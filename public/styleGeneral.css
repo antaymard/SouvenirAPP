@@ -1,0 +1,112 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat+Subrayada';
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400';
+
+#bodyGlobal {
+  height: auto;
+  margin: 3em auto;
+  max-width: 50em;
+  //height:1500px;
+}
+
+#buttDivFixed {
+  position:fixed;
+  bottom: 0px;
+  max-width: 50em;
+  width: 100%;
+  height:100px;
+  //background-color: black;
+}
+
+/*#loupeIcone {
+  display: inline-block;
+}*/
+
+#header {
+  background-color: rgb(77, 182, 172);
+  border-bottom : 3px solid #199894;
+  position: fixed;
+  width: 100%;
+  z-index: 70;
+}
+
+#headerWMargin {
+  margin: 0 auto;
+  max-width: 50em;
+}
+
+#titreHeader {
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: 22px;
+  color: white;
+  transition: 0.5s;
+  margin: 15px 0 7px 0;
+  display: inline-block;
+}
+
+input[type='text'] {
+  box-sizing: border-box;
+  padding: 0px;
+  width: 30px;
+  display: inline-block;
+  outline: none;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);;
+  height: auto;;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  margin: 15px 0 0 0;
+  border-radius: 45px;
+  padding-left: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  transition: 0.8s;
+}
+
+*::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-size : 15px;
+    }
+
+* {
+  box-sizing: border-box;
+}
+
+/* permet de reset le responsive*/
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+body {
+  background: #EEEEEE;
+  margin: 0px;
+}
+
+.generalRoundButton {
+  color: rgb(77, 182, 172);
+  border: solid 1px rgb(77, 182, 172);
+  font-size: 20px;
+  transition: 0.3s;
+  border-radius: 100%;
+  background-color: transparent;;
+  height: 65px;
+  width: 65px;
+  font-size: 30px;
+}
+.generalRoundButton:hover {
+  //box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+
+#statutDisplay {
+  display:none;
+  position: absolute;
+  bottom: 7em;
+  height: auto;
+  width: 50%;
+}
+
+
+
+ //  https://www.sanwebe.com/2014/08/css-html-forms-designs

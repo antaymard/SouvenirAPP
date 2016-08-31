@@ -1,0 +1,85 @@
+#bodyGlobal {
+  height : 1500px;
+}
+
+div.img img {
+  width: 100%;
+  height: 40%;
+}
+
+div.desc {
+  padding: 7px;
+  text-align: left;
+}
+
+.formulaire {
+  display: none;
+  margin: 0 0 15px 0;
+}
+
+p.titre {
+  font-family: Arial;
+  float: ;
+}
+
+p.lieu {
+  font-family: Arial;
+  font-size: 15px;
+  color: grey;
+}
+
+p.titreDesc {
+  font-family: Arial;
+  font-size: 10px;
+  color: #9E9E9E;
+  margin: 0 0 -5px 0;
+}
+
+.responsive {
+  padding: 0px;
+  margin: 20px 5px 0 5px;
+  float: left;
+  width: 45.999%;
+  background: white;
+  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  //transition-duration: 0.4s;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+}
+
+
+@media only screen and (max-width: 700px) {
+  .responsive{
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 99%;
+  }
+}
+
+#addButton {
+  float: right;
+  margin-right: 3px;
+  bottom: 3%;
+  z-index:60;
+  background-color: white;
+}
+#addButton:hover {
+   border: solid 1px green;
+   color: green;
+}
+
+.svnrNumberDisplay {
+  margin: 0 0 -40px 0;
+  font-family: Arial;
+  float:right;
+  color: white;
+  background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(255,255,255,0));
+  opacity: 0.5;
+  width:100%;
+  height: 30px;
+}

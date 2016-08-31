@@ -1,0 +1,19 @@
+#newValider {
+  float:right;
+}
+.form-control {
+  margin-top: 5px;
+}
+
+#validationButtonFile {
+  margin-top: -30px;
+  margin-right: 0px;
+  float: right;
+  width: 25%;
+}
+
+#newValider {
+  width: 25%;
+  margin-top: 45px;
+  margin-bottom: 30px;
+}
