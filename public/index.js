@@ -18,9 +18,9 @@ $( document ).ready(function() {
           //Déclare la fonctionnalité d'ouverture de la carte en focus
         } //fin du for
         $('#Card').click(function() {
+          alert('click');
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
           $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-
         });
       },
       error: function(jqXHR, textStatus, errorThrown) {
