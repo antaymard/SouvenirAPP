@@ -35,17 +35,17 @@ $("#titreHeader").click(function() {
 function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
   $("#bodyGlobal").append('<div class="responsive" id="Card">'
-  // + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
-  // + '<div class="img"><img id="img1" src="' urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
+  + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
+  + '<div class="img"><img id="img1" src="' urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
   // + '<div class="desc">'
-  // + '<p class="titreDesc">Titre</p>'
-  // + '<p class="titre">' + titre + '</p>'
-  // + '<p class="titreDesc">Lieu</p>'
-  // + '<p class="titre" id="titre">' + lieu + '</p>'
-  // + '<p class="titreDesc">Date</p>'
-  // + '<p class="lieu" id="lieu">' + date + '</p>'
-  // //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
-  // + '</div></div></div>'
+  + '<p class="titreDesc">Titre</p>'
+  + '<p class="titre">' + titre + '</p>'
+  + '<p class="titreDesc">Lieu</p>'
+  + '<p class="titre" id="titre">' + lieu + '</p>'
+  + '<p class="titreDesc">Date</p>'
+  + '<p class="lieu" id="lieu">' + date + '</p>'
+  //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
+  + '</div></div></div>'
 )};
 
 $("#addButton").click(function() {
