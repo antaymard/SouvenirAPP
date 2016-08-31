@@ -15,8 +15,14 @@ var postData = 10; //Changé...
           console.log(responseData[i]);
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
-        //Déclare la fonctionnalité d'ouverture de la carte en focus
+
         } //fin du for
+        $('.responsive').click(function() {
+          alert("click success");
+          var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+        });
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
@@ -24,17 +30,11 @@ var postData = 10; //Changé...
     }); //ajax
 });//ready
 
-$('#Card').click(function() {
-  alert("click");
-  var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-  $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-});
-
-
 $("#titreHeader").click(function() {
   $(location).attr('href', urlG);
 });
 
+//Déclare la fonctionnalité d'ouverture de la carte en focus
 function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
   $("#bodyGlobal").append('<div class="responsive" id="Card">'
