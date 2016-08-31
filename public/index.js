@@ -16,11 +16,12 @@ $( document ).ready(function() {
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
           responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
           //Déclare la fonctionnalité d'ouverture de la carte en focus
+        } //fin du for
+        $('#Card').click(function() {
+          var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+
         });
-      } //fin du for
-      $('#Card').click(function() {
-        var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-        $(location).attr('href', urlG + '/focus/' + idSvnrDB);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
