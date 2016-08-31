@@ -48,10 +48,10 @@ var urlG = "http://82.239.100.156:8000";
 //   + '</div>'
 //   + '</div>');
 // };
-//
-// $("#addButton").click(function() {
-//   $(location).attr('href', urlG + '/new');
-// });
+
+$("#addButton").click(function() {
+  $(location).attr('href', urlG + '/new');
+});
 
 //================HEADER===============
 //Reduce header au scroll
