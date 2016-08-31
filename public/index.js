@@ -12,9 +12,9 @@ var postData = 10; //Changé...
         //alert(responseData.idsvnrdb);
         var i;
         for (i in responseData) {
+          console.log(responseData[i]);
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
-              console.log(responseData[i]);
         //Déclare la fonctionnalité d'ouverture de la carte en focus
         $('#Card').click(function() {
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
