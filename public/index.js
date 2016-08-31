@@ -28,10 +28,10 @@ var urlG = "http://82.239.100.156:8000";
 // });
 //
 //
-// $("#titreHeader").click(function() {
-//   $(location).attr('href', urlG);
-// });
-//
+$("#titreHeader").click(function() {
+  $(location).attr('href', urlG);
+});
+
 // function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
 //   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
 //   $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
