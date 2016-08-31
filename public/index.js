@@ -22,12 +22,7 @@ var postData = 10; //Changé...
         alert(textStatus + ", " + errorThrown, "red");
       }
     }); //ajax
-    $('#Card').click(function() {
-      alert("click");
-      var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-      $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-    });
-});
+});//ready
 
 $('#Card').click(function() {
   alert("click");
@@ -55,7 +50,7 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
     //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
     + '</div></div></div>'
   );
-  $('#Card').click(function() {
+  $('.responsive').click(function() {
     alert("click");
     var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
     $(location).attr('href', urlG + '/focus/' + idSvnrDB);
