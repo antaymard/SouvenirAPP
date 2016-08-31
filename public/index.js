@@ -1,6 +1,19 @@
 var urlG = "http://82.239.100.156:8000";
 
 $( document ).ready(function() {
+  $("#bodyGlobal").append('<div class="responsive" id="Card">'
+  + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
+  + '<div class="img"><img id="img1" src="' urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
+  + '<div class="desc">'
+  + '<p class="titreDesc">Titre</p>'
+  + '<p class="titre">' + titre + '</p>'
+  + '<p class="titreDesc">Lieu</p>'
+  + '<p class="titre" id="titre">' + lieu + '</p>'
+  + '<p class="titreDesc">Date</p>'
+  + '<p class="lieu" id="lieu">' + date + '</p>'
+  //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
+  + '</div></div></div>'
+)
   //quand prêt, request 5 dernières lignes de DB par ajax.
 var postData = 10; //Changé...
   $.ajax({
@@ -13,8 +26,8 @@ var postData = 10; //Changé...
         var i;
         for (i in responseData) {
           console.log(responseData[i]);
-        displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
-              responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
+        // displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
+        //       responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
         //Déclare la fonctionnalité d'ouverture de la carte en focus
         $('#Card').click(function() {
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
@@ -27,7 +40,6 @@ var postData = 10; //Changé...
       }
     })
 });
-
 
 $("#titreHeader").click(function() {
   $(location).attr('href', urlG);
@@ -46,9 +58,8 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   + '<p class="titreDesc">Date</p>'
   + '<p class="lieu" id="lieu">' + date + '</p>'
   //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
-  + '</div>'
-  + '</div>');
-};
+  + '</div></div></div>'
+)};
 
 $("#addButton").click(function() {
   $(location).attr('href', urlG + '/new');
