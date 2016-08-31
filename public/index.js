@@ -1,11 +1,22 @@
-var urlG = "http://82.239.100.156:8000";
+//================HEADER===============
+//Reduce header au scroll
+$(window).scroll(function() {
+  if ($(document).scrollTop() > 30) {
+    $('#titreHeader, #searchBox').css('font-size', "15px");
+    $('#titreHeader, #searchBox').css('margin', "3px 0 2px 0");
+  } else {
+    $('#titreHeader, #searchBox').css('font-size', "22px");
+    $('#titreHeader, #searchBox').css('margin', "15px 0 7px 0");
+  }
+});
 
 $( document ).ready(function() {
+  var urlG = "http://82.239.100.156:8000"; //==========================
   //quand prêt, request 5 dernières lignes de DB par ajax.
 var postData = 10; //Changé...
   $.ajax({
       type: "post",
-      url: "http://82.239.100.156:8000/recall",
+      url: urlG + "/recall",
       data: postData,
       //contentType: "application/x-www-form-urlencoded",
       success: function(responseData, textStatus, jqXHR) {

@@ -86,8 +86,8 @@ app.get('/focus/:idSvnr', function(req, res) {
     if(err) {
       console.log("erreur récupération focus");
     }
-    if (result == undefined) {
-      console.log("cette entrée n'existe pas dans le tableau");
+    if (result == null) {
+      console.log("cette entrée n'existe pas dans le tableau DB");
     } else {
       result = result.rows[0];
       //console.log(result.idfile);
