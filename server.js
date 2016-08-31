@@ -4,6 +4,9 @@
 // init project OK
 require('dotenv').config();
 
+var urlG = "http://82.239.100.156:8000";
+
+
 var express = require('express'),
 server = require('http').createServer(app),
 pg = require('pg');
@@ -143,7 +146,7 @@ app.post('/new/uploadReste', urlencodedParser, function(req, res) {
     req.body.date1, req.body.date2, req.body.comments, req.body.hashtags,
     req.body.presentFriends, req.body.sharedFriends, req.body.linkedToId,
     0);
-    res.redirect('http://127.0.0.1:8000/');
+    res.redirect(urlG);
 });
 
 //Définir date du jour
