@@ -14,6 +14,7 @@ var postData = 10; //Changé...
         for (i in responseData) {
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
+              console.log(responseData[i]);
         //Déclare la fonctionnalité d'ouverture de la carte en focus
         $('#Card').click(function() {
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
@@ -34,7 +35,7 @@ $("#titreHeader").click(function() {
 
 function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
-  $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
+  $("#bodyGlobal").append('<div class="responsive" id="Card">'
   + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
   + '<div class="img"><img id="img1" src="' urlG + "/" + idFile + '" alt="Votre image" width="300" height="200">'
   + '<div class="desc">'
