@@ -87,7 +87,7 @@ app.get('/focus/:idSvnr', function(req, res) {
         console.log("erreur récupération focus");
       }
       result = result.rows[0];
-      console.log(result.idfile);
+      //console.log(result.idfile);
       // res.json(result.rows);
       // idfile = result.idfile; ???
       //Render le ejs avec les datas = appliquer les variables changées
