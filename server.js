@@ -64,31 +64,31 @@ app.post('/searchbytag',function(request,response){
 
 app.post('/recall',function(req,res){
   //recall des 10 derniers souvenirs from DB
-        client.query("SELECT * FROM version1 ORDER BY idsvnrdb DESC LIMIT 10",
-          function(err, result) {
-            if(err) {
-              console.log("erreur DB recall 10 last");
-            }
-            console.log(result.rows);
-            res.json(result.rows);
-          });
-    });
+  client.query("SELECT * FROM version1 ORDER BY idsvnrdb DESC LIMIT 10",
+  function(err, result) {
+    if(err) {
+      console.log("erreur DB recall 10 last");
+    }
+    console.log(result.rows);
+    res.json(result.rows);
+  });
+});
 
 
 app.get('/focus/:idSvnr', function(req, res) {
-//Declarer les variables
+  //Declarer les variables
   var result;
   var idSvnr = req.params.idSvnr;
   var idfile = 'bug';
   //Get info from DB ! = changer les variables déclarées
   client.query("SELECT * FROM version1 WHERE idsvnrdb='" + idSvnr + "'",
-    function(err, result) {
-      if(err) {
-        console.log("erreur récupération focus");
-      }
-      if (result == undefined) {
-        console.log("cette entrée n'existe pas dans le tableau");
-      } else {
+  function(err, result) {
+    if(err) {
+      console.log("erreur récupération focus");
+    }
+    if (result == undefined) {
+      console.log("cette entrée n'existe pas dans le tableau");
+    } else {
       result = result.rows[0];
       //console.log(result.idfile);
       // res.json(result.rows);
@@ -113,9 +113,9 @@ app.get('/focus/:idSvnr', function(req, res) {
         presentfriends: result.presentfriends,
         sharedfriends: result.sharedfriends,
         linkedtoid: result.linkedtoid
-      } //else
         //ajouter les variables obtenues par la DB !
-    });//res.render
+      });//res.render
+    } //else
   }); //client
 }); //app.get
 
