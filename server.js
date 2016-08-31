@@ -6,7 +6,6 @@ require('dotenv').config();
 
 var urlG = "http://82.239.100.156:8000";
 
-
 var express = require('express'),
 server = require('http').createServer(app),
 pg = require('pg');

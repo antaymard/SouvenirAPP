@@ -43,7 +43,7 @@
   display: inline-block;
 }
 
-input[type='text'] {
+#searchBox {
   box-sizing: border-box;
   padding: 0px;
   width: 30px;
