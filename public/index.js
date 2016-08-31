@@ -51,7 +51,7 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
     + '</div></div></div>'
   );
   $('.responsive').click(function() {
-    alert("click");
+    alert("click fct");
     var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
     $(location).attr('href', urlG + '/focus/' + idSvnrDB);
   });
