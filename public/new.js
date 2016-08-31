@@ -1,3 +1,5 @@
+var urlG = "http://82.239.100.156:8000";
+
 //Reduce header au scroll
 $(window).scroll(function() {
   if ($(document).scrollTop() > 30) {
@@ -10,7 +12,7 @@ $(window).scroll(function() {
 });
 
 $("#titreHeader").click(function() {
-  $(location).attr('href', 'http://127.0.0.1:8000');
+  $(location).attr('href', urlG);
 });
 
 $("#validationButtonFile").click(function () {

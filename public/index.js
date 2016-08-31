@@ -1,9 +1,11 @@
+var urlG = "http://82.239.100.156:8000";
+
 $( document ).ready(function() {
   //quand prêt, request 5 dernières lignes de DB par ajax.
 var postData = 10; //Changé...
   $.ajax({
       type: "post",
-      url: "http://127.0.0.1:8000/recall",
+      url: urlG + "/recall",
       data: postData,
       //contentType: "application/x-www-form-urlencoded",
       success: function(responseData, textStatus, jqXHR) {
@@ -15,7 +17,7 @@ var postData = 10; //Changé...
         //Déclare la fonctionnalité d'ouverture de la carte en focus
         $('#Card').click(function() {
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-          $(location).attr('href', 'http://127.0.0.1:8000/focus/' + idSvnrDB);
+          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
         });
             } //fin du for
       },
@@ -27,14 +29,14 @@ var postData = 10; //Changé...
 
 
 $("#titreHeader").click(function() {
-  $(location).attr('href', 'http://127.0.0.1:8000');
+  $(location).attr('href', urlG);
 });
 
 function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
   $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
   + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
-  + '<div class="img"><img id="img1" src="http://127.0.0.1:8000/' + idFile + '" alt="Votre image" width="300" height="200">'
+  + '<div class="img"><img id="img1" src=' urlG + "/" + idFile + '" alt="Votre image" width="300" height="200">'
   + '<div class="desc">'
   + '<p class="titreDesc">Titre</p>'
   + '<p class="titre">' + titre + '</p>'
@@ -48,7 +50,7 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
 };
 
 $("#addButton").click(function() {
-  $(location).attr('href', 'http://127.0.0.1:8000/new');
+  $(location).attr('href', urlG + '/new');
 });
 
 //================HEADER===============
