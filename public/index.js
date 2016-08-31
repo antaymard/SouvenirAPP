@@ -1,17 +1,6 @@
-//================HEADER===============
-//Reduce header au scroll
-$(window).scroll(function() {
-  if ($(document).scrollTop() > 30) {
-    $('#titreHeader, #searchBox').css('font-size', "15px");
-    $('#titreHeader, #searchBox').css('margin', "3px 0 2px 0");
-  } else {
-    $('#titreHeader, #searchBox').css('font-size', "22px");
-    $('#titreHeader, #searchBox').css('margin', "15px 0 7px 0");
-  }
-});
+var urlG = "http://82.239.100.156:8000";
 
 // $( document ).ready(function() {
-//   var urlG = "http://82.239.100.156:8000"; //==========================
 //   //quand prêt, request 5 dernières lignes de DB par ajax.
 // var postData = 10; //Changé...
 //   $.ajax({
@@ -37,32 +26,32 @@ $(window).scroll(function() {
 //       }
 //     })
 // });
-
-
-$("#titreHeader").click(function() {
-  $(location).attr('href', urlG);
-});
-
-function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
-  var date = date.slice(0, -14); //enlève la fin de la date (GMT)
-  $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
-  + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
-  + '<div class="img"><img id="img1" src=' urlG + "/" + idFile + '" alt="Votre image" width="300" height="200">'
-  + '<div class="desc">'
-  + '<p class="titreDesc">Titre</p>'
-  + '<p class="titre">' + titre + '</p>'
-  + '<p class="titreDesc">Lieu</p>'
-  + '<p class="titre" id="titre">' + lieu + '</p>'
-  + '<p class="titreDesc">Date</p>'
-  + '<p class="lieu" id="lieu">' + date + '</p>'
-  //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
-  + '</div>'
-  + '</div>');
-};
-
-$("#addButton").click(function() {
-  $(location).attr('href', urlG + '/new');
-});
+//
+//
+// $("#titreHeader").click(function() {
+//   $(location).attr('href', urlG);
+// });
+//
+// function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
+//   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
+//   $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
+//   + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
+//   + '<div class="img"><img id="img1" src=' urlG + "/" + idFile + '" alt="Votre image" width="300" height="200">'
+//   + '<div class="desc">'
+//   + '<p class="titreDesc">Titre</p>'
+//   + '<p class="titre">' + titre + '</p>'
+//   + '<p class="titreDesc">Lieu</p>'
+//   + '<p class="titre" id="titre">' + lieu + '</p>'
+//   + '<p class="titreDesc">Date</p>'
+//   + '<p class="lieu" id="lieu">' + date + '</p>'
+//   //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
+//   + '</div>'
+//   + '</div>');
+// };
+//
+// $("#addButton").click(function() {
+//   $(location).attr('href', urlG + '/new');
+// });
 
 //================HEADER===============
 //Reduce header au scroll
@@ -77,43 +66,43 @@ $(window).scroll(function() {
 });
 
 //Focus = agrandissement de la barre de recherche + enter to submit
-$("#searchBox").focusin(function() {
-  $(this).css('width', "auto");
-  $(this).css('margin', "15px 0 0 -150px");
-});
-$("#searchBox").focusout(function() {
-  $(this).css('width', "30px");
-  $(this).css('margin', "15px 0 0 0");
-});
-$('#searchBox').keypress(function (e) {
-  if (e.which == 13) {
-    // var searchData = $('input#searchBox').val();
-    $('#searchForm').submit();
-    // alert(searchData + ' / ' + typeof searchData);
-    // $.ajax({
-      //   type: "post",
-      //   url: "http://127.0.0.1:8000/searchbytag",
-      //   //contentType: "text/plain",
-      //   data: "data is" + searchData,
-      //   success: function(responseData, textStatus, jqXHR) {
-      //     $('bodyGlobal').remove(); //supprime les cartes affichées par index
-      //     //Affiche les nouvelles cartes form DB
-      //     displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
-      //           responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
-      //     //Déclare la fonctionnalité d'ouverture de la carte en focus
-      //     $('#Card').click(function() {
-      //       var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-      //       $(location).attr('href', 'http://127.0.0.1:8000/focus/' + idSvnrDB);
-      //     });
-      //   },
-      //   error: function(jqXHR, textStatus, errorThrown) {
-      //     alert("2" + textStatus + ", " + errorThrown);
-      //     //alert(searchData); //fonctionne
-      //   }
-      // })
-    return false;    //<---- Add this line = annule l'action classique de enter
-  }
-});
+// $("#searchBox").focusin(function() {
+//   $(this).css('width', "auto");
+//   $(this).css('margin', "15px 0 0 -150px");
+// });
+// $("#searchBox").focusout(function() {
+//   $(this).css('width', "30px");
+//   $(this).css('margin', "15px 0 0 0");
+// });
+// $('#searchBox').keypress(function (e) {
+//   if (e.which == 13) {
+//     // var searchData = $('input#searchBox').val();
+//     $('#searchForm').submit();
+//     // alert(searchData + ' / ' + typeof searchData);
+//     // $.ajax({
+//       //   type: "post",
+//       //   url: "http://127.0.0.1:8000/searchbytag",
+//       //   //contentType: "text/plain",
+//       //   data: "data is" + searchData,
+//       //   success: function(responseData, textStatus, jqXHR) {
+//       //     $('bodyGlobal').remove(); //supprime les cartes affichées par index
+//       //     //Affiche les nouvelles cartes form DB
+//       //     displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
+//       //           responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
+//       //     //Déclare la fonctionnalité d'ouverture de la carte en focus
+//       //     $('#Card').click(function() {
+//       //       var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+//       //       $(location).attr('href', 'http://127.0.0.1:8000/focus/' + idSvnrDB);
+//       //     });
+//       //   },
+//       //   error: function(jqXHR, textStatus, errorThrown) {
+//       //     alert("2" + textStatus + ", " + errorThrown);
+//       //     //alert(searchData); //fonctionne
+//       //   }
+//       // })
+//     return false;    //<---- Add this line = annule l'action classique de enter
+//   }
+// });
 
 
 // var cardSvnr = {
