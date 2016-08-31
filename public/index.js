@@ -18,7 +18,6 @@ var postData = 10; //Changé...
 
         } //fin du for
         $('.responsive').click(function() {
-          alert("click success");
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
           $(location).attr('href', urlG + '/focus/' + idSvnrDB);
         });
@@ -50,11 +49,12 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
     //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
     + '</div></div></div>'
   );
-  $('.responsive').click(function() {
-    alert("click fct");
-    var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-    $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-  });
+  // Bug du click pour focus semble réparé('#Card') -> (".responsive")
+  // $('.responsive').click(function() {
+  //   alert("click fct");
+  //   var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+  //   $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+  // });
 };
 
 $("#addButton").click(function() {
