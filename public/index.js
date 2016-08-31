@@ -46,7 +46,7 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   + '<p class="lieu" id="lieu">' + date + '</p>'
   //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
   + '</div>'
-  + '</div>');
+  + '</div>')
 };
 
 $("#addButton").click(function() {
