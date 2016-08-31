@@ -26,8 +26,21 @@ var postData = 10; //Changé...
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
       }
-    })
+    });
+    $('#Card').click(function() {
+      alert("click");
+      var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+      $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+    });
+
 });
+
+$('#Card').click(function() {
+  alert("click");
+  var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+  $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+});
+
 
 $("#titreHeader").click(function() {
   $(location).attr('href', urlG);
