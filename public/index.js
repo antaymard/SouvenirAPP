@@ -2,31 +2,31 @@ var urlG = "http://82.239.100.156:8000";
 
 $( document ).ready(function() {
   //quand prêt, request 5 dernières lignes de DB par ajax.
-var postData = 10; //Changé...
+  var postData = 10; //Changé...
   $.ajax({
-      type: "post",
-      url: urlG + "/recall",
-      data: postData,
-      //contentType: "application/x-www-form-urlencoded",
-      success: function(responseData, textStatus, jqXHR) {
-        //alert(responseData.idsvnrdb);
-        var i;
-        for (i in responseData) {
-          console.log(responseData[i]);
+    type: "post",
+    url: urlG + "/recall",
+    data: postData,
+    //contentType: "application/x-www-form-urlencoded",
+    success: function(responseData, textStatus, jqXHR) {
+      //alert(responseData.idsvnrdb);
+      var i;
+      for (i in responseData) {
+        console.log(responseData[i]);
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
-              responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
-        //Déclare la fonctionnalité d'ouverture de la carte en focus
-        $('#Card').click(function() {
-          var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+          responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
+          //Déclare la fonctionnalité d'ouverture de la carte en focus
         });
-            } //fin du for
+      } //fin du for
+      $('#Card').click(function() {
+        var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+        $(location).attr('href', urlG + '/focus/' + idSvnrDB);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
       }
     })
-});
+  });
 
 $("#titreHeader").click(function() {
   $(location).attr('href', urlG);
