@@ -86,6 +86,9 @@ app.get('/focus/:idSvnr', function(req, res) {
       if(err) {
         console.log("erreur récupération focus");
       }
+      if (result == undefined) {
+        console.log("cette entrée n'existe pas dans le tableau");
+      } else {
       result = result.rows[0];
       //console.log(result.idfile);
       // res.json(result.rows);
@@ -110,6 +113,7 @@ app.get('/focus/:idSvnr', function(req, res) {
         presentfriends: result.presentfriends,
         sharedfriends: result.sharedfriends,
         linkedtoid: result.linkedtoid
+      } //else
         //ajouter les variables obtenues par la DB !
     });//res.render
   }); //client
