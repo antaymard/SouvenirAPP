@@ -17,17 +17,19 @@ $( document ).ready(function() {
           responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
           //Déclare la fonctionnalité d'ouverture de la carte en focus
         } //fin du for
-        $('#Card').click(function() {
-          alert('click');
-          var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-        });
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
       }
     })
   });
+
+  $('#Card').click(function() {
+    alert('click');
+    var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+    $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+  });
+
 
 $("#titreHeader").click(function() {
   $(location).attr('href', urlG);
