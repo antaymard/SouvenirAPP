@@ -36,7 +36,7 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
   $("#bodyGlobal").append('<div class="responsive" id="Card">'
   + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
-  + '<div class="img"><img id="img1" src="' urlG + idFile + '" alt="Votre image" width="300" height="200">'
+  + '<div class="img"><img id="img1" src="' + urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
   + '<div class="desc">'
   + '<p class="titreDesc">Titre</p>'
   + '<p class="titre">' + titre + '</p>'
