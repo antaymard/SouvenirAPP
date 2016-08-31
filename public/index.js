@@ -16,17 +16,17 @@ var postData = 10; //Changé...
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
         //Déclare la fonctionnalité d'ouverture de la carte en focus
+        $('#Card').click(function() {
+          alert("click");
+          var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+        });
             } //fin du for
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
       }
-    });
-    $('#Card').click(function() {
-      var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-      $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-
-    });
+    })
 });
 
 $("#titreHeader").click(function() {
