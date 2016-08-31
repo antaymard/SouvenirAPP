@@ -16,23 +16,17 @@ var postData = 10; //Changé...
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
         //Déclare la fonctionnalité d'ouverture de la carte en focus
-        $('#Card').click(function() {
-          alert("click");
-          var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-          $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-        });
-            } //fin du for
+        } //fin du for
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
       }
-    });
+    }); //ajax
     $('#Card').click(function() {
       alert("click");
       var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
       $(location).attr('href', urlG + '/focus/' + idSvnrDB);
     });
-
 });
 
 $('#Card').click(function() {
@@ -49,18 +43,24 @@ $("#titreHeader").click(function() {
 function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
   $("#bodyGlobal").append('<div class="responsive" id="Card">'
-  + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
-  + '<div class="img"><img id="img1" src="' + urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
-  + '<div class="desc">'
-  + '<p class="titreDesc">Titre</p>'
-  + '<p class="titre">' + titre + '</p>'
-  + '<p class="titreDesc">Lieu</p>'
-  + '<p class="titre" id="titre">' + lieu + '</p>'
-  + '<p class="titreDesc">Date</p>'
-  + '<p class="lieu" id="lieu">' + date + '</p>'
-  //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
-  + '</div></div></div>'
-)};
+    + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
+    + '<div class="img"><img id="img1" src="' + urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
+    + '<div class="desc">'
+    + '<p class="titreDesc">Titre</p>'
+    + '<p class="titre">' + titre + '</p>'
+    + '<p class="titreDesc">Lieu</p>'
+    + '<p class="titre" id="titre">' + lieu + '</p>'
+    + '<p class="titreDesc">Date</p>'
+    + '<p class="lieu" id="lieu">' + date + '</p>'
+    //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
+    + '</div></div></div>'
+  );
+  $('#Card').click(function() {
+    alert("click");
+    var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
+    $(location).attr('href', urlG + '/focus/' + idSvnrDB);
+  });
+};
 
 $("#addButton").click(function() {
   $(location).attr('href', urlG + '/new');
