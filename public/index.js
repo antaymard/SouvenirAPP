@@ -11,9 +11,7 @@ $( document ).ready(function() {
   + '<p class="titre" id="titre">' + lieu + '</p>'
   + '<p class="titreDesc">Date</p>'
   + '<p class="lieu" id="lieu">' + date + '</p>'
-  //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
-  + '</div></div></div>'
-)
+  + '</div></div></div>');
   //quand prêt, request 5 dernières lignes de DB par ajax.
 var postData = 10; //Changé...
   $.ajax({
