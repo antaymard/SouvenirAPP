@@ -5,7 +5,7 @@ $( document ).ready(function() {
 var postData = 10; //Changé...
   $.ajax({
       type: "post",
-      url: urlG + "/recall",
+      url: "http://82.239.100.156:8000/recall",
       data: postData,
       //contentType: "application/x-www-form-urlencoded",
       success: function(responseData, textStatus, jqXHR) {
