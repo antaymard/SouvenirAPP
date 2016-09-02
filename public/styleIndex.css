@@ -37,7 +37,7 @@
    color: white;
 }
 
-#validButtDiv, #plusButtDiv {
+#validButtDiv {
   color: rgba(255, 255, 255, 0.7);
   border: solid 1px rgb(77, 182, 172);
   background-color: transparent;
@@ -56,6 +56,22 @@
    border: solid 1px #4CAF50;
    color: white;
    background-color: #4CAF50;
+}
+
+#plusButtDiv{
+  color: rgba(255, 255, 255, 0.7);
+  border: solid 1px rgb(77, 182, 172);
+  background-color: transparent;
+  font-size: 20px;
+  transition: 0.3s;
+  border-radius: 100%;
+  height: auto;
+  width: 35px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: lighter;
+  opacity: 1;
+  margin-bottom: 15px;
 }
 #plusButtDiv:hover {
   border: solid 1px white;

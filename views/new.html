@@ -19,6 +19,7 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <script src="http://malsup.github.com/jquery.form.js"></script>
 
 </head>
 <body>
@@ -39,7 +40,7 @@
       <!-- <h2>Création de souvenir</h2><br> -->
 
     <form id="fileUpForm" enctype = "multipart/form-data"
-      action="http://82.239.100.156:8000/new/uploadFile" method="post">
+      action="/new/uploadFile" method="post">
       <div class="form-group">
         <h4><i class="fa fa-picture-o" aria-hidden="true"></i> Image</h4>
         <label for="userPhoto">Choose a file</label>
@@ -49,11 +50,11 @@
     </form>
   <br>
 
-    <form id="resteUpForm" action="http://82.239.100.156:8000/new/uploadReste" method="post">
+    <form id="resteUpForm" action="/new/uploadReste" method="post">
       <div class="form-group">
         <h4><i class="fa fa-home" aria-hidden="true"></i> Informations principales</h4>
-        <input type="text" placeholder="Titre " name="titreSvnr" class="form-control" disabled="true"/>
-        <input type="text" placeholder="Lieu" name="lieuSvnr" class="form-control" disabled="true"/>
+        <input type="text" placeholder="Titre " name="titreSvnr" class="form-control"/>
+        <input type="text" placeholder="Lieu" name="lieuSvnr" class="form-control"/>
         <h6>Type de souvenir</h6>
         <input type="radio" name="typeSvnr" value="moment" checked> Moment<br>
         <input type="radio" name="typeSvnr" value="person"> Personne<br>

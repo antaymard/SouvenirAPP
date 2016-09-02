@@ -17,7 +17,23 @@ $("#titreHeader").click(function() {
 });
 
 $("#validationButtonFile").click(function () {
-  $("input").prop('disabled', false);
+  console.log('change');
+  $('#fileUpForm').submit(function() {
+        // $("#status").empty().text("File is uploading...");
+        $(this).ajaxSubmit({
+
+            error: function(xhr) {
+        console.log('Error: ' + xhr.status);
+            },
+
+            success: function(response) {
+        // $("#status").empty().text(response);
+                console.log('ok');
+            }
+    });
+        //Very important line, it disable the page refresh.
+    return false;
+    });
 });
 
 // $("#resteUpForm").submit(function(event) {

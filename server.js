@@ -43,10 +43,10 @@ app.set('view engine', 'ejs');
 var io = require('socket.io').listen(8080);
 
 io.on('connection', function (socket) {
-    console.log('Un client est connecté !+++++++++++++++++++++++++');
-    socket.on('lol', function (data) {
-      console.log(data);
-    });
+    console.log('____SOCKET : Client connecté');
+    // socket.on('lol', function (data) {
+      //console.log(data);
+    // });
 });
 
 
@@ -56,14 +56,14 @@ var client = new pg.Client(conString);
 console.log(conString);
 client.connect(function(err) {
   if(err) {
-    return console.error('could not connect to postgres', err);
+    return console.error('X-------could not connect to postgres', err);
   }
   console.log("____Connected to the database");
   client.query('SELECT NOW() AS "theTime"', function(err, result) {
     if(err) {
-      return console.error('X----PB testDBQuery', err);
+      return console.error('X----PB testDBQuery - ', err);
     }
-    console.log("testDBQuery" + result.rows[0].theTime);
+    console.log("____testDBQuery - " + result.rows[0].theTime);
     //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
   });
     //client.end();
@@ -84,9 +84,9 @@ app.post('/recall',function(req,res){
   client.query("SELECT * FROM version1 ORDER BY idsvnrdb DESC LIMIT 10",
   function(err, result) {
     if(err) {
-      console.log("erreur DB recall 10 last");
+      console.log("X-------erreur DB recall 10 last" + err);
     }
-    console.log(result.rows);
+    console.log("____Recall OK");
     res.json(result.rows);
   });
 });
@@ -103,22 +103,20 @@ app.get('/focus/:idSvnr', function(req, res) {
     if(err) {
       console.log("erreur récupération focus");
     }
-    if (result == null) {
-      console.log("cette entrée n'existe pas dans le tableau DB");
-    } else {
       result = result.rows[0];
       //console.log(result.idfile);
       // res.json(result.rows);
       // idfile = result.idfile; ???
       //Render le ejs avec les datas = appliquer les variables changées
+if (date1) {
       var date1 = result.date1.toGMTString().slice(0, -13) //enlève la fin de la date (GMT)
-      //console.log(result.);
+    };//console.log(result.);
 
       //individualiser les hashtags
       // var hashtags = result.hashtags.split(', ');
       // console.log("#1" + hashtags[0]);
       // console.log('#2' + hashtags[1]);
-
+if (result) {
       res.render('ejs/focus', {
         idSvnr: idSvnr,
         idfile: result.idfile,
@@ -132,7 +130,7 @@ app.get('/focus/:idSvnr', function(req, res) {
         linkedtoid: result.linkedtoid
         //ajouter les variables obtenues par la DB !
       });//res.render
-    } //else
+      };
   }); //client
 }); //app.get
 
@@ -147,8 +145,7 @@ app.post('/new/uploadFile',function(req,res){
         }
         //Reçoit le fichier, le nomme et l'enregistre.
         //idFile a normalement la valeur du nom du new file.
-        //res.end("File is uploaded");
-        console.log("fichier uploadé" + idFile);
+        console.log("fichier uploadé - " + idFile);
         io.emit('FileUploaded', 'ok');
     });
 });
@@ -163,16 +160,27 @@ app.post('/new/uploadReste', urlencodedParser, function(req, res) {
     req.body.presentFriends, req.body.sharedFriends, req.body.linkedToId,
     0); //rating = 0 car desactivé
   //Doit incorporer ces données + idSvnrDB + idFile
-  console.log("request " + req.body.titreSvnr, req.body.lieuSvnr, idFile, req.body.typeSvnr,
+  console.log("Données reçues : " + req.body.titreSvnr, req.body.lieuSvnr, idFile, req.body.typeSvnr,
     req.body.date1, req.body.date2, req.body.comments, req.body.hashtags,
     req.body.presentFriends, req.body.sharedFriends, req.body.linkedToId,
     0);
-    res.redirect(urlG);
+
+    client.query("SELECT * FROM version1 ORDER BY idsvnrdb DESC LIMIT 10",
+    function(err, result) {
+      if(err) {
+        console.log("erreur DB recall 10 last après new");
+      }
+      console.log("recall effectué après new");
+      res.json(result.rows);
+    });
+
 });
 
 //Définir date du jour
-var today = new Date();
-var dd = today.getDate();
+var today;
+function getToday() {
+today = new Date();
+var dd = today.getDate()+1;
 var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
 if(dd<10) {
@@ -181,16 +189,18 @@ if(dd<10) {
 if(mm<10) {
     mm='0'+mm
 }
-today = mm+'-'+dd+'-'+yyyy;
+today = yyyy + '-' + mm +'-' + dd;
+return today;
+};
 
 function storageDB(titre, lieu, idFile, typeSvnr, date1, date2, comments,
         hashtags, presentFriends, sharedFriends, linkedToId, rating) {
-          var creationdate = today; //récupérer la date du jour
+          var creationdate = getToday(); //récupérer la date du jour
           if (date1 == "") {
-            date1 = "01-01-1901"; //string ???
+            date1 = getToday(); //string ???
           }
           if (date2 == "") {
-            date2 = "01-01-1901";
+            date2 = getToday();
           }
           hour = "00:00:00";
           linkedToId = 0; //non fonctionnel
