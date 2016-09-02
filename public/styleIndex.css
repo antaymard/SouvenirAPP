@@ -2,6 +2,86 @@
   height : 1500px;
 }
 
+#buttDivFixed {
+  position:fixed;
+  bottom: -340px;
+  max-width: 50em;
+  width: 100%;
+  height: 400px; /*60*/
+  background-color: #199894;
+  padding-top: 13px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-top : 3px solid rgb(77, 182, 172);
+  z-index: 45;
+}
+
+#addButton {
+  color: rgba(255, 255, 255, 0.7);
+  border: solid 1px rgb(77, 182, 172);
+  font-size: 20px;
+  transition: 0.3s;
+  border-radius: 45px;
+  height: auto;
+  width: 120px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.addButton-confirmed {
+  color: #4CAF50;
+  border: solid 1px #4CAF50;
+}
+#addButton:hover {
+   border: solid 1px white;
+   color: white;
+}
+
+#validButtDiv, #plusButtDiv {
+  color: rgba(255, 255, 255, 0.7);
+  border: solid 1px rgb(77, 182, 172);
+  background-color: transparent;
+  font-size: 20px;
+  transition: 0.3s;
+  border-radius: 100%;
+  height: auto;
+  width: 35px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: lighter;
+  opacity: 0;
+  margin-bottom: 15px;
+}
+#validButtDiv:hover {
+   border: solid 1px #4CAF50;
+   color: white;
+   background-color: #4CAF50;
+}
+#plusButtDiv:hover {
+  border: solid 1px white;
+  color: white;
+}
+
+
+#searchBox {
+  width: 30px;
+  margin: 15px 0 0 0;
+}
+
+.typeBox {
+  width : 100%;
+}
+
+.inputFilePhoto {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	//position: absolute;
+	z-index: 80;
+  cursor: pointer;
+}
+
 div.img img {
   width: 100%;
   height: 40%;
@@ -39,7 +119,7 @@ p.titreDesc {
   padding: 0px;
   margin: 20px 5px 0 5px;
   float: left;
-  width: 45.999%;
+  width: 48.5%;
   background: white;
   //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   //transition-duration: 0.4s;
@@ -59,18 +139,6 @@ p.titreDesc {
   .responsive {
     width: 99%;
   }
-}
-
-#addButton {
-  float: right;
-  margin-right: 3px;
-  bottom: 3%;
-  z-index:60;
-  background-color: white;
-}
-#addButton:hover {
-   border: solid 1px green;
-   color: green;
 }
 
 .svnrNumberDisplay {

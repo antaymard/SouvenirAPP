@@ -4,14 +4,18 @@
 // init project OK
 require('dotenv').config();
 
-var urlG = "http://82.239.100.156:8000";
+//var urlG = "http://82.239.100.156:8000";
+var urlG = "http://127.0.0.1:8000";
 
-var express = require('express'),
-server = require('http').createServer(app),
-pg = require('pg');
-var app = express();
+var express = require('express');
+var server = require('http').createServer(app); //Semble inutile
 var bodyParser = require('body-parser');
 var url = require("url");
+var pg = require('pg');
+
+var app = express();
+
+
 //Upload de fichiers
 var multer  =   require('multer');
 var storage =   multer.diskStorage({
@@ -30,8 +34,21 @@ var idSvnrDB; //id du souvenir
 var idFile; //id de l'image après réception et enregistrement
 
 app.use(express.static('public'));
+// app.use(express.static(__dirname +'/node_modules/socket.io/node_modules/socket.io-client'));
 app.use(express.static(__dirname + '/stockageLocal'))
 app.set('view engine', 'ejs');
+
+
+//=====================SOCKET.IO================
+var io = require('socket.io').listen(8080);
+
+io.on('connection', function (socket) {
+    console.log('Un client est connecté !+++++++++++++++++++++++++');
+    socket.on('lol', function (data) {
+      console.log(data);
+    });
+});
+
 
 //Database Shit
 var conString = process.env.ELEPHANTSQL_URL;
@@ -132,6 +149,7 @@ app.post('/new/uploadFile',function(req,res){
         //idFile a normalement la valeur du nom du new file.
         //res.end("File is uploaded");
         console.log("fichier uploadé" + idFile);
+        io.emit('FileUploaded', 'ok');
     });
 });
 

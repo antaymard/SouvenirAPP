@@ -7,7 +7,7 @@
 <!-- haml: http://haml.info/tutorial.html -->
 <!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
 
-<!-- 1 = UNE VALEUR URL A CHANGER -->
+<!-- 2 = UNE VALEUR URL A CHANGER -->
 
 <!DOCTYPE html>
 <html>
@@ -37,13 +37,14 @@
   <div id="header">
     <div id="headerWMargin" class="row">
       <div class="col-xs-9">
-      <p id="titreHeader"><i class="fa fa-cloud" aria-hidden="true"></i> Remember</p>
+      <p id="titreHeader"><i class="fa fa-cloud fa-pulse" aria-hidden="true"></i> Remember</p> v0.1.1
+
     </div>
     <div class="col-xs-2">
       <div style="float: left">
       <!-- <i id="loupeIcone" class="fa fa-search" aria-hidden="true"></i> -->
-      <form id="searchForm" method="post" action="http://82.239.100.156:8000/searchbytag">
-      <input id="searchBox" type="text" class="col-xs-3" placeholder="#" name='searchText'>
+      <form id="searchForm" method="post" action="hhttp://127.0.0.1:8000/searchbytag">
+      <input class='typeBox' id="searchBox" type="text" class="col-xs-3" placeholder="#" name='searchText'>
       </form>
     </div>
     </div>
@@ -52,20 +53,34 @@
 
 <div class="clearfix"></div>
 
-  <!-- Panel Black -->
-  <div id="addPanelBlack">  </div>
-
   <div id="bodyGlobal"> <br>
 
     <!-- <button id="testButton" class="generalRoundButton">Test</button> -->
 
-    <div id="statutDisplay" class="alert">
-    <strong>Serveur : </strong> <span id="dbRecStatut"></span>
-  </div>
-
     <div id="buttDivFixed">
-        <button id="addButton" class="generalRoundButton">+</button>
+      <div class='row row-eq-height'>
+        <div class="col-xs-9">
+          <input type="text" placeholder="Titre " name="titreSvnr" class="typeBox"/>
+          <div class='row' style='padding-top:15px'>
+          <div class="col-xs-6">
+          <input id='statutBox' class='typeBox' type="text" name="lol" placeholder="Amis"></div>
+          <div class="col-xs-6">
+          <input id='statutBox' class='typeBox' type="text" name="lol" placeholder="#"></div>
+        </div>
+        </div>
+        <div class="col-xs-2">
+          <form id="fileUpForm" enctype = "multipart/form-data"
+          action="http://127.0.0.1:8000/new/uploadFile" method="post">
+          <label id="addButton" for="userPhoto"><i class="fa fa-picture-o" aria-hidden="true"></i></label>
+          <input type="file" name="userPhoto" id="userPhoto" class='inputFilePhoto'/>
+          </form>
+        </div>
+        <div class="col-xs-1">
+          <button id="validButtDiv"><i class="fa fa-check" aria-hidden="true"></i></button>
+          <button id="plusButtDiv"><i class="fa fa-sort-desc" aria-hidden="true"></i></button>
+      </div>
     </div>
+  </div>
 
     <div class="clearfix"></div>
 
@@ -74,6 +89,8 @@
 <link rel="stylesheet" href="/styleGeneral.css">
 <link rel="stylesheet" href="/styleIndex.css">
 <script type="text/javascript" src="/index.js"></script>
+<script type="text/javascript" src='/jquery.transit.min.js'></script> //transitions
+<script src="http://127.0.0.1:8080/socket.io/socket.io.js"></script>
 
-  </body>
+</body>
   </html>

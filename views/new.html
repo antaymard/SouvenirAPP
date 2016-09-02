@@ -1,3 +1,5 @@
+<!-- 2 = UNE VALEUR URL A CHANGER -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,11 +42,13 @@
       action="http://82.239.100.156:8000/new/uploadFile" method="post">
       <div class="form-group">
         <h4><i class="fa fa-picture-o" aria-hidden="true"></i> Image</h4>
-        <input type="file" name="userPhoto" id="userPhoto" />
+        <label for="userPhoto">Choose a file</label>
+        <input type="file" name="userPhoto" id="userPhoto" class='inputFilePhoto'/>
         <input class="btn btn-warning" type="submit" value="Ajouter" id="validationButtonFile"/>
       </div>
     </form>
   <br>
+
     <form id="resteUpForm" action="http://82.239.100.156:8000/new/uploadReste" method="post">
       <div class="form-group">
         <h4><i class="fa fa-home" aria-hidden="true"></i> Informations principales</h4>

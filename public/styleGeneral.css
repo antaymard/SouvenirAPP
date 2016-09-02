@@ -8,15 +8,6 @@
   //height:1500px;
 }
 
-#buttDivFixed {
-  position:fixed;
-  bottom: 0px;
-  max-width: 50em;
-  width: 100%;
-  height:100px;
-  //background-color: black;
-}
-
 /*#loupeIcone {
   display: inline-block;
 }*/
@@ -41,12 +32,11 @@
   transition: 0.5s;
   margin: 15px 0 7px 0;
   display: inline-block;
+  cursor: pointer;
 }
 
-#searchBox {
+.typeBox {
   box-sizing: border-box;
-  padding: 0px;
-  width: 30px;
   display: inline-block;
   outline: none;
   border: none;
@@ -54,13 +44,13 @@
   height: auto;;
   color: rgba(255, 255, 255, 0.7);
   font-size: 20px;
-  margin: 15px 0 0 0;
   border-radius: 45px;
-  padding-left: 10px;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
   transition: 0.8s;
+  padding-left: 10px;
 }
+
 
 *::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.5);
@@ -85,26 +75,14 @@ body {
 }
 
 .generalRoundButton {
-  color: rgb(77, 182, 172);
-  border: solid 1px rgb(77, 182, 172);
   font-size: 20px;
   transition: 0.3s;
-  border-radius: 100%;
-  background-color: transparent;;
-  height: 65px;
-  width: 65px;
-  font-size: 30px;
+  border-radius: 45px;
+  height: auto;
+  font-size: 20px;
 }
 .generalRoundButton:hover {
   //box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-}
-
-#statutDisplay {
-  display:none;
-  position: absolute;
-  bottom: 7em;
-  height: auto;
-  width: 50%;
 }
 
 

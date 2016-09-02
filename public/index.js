@@ -1,6 +1,8 @@
-var urlG = "http://82.239.100.156:8000";
+//var urlG = "http://82.239.100.156:8000";
+var urlG = "http://127.0.0.1:8000";
 
 $( document ).ready(function() {
+  $('#addButton').transition({x:'+20px'});
   //quand prêt, request 5 dernières lignes de DB par ajax.
 var postData = 10; //Changé...
   $.ajax({
@@ -15,23 +17,31 @@ var postData = 10; //Changé...
           console.log(responseData[i]);
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
-
         } //fin du for
         $('.responsive').click(function() {
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
           $(location).attr('href', urlG + '/focus/' + idSvnrDB);
         });
-
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(textStatus + ", " + errorThrown, "red");
       }
     }); //ajax
-});//ready
 
-$("#titreHeader").click(function() {
-  $(location).attr('href', urlG);
-});
+    //================SOCKET.IO==========
+    var socket = io.connect('http://127.0.0.1:8080');
+    socket.emit('lol', {my : 'data'});
+    socket.on('FileUploaded', function(state) {
+      //alert('file' + state);
+      $('#addButton').css('color', 'white');
+      $('#addButton').css('background-color', '#4CAF50');
+      setTimeout(function() {
+        $('#addButton').css('color', 'rgba(255, 255, 255, 0.7)');
+        $('#addButton').css('background-color', 'transparent');
+      }, 600);
+    });
+
+});//ready
 
 //Déclare la fonctionnalité d'ouverture de la carte en focus
 function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
@@ -49,17 +59,8 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
     //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
     + '</div></div></div>'
   );
-  // Bug du click pour focus semble réparé('#Card') -> (".responsive")
-  // $('.responsive').click(function() {
-  //   alert("click fct");
-  //   var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-  //   $(location).attr('href', urlG + '/focus/' + idSvnrDB);
-  // });
 };
 
-$("#addButton").click(function() {
-  $(location).attr('href', urlG + '/new');
-});
 
 //================HEADER===============
 //Reduce header au scroll
@@ -72,6 +73,43 @@ $(window).scroll(function() {
     $('#titreHeader, #searchBox').css('margin', "15px 0 7px 0");
   }
 });
+$("#titreHeader").click(function() {
+  $(location).attr('href', urlG);
+});
+
+//================PIED===============
+$("#buttDivFixed").focusin(function() {
+  buttDivOpen1();
+});
+$("#buttDivFixed").focusout(function() {
+  buttDivClose()
+});
+$("#validButtDiv").click(function() {
+  buttDivClose()
+});
+
+function buttDivOpen1 () {
+$('#buttDivFixed').transition({y:'-40px'});
+$('#addButton').transition({x:'-20px'});
+$('#validButtDiv, #plusButtDiv').transition({ opacity: 1 });
+}
+function buttDivClose () {
+  $('#buttDivFixed').transition({y:'0px'});
+  $('#addButton').transition({x:'+20px'});
+  $('#validButtDiv, #plusButtDiv').transition({ opacity: 0 });
+}
+
+$("#userPhoto").change(function(){
+    $('#fileUpForm').submit();
+});
+
+
+
+
+
+// $("#addButton").click(function() {
+//   $(location).attr('href', urlG + '/new');
+// });
 
 //Focus = agrandissement de la barre de recherche + enter to submit
 // $("#searchBox").focusin(function() {
