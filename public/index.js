@@ -1,5 +1,5 @@
-//var urlG = "http://82.239.100.156:8000";
-var urlG = "http://127.0.0.1:8000";
+var urlG = "http://82.239.100.156:8000";
+//var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
 
 $( document ).ready(function() {
   $('#addButton').transition({x:'+20px'});
@@ -29,7 +29,7 @@ var postData = 10; //Changé...
     }); //ajax
 
     //================SOCKET.IO==========
-    var socket = io.connect('http://127.0.0.1:8080');
+    var socket = io.connect('http://82.239.100.156:8080');
     socket.emit('lol', {my : 'data'});
     socket.on('FileUploaded', function(state) {
       //alert('file' + state);

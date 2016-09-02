@@ -4,8 +4,8 @@
 // init project OK
 require('dotenv').config();
 
-//var urlG = "http://82.239.100.156:8000";
-var urlG = "http://127.0.0.1:8000";
+var urlG = "http://82.239.100.156:8000";
+//var urlG = "http://127.0.0.1:8000";
 
 var express = require('express');
 var server = require('http').createServer(app); //Semble inutile
