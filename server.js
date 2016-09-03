@@ -8,13 +8,49 @@ var urlG = "http://82.239.100.156:8000";
 //var urlG = "http://127.0.0.1:8000";
 
 var express = require('express');
+var app = express();
 var server = require('http').createServer(app); //Semble inutile
 var bodyParser = require('body-parser');
 var url = require("url");
 var pg = require('pg');
 
-var app = express();
+var session = require('express-session'); //ADDED
 
+
+app.use(express.static('public'));
+// app.use(express.static(__dirname +'/node_modules/socket.io/node_modules/socket.io-client'));
+app.use(express.static(__dirname + '/stockageLocal'))
+app.set('view engine', 'ejs');
+
+
+//TEST----TEST----TEST----TEST----
+
+
+app.use(session({secret: 'ssshhhhh'})); //ADDED
+app.use(bodyParser.json());             //ADDED
+app.use(bodyParser.urlencoded({extended:true}));  //ADDED
+
+var sess;
+// Chargement de la page index
+app.get("/", function (req, res) {
+  sess=req.session;
+if(sess.email){
+  res.sendFile(__dirname + '/views/index.html');
+}else {
+  res.sendFile(__dirname + '/views/signin.html');
+}
+  console.log("____Page index chargée - ID : " + sess.email);
+});
+
+app.post('/signin',function(req,res){
+  sess = req.session;
+//In this we are assigning email to sess.email variable.
+//email comes from HTML page.
+  sess.email=req.body.email;
+  res.end('done');
+});
+
+//TEST----TEST----TEST----TEST----over
 
 //Upload de fichiers
 var multer  =   require('multer');
@@ -32,11 +68,6 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 var idSvnrDB; //id du souvenir
 var idFile; //id de l'image après réception et enregistrement
-
-app.use(express.static('public'));
-// app.use(express.static(__dirname +'/node_modules/socket.io/node_modules/socket.io-client'));
-app.use(express.static(__dirname + '/stockageLocal'))
-app.set('view engine', 'ejs');
 
 
 //=====================SOCKET.IO================
@@ -69,10 +100,6 @@ client.connect(function(err) {
     //client.end();
 });
 
-// Chargement de la page index
-app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/index.html');
-});
 
 app.post('/searchbytag',function(request,response){
   var researchedTag = request.body.searchText;
@@ -158,12 +185,12 @@ app.post('/new/uploadReste', urlencodedParser, function(req, res) {
   storageDB(req.body.titreSvnr, req.body.lieuSvnr, idFile, req.body.typeSvnr,
     req.body.date1, req.body.date2, req.body.comments, req.body.hashtags,
     req.body.presentFriends, req.body.sharedFriends, req.body.linkedToId,
-    0); //rating = 0 car desactivé
+    sess.email); //rating = 0 car desactivé
   //Doit incorporer ces données + idSvnrDB + idFile
   console.log("Données reçues : " + req.body.titreSvnr, req.body.lieuSvnr, idFile, req.body.typeSvnr,
     req.body.date1, req.body.date2, req.body.comments, req.body.hashtags,
     req.body.presentFriends, req.body.sharedFriends, req.body.linkedToId,
-    0);
+    sess.email);
 
     client.query("SELECT * FROM version1 ORDER BY idsvnrdb DESC LIMIT 10",
     function(err, result) {
