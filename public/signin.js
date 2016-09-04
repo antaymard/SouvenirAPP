@@ -37,8 +37,7 @@ $(document).ready(function(){
             {
                 window.location.href="/";
             } else {alert("PB d'authentification. Pas de réponse favorable du serveur");}
-            }
-        });
+            });
     });
 });
 
