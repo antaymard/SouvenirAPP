@@ -28,16 +28,15 @@ $(document).ready(function(){
         if (isNaN(email)==true) {
           alert('invalid user name');
           window.location.href="/";
-        } else {
-        /*
-        * Perform some validation here.
-        */
+        }
+        else {
         $.post("/signin",{email:email,pass:pass},function(data){
             if(data==='done')
             {
                 window.location.href="/";
-            } else {alert("PB d'authentification. Pas de réponse favorable du serveur");}
-            });
+            }
+        });
+      };
     });
 });
 
