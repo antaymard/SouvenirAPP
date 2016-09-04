@@ -1,5 +1,5 @@
 var urlG = "http://82.239.100.156:8000";
-//var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
+// var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
 
 $( document ).ready(function() {
   $('#addButton').transition({x:'+20px'});
@@ -17,7 +17,7 @@ var postData = 10; //Changé...
         for (i in responseData) {
           // console.log(responseData[i]);
         displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
-              responseData[i].lieu, responseData[i].date1, responseData[i].idfile);
+              responseData[i].lieu, responseData[i].date1, responseData[i].idfile, responseData[i].hour);
         } //fin du for
         $('.responsive').click(function() {
           var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
@@ -44,9 +44,9 @@ var postData = 10; //Changé...
 });//ready
 
 //Déclare la fonctionnalité d'ouverture de la carte en focus
-function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
+function displayNewCard(idsvnrdb, titre, lieu, date, idFile, hour) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
-  $("#bodyGlobal").append('<div class="responsive" id="Card">'
+  $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
     + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
     + '<div class="img"><img id="img1" src="' + urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
     + '<div class="desc">'
@@ -55,12 +55,16 @@ function displayNewCard(idsvnrdb, titre, lieu, date, idFile) {
     + '<p class="titreDesc">Lieu</p>'
     + '<p class="titre" id="titre">' + lieu + '</p>'
     + '<p class="titreDesc">Date</p>'
-    + '<p class="lieu" id="lieu">' + date + '</p>'
+    + '<p class="lieu" id="lieu">' + date + ' at ' + hour + '</p>'
     //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
     + '</div></div></div>'
   );
 };
 
+$('#logoutButton').click(function(){
+  $(location).attr('href', urlG + '/logout');
+  console.log('click');
+});
 
 //================HEADER===============
 //Reduce header au scroll

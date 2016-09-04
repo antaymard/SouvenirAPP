@@ -4,8 +4,8 @@
 // init project OK
 require('dotenv').config();
 
-//var urlG = "http://82.239.100.156:8000";
-//var urlG = "http://127.0.0.1:8000";
+var urlG = "http://82.239.100.156:8000";
+// var urlG = "http://127.0.0.1:8000";
 
 var express = require('express');
 var app = express();
@@ -48,6 +48,16 @@ app.post('/signin',function(req,res){
 //email comes from HTML page.
   sess.email=req.body.email;
   res.end('done');
+});
+
+app.get('/logout',function(req,res){
+req.session.destroy(function(err) {
+  if(err) {
+    console.log(err);
+  } else {
+    res.redirect('/');
+  }
+});
 });
 
 //TEST----TEST----TEST----TEST----over
@@ -108,13 +118,15 @@ app.post('/searchbytag',function(request,response){
 
 app.post('/recall',function(req,res){
   //recall des 10 derniers souvenirs from DB
-  client.query("SELECT * FROM version1 ORDER BY idsvnrdb DESC LIMIT 10",
+  client.query("SELECT * FROM version1 WHERE rating='" + sess.email + "' ORDER BY idsvnrdb DESC LIMIT 10",
   function(err, result) {
     if(err) {
       console.log("X-------erreur DB recall 10 last" + err);
     }
     console.log("____Recall OK");
+    if (result){
     res.json(result.rows);
+    }
   });
 });
 
@@ -135,9 +147,7 @@ app.get('/focus/:idSvnr', function(req, res) {
       // res.json(result.rows);
       // idfile = result.idfile; ???
       //Render le ejs avec les datas = appliquer les variables changées
-if (date1) {
       var date1 = result.date1.toGMTString().slice(0, -13) //enlève la fin de la date (GMT)
-    };//console.log(result.);
 
       //individualiser les hashtags
       // var hashtags = result.hashtags.split(', ');
@@ -154,7 +164,8 @@ if (result) {
         hashtags: result.hashtags,
         presentfriends: result.presentfriends,
         sharedfriends: result.sharedfriends,
-        linkedtoid: result.linkedtoid
+        linkedtoid: result.linkedtoid,
+        hour: result.hour
         //ajouter les variables obtenues par la DB !
       });//res.render
       };
@@ -207,7 +218,7 @@ app.post('/new/uploadReste', urlencodedParser, function(req, res) {
 var today;
 function getToday() {
 today = new Date();
-var dd = today.getDate()+1;
+var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
 if(dd<10) {
@@ -220,6 +231,20 @@ today = yyyy + '-' + mm +'-' + dd;
 return today;
 };
 
+var now;
+function getNow() {
+  now = new Date();
+  var hh = now.getHours();
+  console.log(hh);
+  var min = now.getMinutes();
+  console.log(min);
+  var ss = now.getSeconds();
+  console.log(ss);
+  now = hh + ':' + min + ':' + ss;
+  console.log(now);
+  return now;
+}
+
 function storageDB(titre, lieu, idFile, typeSvnr, date1, date2, comments,
         hashtags, presentFriends, sharedFriends, linkedToId, rating) {
           var creationdate = getToday(); //récupérer la date du jour
@@ -229,7 +254,7 @@ function storageDB(titre, lieu, idFile, typeSvnr, date1, date2, comments,
           if (date2 == "") {
             date2 = getToday();
           }
-          hour = "00:00:00";
+          hour = getNow();
           linkedToId = 0; //non fonctionnel
           //idFile = 123;
   client.query("INSERT INTO  version1 (titre, lieu, idfile,"
@@ -289,7 +314,7 @@ function storageDB(titre, lieu, idFile, typeSvnr, date1, date2, comments,
 //test
 app.get('/lol', function (req, res) {
   res.send('GET request to homepage');
-})
+});
 
 // listen for requests OK
 var listener = app.listen(8000, function () {
