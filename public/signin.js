@@ -28,7 +28,7 @@ $(document).ready(function(){
         if (isNaN(email)==true) {
           alert('invalid user name');
           window.location.href="/";
-        }
+        } else {
         /*
         * Perform some validation here.
         */
@@ -36,6 +36,7 @@ $(document).ready(function(){
             if(data==='done')
             {
                 window.location.href="/";
+            } else {alert("PB d'authentification. Pas de réponse favorable du serveur");}
             }
         });
     });
