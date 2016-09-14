@@ -1,5 +1,5 @@
-var urlG = "http://82.239.100.156:8000";
-// var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
+// var urlG = "http://82.239.100.156:8000";
+var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
 
 $( document ).ready(function() {
   $('#addButton').transition({x:'+20px'});
@@ -16,7 +16,7 @@ var postData = 10; //Changé...
         var i;
         for (i in responseData) {
           // console.log(responseData[i]);
-        displayNewCard(responseData[i].idsvnrdb, responseData[i].titre,
+        displayNewCard(responseData[i].idsvnr, responseData[i].titre,
               responseData[i].lieu, responseData[i].date1, responseData[i].idfile, responseData[i].hour);
         } //fin du for
         $('.responsive').click(function() {
@@ -25,12 +25,12 @@ var postData = 10; //Changé...
         });
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        alert(textStatus + ", " + errorThrown, "red");
+        alert('pb de recall' + textStatus + ", " + errorThrown, "red");
       }
     }); //ajax
 
     //================SOCKET.IO==========
-    var socket = io.connect('http://82.239.100.156:8080'); //A changer ici aussi !!!
+    var socket = io.connect('http://127.0.0.1:8080'); //A changer ici aussi !!!
     socket.emit('lol', {my : 'data'});
     socket.on('FileUploaded', function(state) {
       $('#addButton').css('color', 'white');
@@ -44,10 +44,10 @@ var postData = 10; //Changé...
 });//ready
 
 //Déclare la fonctionnalité d'ouverture de la carte en focus
-function displayNewCard(idsvnrdb, titre, lieu, date, idFile, hour) {
+function displayNewCard(idsvnr, titre, lieu, date, idFile, hour) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
   $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
-    + '<div class="svnrNumberDisplay">' + idsvnrdb + '</div>'
+    + '<div class="svnrNumberDisplay">' + idsvnr + '</div>'
     + '<div class="img"><img id="img1" src="' + urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
     + '<div class="desc">'
     + '<p class="titreDesc">Titre</p>'
@@ -152,18 +152,6 @@ $("#validButtDiv").click(function() {
 });
 
 //=============================Geolocalisation===============
-var x = document.getElementById("target");
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude +
-    "<br>Longitude: " + position.coords.longitude;
-}
 
 
 // $("#addButton").click(function() {

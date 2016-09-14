@@ -1,0 +1,53 @@
+#title {
+  font-size: 70px;
+  text-align: center;
+  color: white;
+  margin-bottom: -30px;
+}
+
+#logo {
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-bottom: -70px;
+}
+
+body {
+  background: #199894;
+  margin: 0px;
+  height: 4500px;
+}
+
+#bodyG {
+  height: auto;
+  margin: 3em auto;
+  max-width: 90em;
+  //height:1500px;
+  /*background-color: grey;*/
+}
+
+.col-xs-6 {
+  margin-left: -15px;
+}
+
+#formleft {
+  padding-right: 45px;
+}
+
+input {
+  margin-bottom: 9px;
+}
+
+#divForm {
+  position: fixed;
+  margin-top: 50px;
+}
+#divstate {
+  margin-top: 10px;
+  margin-bottom: -2px;
+}
+
+h2 {
+  color: white;
+}

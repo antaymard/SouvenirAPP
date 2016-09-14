@@ -1,0 +1,63 @@
+body {
+  background: #199894;
+  margin: 0px;
+}
+
+
+#bodyLogin {
+  /*background-color: grey;*/
+  max-width: 50em;
+  width: auto;
+  margin: auto;
+  max-height: 80em;
+  margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+  transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+}
+
+#firstDiv {
+  height: 50vh;
+  /*background-color: blue;*/
+  min-height: 300px;
+  /*margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */*/
+
+}
+
+#logo {
+  margin-top: -40px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-bottom: -70px;
+}
+
+.form-control {
+  margin: 5px 0 5px 0;
+}
+
+.btn {
+  width: 100%;
+  margin-top: -10px;
+}
+
+#title {
+  font-size: 70px;
+  text-align: center;
+  color: white;
+  margin-bottom: -30px;
+}
+
+.bigMargin {
+  margin: 3em auto;
+  max-width: 20em;
+}
+
+#explainBody {
+  max-width: 50em;
+  margin: 0px auto;
+  /*background-color: grey;*/
+}
+
+#state {
+  margin-top : 15px;
+  opacity: 0;
+}
