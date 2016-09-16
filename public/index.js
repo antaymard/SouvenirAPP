@@ -1,5 +1,5 @@
-// var urlG = "http://82.239.100.156:8000";
-var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
+var urlG = "http://82.239.100.156:8000";
+// var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
 
 $( document ).ready(function() {
   $('#addButton').transition({x:'+20px'});
@@ -30,7 +30,7 @@ var postData = 10; //Changé...
     }); //ajax
 
     //================SOCKET.IO==========
-    var socket = io.connect('http://127.0.0.1:8080'); //A changer ici aussi !!!
+    var socket = io.connect('http://82.239.100.156:8080'); //A changer ici aussi !!!
     socket.emit('lol', {my : 'data'});
     socket.on('FileUploaded', function(state) {
       $('#addButton').css('color', 'white');
@@ -68,15 +68,15 @@ $('#logoutButton').click(function(){
 
 //================HEADER===============
 //Reduce header au scroll
-$(window).scroll(function() {
-  if ($(document).scrollTop() > 30) {
-    $('#titreHeader, #searchBox').css('font-size', "15px");
-    $('#titreHeader, #searchBox').css('margin', "3px 0 2px 0");
-  } else {
-    $('#titreHeader, #searchBox').css('font-size', "22px");
-    $('#titreHeader, #searchBox').css('margin', "15px 0 7px 0");
-  }
-});
+// $(window).scroll(function() {
+//   if ($(document).scrollTop() > 30) {
+//     $('#titreHeader, #searchBox').css('font-size', "15px");
+//     $('#titreHeader, #searchBox').css('margin', "3px 0 2px 0");
+//   } else {
+//     $('#titreHeader, #searchBox').css('font-size', "22px");
+//     $('#titreHeader, #searchBox').css('margin', "15px 0 7px 0");
+//   }
+// });
 $("#titreHeader").click(function() {
   $(location).attr('href', urlG);
 });

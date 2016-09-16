@@ -4,8 +4,8 @@
 // init project OK
 require('dotenv').config();
 
-// var urlG = "http://82.239.100.156:8000";
-var urlG = "http://127.0.0.1:8000";
+var urlG = "http://82.239.100.156:8000";
+// var urlG = "http://127.0.0.1:8000";
 
 var express = require('express');
 var app = express();
@@ -21,6 +21,7 @@ app.use(express.static('public'));
 // app.use(express.static(__dirname +'/node_modules/socket.io/node_modules/socket.io-client'));
 app.use(express.static(__dirname + '/stockageLocal'));
 app.use(express.static(__dirname + '/SiteSrc'));
+app.use(express.static(__dirname + '/stockageUser'));
 app.set('view engine', 'ejs');
 
 
@@ -32,15 +33,34 @@ app.use(bodyParser.json());             //ADDED
 app.use(bodyParser.urlencoded({extended:true}));  //ADDED
 
 var sess;
+var profileNom, profilePseudo, profilePNom;
 // Chargement de la page index
 app.get("/", function (req, res) {
   sess = req.session;
+  client.query("SELECT * FROM userdb WHERE userid='" + sess.userid + "'", function(err, result) {
+    if(err) {
+      return console.error('PB Check pseudo', err);
+    }
+    if(result.rows[0]) {
+      userphotoid = result.rows[0].userphotoid;
+      profilePseudo = result.rows[0].username;
+      profileNom = result.rows[0].nom;
+      profilePNom = result.rows[0].prenom;
+      console.log(profilePNom);
+    }
+  });
 if(sess.username){
   res.sendFile(__dirname + '/views/index.html');
+  // res.render('ejs/index', {
+  //   userphotoid : userphotoid,
+  //   profilePseudo : profilePseudo,
+  //   profileNom : profileNom,
+  //   profilePNom : profilePNom
+  // });
+  console.log("____Page index chargée - ID : " + sess.username);
 }else {
   res.sendFile(__dirname + '/views/login.html');
 }
-  console.log("____Page index chargée - ID : " + sess.username);
 });
 
 app.post('/login',function(req,response){
@@ -193,6 +213,7 @@ var upload = multer({ storage : storage}).single('userPhoto');
 
 var idSvnrDB; //id du souvenir
 var idFile; //id de l'image après réception et enregistrement
+var userphotoid;
 
 
 //=====================SOCKET.IO================
@@ -295,6 +316,10 @@ if (result.iduser == sess.userid) {
 
 app.get('/new', function(req, res) {
   res.sendFile(__dirname + '/views/new.html');
+});
+
+app.get('/profile', function(req, res) {
+  res.render('ejs/profile', {})
 });
 
 app.post('/new/uploadFile',function(req,res){

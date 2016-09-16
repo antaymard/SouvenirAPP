@@ -3,7 +3,9 @@
 
 #bodyGlobal {
   height: auto;
-  margin: 3em auto;
+  margin-left: 300px;
+  margin-top: 60px;
+  padding-left: 15px;
   max-width: 50em;
   //height:1500px;
 }
