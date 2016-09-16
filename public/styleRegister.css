@@ -16,7 +16,8 @@
 body {
   background: #199894;
   margin: 0px;
-  height: 4500px;
+  height: auto;
+  width: 100%;
 }
 
 #bodyG {
@@ -40,7 +41,6 @@ input {
 }
 
 #divForm {
-  position: fixed;
   margin-top: 50px;
 }
 #divstate {
