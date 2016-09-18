@@ -1,30 +1,40 @@
 #bodyGlobal {
-  height : 1500px;
+  /*height : 1500px;*/
 }
 
-#profilePic {
-  margin-top: 30px;
-}
-
-#sidebar {
-  position: fixed;
-  top: 0px; left: 0px; bottom: 0px;
-  width: 300px;
-  background-color: #232321;
-}
-
-#buttDivFixed {
+/*#buttDivFixed {
   position:fixed;
-  bottom: -340px;
+  bottom: 0px;
   max-width: 50em;
-  width: 100%;
-  height: 400px; /*60*/
+  width: 100%-300px;
+  height: 150px;
   background-color: #199894;
-  padding-top: 13px;
-  padding-left: 30px;
-  padding-right: 30px;
   border-top : 3px solid rgb(77, 182, 172);
   z-index: 45;
+}*/
+
+.floating-btn {
+  position: fixed;
+  bottom: 45px;
+  right: 45px;
+  background-color: #009688;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 20px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.floating-btn:hover {
+  background-color: #00796B;
+}
+
+
+#logoutButton {
+  position: absolute;
+  bottom: 15px;
 }
 
 #addButton {
@@ -109,11 +119,6 @@
   cursor: pointer;
 }
 
-div.img img {
-  width: 100%;
-  height: 40%;
-}
-
 div.desc {
   padding: 7px;
   text-align: left;
@@ -125,46 +130,59 @@ div.desc {
 }
 
 p.titre {
-  font-family: Arial;
-  float: ;
+  font-weight: 200;
+  font-size: 20px;
+  color: white;
+  margin-top: -45px;
+  padding-left: 5px;
 }
 
 p.lieu {
-  font-family: Arial;
   font-size: 15px;
   color: grey;
 }
 
 p.titreDesc {
-  font-family: Arial;
   font-size: 10px;
   color: #9E9E9E;
   margin: 0 0 -5px 0;
 }
 
-.responsive {
-  padding: 0px;
-  margin: 20px 5px 0 5px;
-  float: left;
-  width: 48.5%;
-  background: white;
-  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-  //transition-duration: 0.4s;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
+div.img img {
+  width: 100%;
+  object-fit: cover;
+  /*padding-right: 2.5px;*/
 }
 
-
-@media only screen and (max-width: 700px) {
-  .responsive{
-    width: 49.99999%;
-    margin: 6px 0;
+.responsive {
+  font-family: 'Roboto', sans-serif;
+  margin-left: 9px;
+  margin-right: auto;
+  margin-bottom: 9px;
+  height: 202px;
+  background: white;
+  border: 1px solid white;
+  border-radius: 2px;
+  float: left;
+  cursor: pointer;
+}
+.responsive:hover {
+  opacity: 0.8;
+  transition-duration: 0.5s;
+}
+@media screen and (max-width: 1900px) {
+  .responsive {
+    width : 23%;
   }
 }
-
-@media only screen and (max-width: 500px) {
+@media screen and (max-width: 900px) {
   .responsive {
-    width: 99%;
+    width : 48%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .responsive {
+    width : 96%;
   }
 }
 
@@ -178,3 +196,5 @@ p.titreDesc {
   width:100%;
   height: 30px;
 }
+
+//Freewall

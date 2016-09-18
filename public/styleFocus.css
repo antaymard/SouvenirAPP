@@ -49,6 +49,8 @@ body {
 
 #supprButton {
   float: right;
+  margin-bottom: 15px;
+  
 }
 
 @media only screen and (max-width: 800px) {

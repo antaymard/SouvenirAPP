@@ -22,7 +22,7 @@ $("input").keypress(function(event) {
 });
 
 function submitForm () {
-  username=$("#username").val();
+  username=$("#username").val().toUpperCase();
   pwd=$("#password").val();
 
   if (!pwd) {

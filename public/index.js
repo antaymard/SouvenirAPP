@@ -1,11 +1,11 @@
 var urlG = "http://82.239.100.156:8000";
-// var urlG = "http://127.0.0.1:8000";     //+ io.connect !!!
 
 $( document ).ready(function() {
   $('#addButton').transition({x:'+20px'});
   $('#plusButtDiv').transition({ rotate: '180deg' });
   //quand prêt, request 5 dernières lignes de DB par ajax.
 var postData = 10; //Changé...
+
   $.ajax({
       type: "post",
       url: urlG + "/recall",
@@ -30,36 +30,40 @@ var postData = 10; //Changé...
     }); //ajax
 
     //================SOCKET.IO==========
-    var socket = io.connect('http://82.239.100.156:8080'); //A changer ici aussi !!!
-    socket.emit('lol', {my : 'data'});
-    socket.on('FileUploaded', function(state) {
-      $('#addButton').css('color', 'white');
-      $('#addButton').css('background-color', '#4CAF50');
-      setTimeout(function() {
-        $('#addButton').css('color', 'rgba(255, 255, 255, 0.7)');
-        $('#addButton').css('background-color', 'transparent');
-      }, 600);
-    });
+    // var socket = io.connect('http://82.239.100.156:8080'); //A changer ici aussi !!!
+    // socket.emit('lol', {my : 'data'});
+    // socket.on('FileUploaded', function(state) {
+    //   $('#addButton').css('color', 'white');
+    //   $('#addButton').css('background-color', '#4CAF50');
+    //   setTimeout(function() {
+    //     $('#addButton').css('color', 'rgba(255, 255, 255, 0.7)');
+    //     $('#addButton').css('background-color', 'transparent');
+    //   }, 600);
+    // });
 
 });//ready
 
-//Déclare la fonctionnalité d'ouverture de la carte en focus
+// Déclare la fonctionnalité d'ouverture de la carte en focus
 function displayNewCard(idsvnr, titre, lieu, date, idFile, hour) {
   var date = date.slice(0, -14); //enlève la fin de la date (GMT)
-  $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
+  $(".grid").append('<div class="responsive" id="card">'
     + '<div class="svnrNumberDisplay">' + idsvnr + '</div>'
     + '<div class="img"><img id="img1" src="' + urlG + '/' + idFile + '" alt="Votre image" width="300" height="200">'
     + '<div class="desc">'
-    + '<p class="titreDesc">Titre</p>'
     + '<p class="titre">' + titre + '</p>'
-    + '<p class="titreDesc">Lieu</p>'
-    + '<p class="titre" id="titre">' + lieu + '</p>'
-    + '<p class="titreDesc">Date</p>'
-    + '<p class="lieu" id="lieu">' + date + ' at ' + hour + '</p>'
+    // + '<p class="titreDesc">Lieu</p>'
+    // + '<p class="titre" id="titre">' + lieu + '</p>'
+    // + '<p class="titreDesc">Date</p>'
+    // + '<p class="lieu" id="lieu">' + date + ' at ' + hour + '</p>'
     //+ '<button id="focusButton" type="button" class="btn btn-warning">Focus</button>'
-    + '</div></div></div>'
+    // + '</div>'
+    + '</div></div>'
   );
 };
+
+$(".floating-btn").click(function(){
+  $(location).attr('href', urlG + '/new');
+});
 
 $('#logoutButton').click(function(){
   $(location).attr('href', urlG + '/logout');
@@ -174,7 +178,7 @@ $("#validButtDiv").click(function() {
 //     // alert(searchData + ' / ' + typeof searchData);
 //     // $.ajax({
 //       //   type: "post",
-//       //   url: "http://127.0.0.1:8000/searchbytag",
+//       //   url: "http://82.239.100.156:8000/searchbytag",
 //       //   //contentType: "text/plain",
 //       //   data: "data is" + searchData,
 //       //   success: function(responseData, textStatus, jqXHR) {
@@ -185,7 +189,7 @@ $("#validButtDiv").click(function() {
 //       //     //Déclare la fonctionnalité d'ouverture de la carte en focus
 //       //     $('#Card').click(function() {
 //       //       var idSvnrDB = $(this).children(".svnrNumberDisplay").text();
-//       //       $(location).attr('href', 'http://127.0.0.1:8000/focus/' + idSvnrDB);
+//       //       $(location).attr('href', 'http://82.239.100.156:8000/focus/' + idSvnrDB);
 //       //     });
 //       //   },
 //       //   error: function(jqXHR, textStatus, errorThrown) {
@@ -224,7 +228,7 @@ $("#validButtDiv").click(function() {
 //   display(){
 //     $("#bodyGlobal").prepend('<div class="responsive" id="Card">'
 //     + '<div class="svnrNumberDisplay">#' + cardSvnr.idsvnrdb + '</div>'
-//     + '<div class="img"><img id="img1" src="http://127.0.0.1:8000/' + idFile + '" alt="Votre image" width="300" height="200">'
+//     + '<div class="img"><img id="img1" src="http://82.239.100.156:8000/' + idFile + '" alt="Votre image" width="300" height="200">'
 //     + '<div class="desc">'
 //     + '<p class="titreDesc">titre</p>'
 //     + '<p class="titre">' + cardSvnr.titre + '</p>'

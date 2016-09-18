@@ -16,7 +16,7 @@ $('#pseudo').focusout(function(){
   $('#pseudo').prop('title', '');
   ch=0;
 
-  pseudo = $("#pseudo").val();
+  pseudo = $("#pseudo").val().toUpperCase();
     $.post("/register/checkpseudo",{pseudo:pseudo},function(data){
       if(data==='match') {
         console.log('match');
@@ -57,18 +57,16 @@ function alertRegister (state, mes1, mes2) {
 
 
 function submitForm () {
-  var prenom = $("#prenom").val();
-  var nom = $("#nom").val();
-  var email1 = $("#email1").val();
-  var email2 = $("#email2").val();
-  pseudo = $("#pseudo").val();
-  var pwd1 = $("#pwd1").val();
+  var prenom = $("#prenom").val().toUpperCase();
+  var nom = $("#nom").val().toUpperCase();
+  var email2 = $("#email2").val().toUpperCase();
+  pseudo = $("#pseudo").val().toUpperCase();
   var pwd2 = $("#pwd2").val();
   var datebirth = $("#datebirth").val();
   var gender = $('input[name=gender]:checked').val();
 
-  if (prenom && nom && email1 && email2 && pseudo && pwd1 && pwd2 && datebirth && gender && ch==1 && email1==email2 && pwd1==pwd2) {
-    $.post("/register/new",{prenom:prenom, nom:nom, email:email1, pseudo:pseudo, pwd:pwd1, datebirth:datebirth, gender:gender},function(data){
+  if (prenom && nom && email2 && pseudo && pwd2 && datebirth && gender && ch==1) {
+    $.post("/register/new",{prenom:prenom, nom:nom, email:email2, pseudo:pseudo, pwd:pwd2, datebirth:datebirth, gender:gender},function(data){
       if(data==='done') {
         console.log('done user inscrit');
         window.location = '/';
@@ -77,14 +75,8 @@ function submitForm () {
       }
   });
 }
-if (!prenom || !nom || !email1 || !email2 || !pseudo || !pwd1 || !pwd2 || !datebirth || !gender) {
+if (!prenom || !nom || !email2 || !pseudo || !pwd2 || !datebirth || !gender) {
   alertRegister('danger', 'Attention ! ', 'Veuillez remplir tous les champs.');
-}
-if (email1!==email2) {
-  alertRegister('danger', 'Attention ! ', 'Emails différents.');
-}
-if (pwd1!==pwd2) {
-  alertRegister('danger', 'Attention ! ', 'Mots de passe différents.');
 }
 if (ch==0) {
   alertRegister('danger', 'Attention ! ', 'Pseudo déjà existant');

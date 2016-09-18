@@ -5,7 +5,6 @@
 require('dotenv').config();
 
 var urlG = "http://82.239.100.156:8000";
-// var urlG = "http://127.0.0.1:8000";
 
 var express = require('express');
 var app = express();
@@ -13,6 +12,7 @@ var server = require('http').createServer(app); //Semble inutile
 var bodyParser = require('body-parser');
 var url = require("url");
 var pg = require('pg');
+var colors = require('colors');
 
 var session = require('express-session'); //ADDED
 
@@ -37,9 +37,10 @@ var profileNom, profilePseudo, profilePNom;
 // Chargement de la page index
 app.get("/", function (req, res) {
   sess = req.session;
+if(sess.username){
   client.query("SELECT * FROM userdb WHERE userid='" + sess.userid + "'", function(err, result) {
     if(err) {
-      return console.error('PB Check pseudo', err);
+      return console.error('PB Check pseudo'.red, err);
     }
     if(result.rows[0]) {
       userphotoid = result.rows[0].userphotoid;
@@ -47,17 +48,16 @@ app.get("/", function (req, res) {
       profileNom = result.rows[0].nom;
       profilePNom = result.rows[0].prenom;
       console.log(profilePNom);
+      res.render('ejs/index', {
+        userphotoid : userphotoid,
+        profilePseudo : profilePseudo,
+        profileNom : profileNom,
+        profilePNom : profilePNom
+      });
     }
   });
-if(sess.username){
-  res.sendFile(__dirname + '/views/index.html');
-  // res.render('ejs/index', {
-  //   userphotoid : userphotoid,
-  //   profilePseudo : profilePseudo,
-  //   profileNom : profileNom,
-  //   profilePNom : profilePNom
-  // });
-  console.log("____Page index chargée - ID : " + sess.username);
+  // res.sendFile(__dirname + '/views/index.html');
+  console.log("____Page index chargée - ID : ".green + sess.username);
 }else {
   res.sendFile(__dirname + '/views/login.html');
 }
@@ -69,13 +69,13 @@ app.post('/login',function(req,response){
 //email comes from HTML page.
   client.query("SELECT * FROM userdb WHERE username='" + req.body.username + "'", function(err, res) {
     if(err) {
-      return console.error('PB recall userdb', err);
+      return console.error('PB recall userdb'.red, err);
     }
     if(res.rows.length > 1) {
     console.log("problème : il y a " + res.rows.length + ' profil qui correspondent à ' + res.rows[0].username);
     }
     if(!res.rows[0]) {
-      console.log('no match');
+      console.log('no match'.red);
       response.end('no match');
     }
     if(res.rows[0]) {
@@ -118,7 +118,7 @@ app.post('/register/new', function (req,res) {
   + getToday() + "')",
   function(err, result) {
     if(err) {
-      console.log('pb inscription user dans userdb', err);
+      console.log('pb inscription user dans userdb'.red + err);
     }
     res.end('done');
   })
@@ -128,7 +128,7 @@ app.post('/register/checkpseudo', function (req,res) {
   var pseudo = req.body.pseudo;
   client.query("SELECT * FROM userdb WHERE username='" + pseudo + "'", function(err, result) {
     if(err) {
-      return console.error('PB Check pseudo', err);
+      return console.error('PB Check pseudo'.red, err);
     }
     if (result.rows[0]) {
       res.end('match');
@@ -157,7 +157,7 @@ app.get("/changelog", function (req, res) {
   client.query("SELECT COUNT(*) FROM userdb",
   function(err, result) {
     if(err) {
-      console.log("Erreur compte d'userdb" + err);
+      console.log("Erreur compte d'userdb".red + err);
     }
     if (result){
       usernb = result.rows[0].count;
@@ -166,7 +166,7 @@ app.get("/changelog", function (req, res) {
     client.query("SELECT COUNT(*) FROM version2",
     function(err, result) {
       if(err) {
-        console.log("Erreur compte de svnr" + err);
+        console.log("Erreur compte de svnr".red + err);
       }
       if (result){
         svnrnb = result.rows[0].count;
@@ -206,7 +206,7 @@ var storage =   multer.diskStorage({
   filename: function (req, file, callback) {
     idFile = file.fieldname + '-' + Date.now() + '.jpg';
     callback(null, idFile);
-    console.log(idFile);
+    console.log("Fichier enregistré ".green + idFile);
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
@@ -233,14 +233,14 @@ var client = new pg.Client(conString);
 console.log(conString);
 client.connect(function(err) {
   if(err) {
-    return console.error('X-------could not connect to postgres', err);
+    return console.error('X-------could not connect to postgres'.red + err);
   }
-  console.log("____Connected to the database");
+  console.log("____Connected to the database".green);
   client.query('SELECT NOW() AS "theTime"', function(err, result) {
     if(err) {
-      return console.error('X----PB testDBQuery - ', err);
+      return console.error('X----PB testDBQuery - '.red + err);
     }
-    console.log("____testDBQuery - " + result.rows[0].theTime);
+    console.log("____testDBQuery - ".green + result.rows[0].theTime);
     //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
   });
     //client.end();
@@ -257,7 +257,7 @@ app.post('/recall',function(req,res){
   client.query("SELECT * FROM version2 WHERE iduser='" + sess.userid + "' ORDER BY idsvnr DESC LIMIT 10",
   function(err, result) {
     if(err) {
-      console.log("X-------erreur DB recall 10 last" + err);
+      console.log("X-------erreur DB recall 10 last".red + err);
     }
     console.log("____Recall OK");
     if (result){
@@ -276,43 +276,57 @@ app.get('/focus/:idSvnr', function(req, res) {
   client.query("SELECT * FROM version2 WHERE idsvnr='" + idSvnr + "'",
   function(err, result) {
     if(err) {
-      console.log("erreur récupération focus");
+      console.log("erreur récupération focus".red);
     }
+if (sess) {
+  if (result.rows[0]) {
+    result = result.rows[0];
+    //console.log(result.idfile);
+    // res.json(result.rows);
+    // idfile = result.idfile; ???
+    //Render le ejs avec les datas = appliquer les variables changées
+    var date1 = result.date1.toString().slice(0, -48) //enlève la fin de la date (GMT)
 
-    if (result.rows[0]) {
-      result = result.rows[0];
-      //console.log(result.idfile);
-      // res.json(result.rows);
-      // idfile = result.idfile; ???
-      //Render le ejs avec les datas = appliquer les variables changées
-      var date1 = result.date1.toString().slice(0, -48) //enlève la fin de la date (GMT)
-
-      //individualiser les hashtags
-      // var hashtags = result.hashtags.split(', ');
-      // console.log("#1" + hashtags[0]);
-      // console.log('#2' + hashtags[1]);
+    //individualiser les hashtags
+    // var hashtags = result.hashtags.split(', ');
+    // console.log("#1" + hashtags[0]);
+    // console.log('#2' + hashtags[1]);
 
 if (result.iduser == sess.userid) {
-      res.render('ejs/focus', {
-        idSvnr: idSvnr,
-        idfile: result.idfile,
-        titre: result.titre,
-        lieu: result.lieu,
-        date: date1,
-        comments: result.comments,
-        hashtags: result.hashtags,
-        presentfriends: result.presentfriends,
-        sharedfriends: result.sharedfriends,
-        linkedtoid: result.linkedtoid,
-        hour: result.hour
-        //ajouter les variables obtenues par la DB !
-      });//res.render
-      } else {
-        res.redirect('/');
-      }
-      }
+    res.render('ejs/focus', {
+      idSvnr: idSvnr,
+      idfile: result.idfile,
+      titre: result.titre,
+      lieu: result.lieu,
+      date: date1,
+      comments: result.comments,
+      hashtags: result.hashtags,
+      presentfriends: result.presentfriends,
+      sharedfriends: result.sharedfriends,
+      linkedtoid: result.linkedtoid,
+      hour: result.hour
+      //ajouter les variables obtenues par la DB !
+    });//res.render
+    } else {
+      res.redirect('/');
+    }
+    }
+}else{res.redirect('/');}
   }); //client
 }); //app.get
+
+app.get('/focus/:idSvnr/delete', function(req, res) {
+  var idSvnr = req.params.idSvnr;
+client.query("DELETE FROM version2 WHERE idsvnr='" + idSvnr + "'", function(err){
+  if (err) {
+    console.log('ERR de suppr de datas'.red + err);
+  } else {
+    console.log('suppression de souvenir ok'.green);
+    res.end('done');
+  }
+})
+});
+
 
 app.get('/new', function(req, res) {
   res.sendFile(__dirname + '/views/new.html');
@@ -325,11 +339,11 @@ app.get('/profile', function(req, res) {
 app.post('/new/uploadFile',function(req,res){
     upload(req,res,function(err) {
         if(err) {
-            return res.end("Error uploading file.");
+            return res.end("Error uploading file.".red);
         }
         //Reçoit le fichier, le nomme et l'enregistre.
         //idFile a normalement la valeur du nom du new file.
-        console.log("fichier uploadé - " + idFile);
+        console.log("fichier uploadé - ".green + idFile);
         io.emit('FileUploaded', 'ok');
     });
 });
@@ -337,6 +351,7 @@ app.post('/new/uploadFile',function(req,res){
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.post('/new/uploadReste', urlencodedParser, function(req, res) {
+  sess = req.session;
   //reçoit le reste des datas entrées.
  console.log("données formulaire 2.0 en reception");
   storageDB(sess.userid, req.body.titreSvnr, req.body.lieuSvnr, idFile, req.body.typeSvnr,
@@ -350,7 +365,7 @@ app.post('/new/uploadReste', urlencodedParser, function(req, res) {
     client.query("SELECT * FROM version2 ORDER BY idsvnr DESC LIMIT 10",
     function(err, result) {
       if(err) {
-        console.log("erreur DB recall 10 last après new");
+        console.log("erreur DB recall 10 last après new".red);
       }
       console.log("recall effectué après new");
       res.json(result.rows);
@@ -415,9 +430,9 @@ function storageDB(userid, titre, lieu, idFile, typeSvnr, date1, date2, comments
                         + " - type/dates : " + typeSvnr, date1, date2
                         + " - comments/hashtags : " + comments, hashtags
                         + " - social : " + presentFriends, sharedFriends, linkedToId);
-                return console.error('X----PB inscription des données dans BD : ', err);
+                return console.error('X----PB inscription des données dans BD : '.red, err);
               }
-              console.log("___Inscription des données dans DB ok");
+              console.log("___Inscription des données dans DB ok".green);
               console.log("datas DB " + "titre/lieu : " + titre, lieu, idFile
                       + " - type/dates : " + typeSvnr, date1, date2
                       + " - comments/hashtags : " + comments, hashtags
