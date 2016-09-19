@@ -1,38 +1,3 @@
-#bodyGlobal {
-  /*height : 1500px;*/
-}
-
-/*#buttDivFixed {
-  position:fixed;
-  bottom: 0px;
-  max-width: 50em;
-  width: 100%-300px;
-  height: 150px;
-  background-color: #199894;
-  border-top : 3px solid rgb(77, 182, 172);
-  z-index: 45;
-}*/
-
-/*.floating-btn {
-  position: fixed;
-  bottom: 45px;
-  right: 45px;
-  background-color: #009688;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  padding-top: 18px;
-  padding-left: 2px;
-  font-size: 25px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  color: white;
-}
-.floating-btn:hover {
-  background-color: #00796B;
-}*/
-
-
 #logoutButton {
   position: absolute;
   bottom: 15px;
@@ -59,48 +24,6 @@
    color: white;
    background-color: #00796B;
 }
-
-#validButtDiv {
-  color: rgba(255, 255, 255, 0.7);
-  border: solid 1px rgb(77, 182, 172);
-  background-color: transparent;
-  font-size: 20px;
-  transition: 0.3s;
-  border-radius: 100%;
-  height: auto;
-  width: 35px;
-  font-size: 20px;
-  text-align: center;
-  font-weight: lighter;
-  opacity: 0;
-  margin-bottom: 15px;
-}
-#validButtDiv:hover {
-   border: solid 1px #4CAF50;
-   color: white;
-   background-color: #4CAF50;
-}
-
-#plusButtDiv{
-  color: rgba(255, 255, 255, 0.7);
-  border: solid 1px rgb(77, 182, 172);
-  background-color: transparent;
-  font-size: 20px;
-  transition: 0.3s;
-  border-radius: 100%;
-  height: auto;
-  width: 35px;
-  font-size: 20px;
-  text-align: center;
-  font-weight: lighter;
-  opacity: 1;
-  margin-bottom: 15px;
-}
-#plusButtDiv:hover {
-  border: solid 1px white;
-  color: white;
-}
-
 
 #searchBox {
   width: 30px;

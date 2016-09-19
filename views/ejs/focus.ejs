@@ -40,16 +40,16 @@
    <div class="container-fluid">
      <div class="row row-eq-height">
        <div id="descriptionPanel" class="col-xs-6">
-         <p class="titre1"><span id='titre'><%= titre %></span></p>
-         <p class='titre2'><i id="icones" class="fa fa-map-marker" aria-hidden="true"></i><span id='lieu'><%= lieu %></span></p>
-         <p class="titre2"><i id="icones" class="fa fa-calendar" aria-hidden="true"></i><span id="date"><%= date %></span></p>
-         <p class="titre2"><i id="icones" class="fa fa-clock-o" aria-hidden="true"></i><span><%= hour %></span></p>
+         <p class="titre1"><%= titre %></p>
+         <p class='titre2'><i id="icones" class="fa fa-map-marker" aria-hidden="true"></i><%= lieu %></p>
+         <p class="titre2"><i id="icones" class="fa fa-calendar" aria-hidden="true"></i><%= date %></p>
+         <p class="titre2"><i id="icones" class="fa fa-clock-o" aria-hidden="true"></i><%= hour %></p>
          <p style="font-size: 10px">Souvenir id <%= idSvnr %></p>
        </div>
        <div id="socialPanel" class="col-xs-6" style="background-color:white;">
-         <p class="titre1"><span id='presentfriends'><%= presentfriends %></span></p>
-         <p class="titre2"><span id='sharedfriends'><%= sharedfriends %></span></p>
-         <p class="titre2"><span id='linkedtoid'><%= linkedtoid %></span></p>
+         <p class="titre1"><%= presentfriends %></p>
+         <p class="titre2"><%= sharedfriends %></p>
+         <p class="titre2"><%= linkedtoid %></p>
          <!-- <p>Views <span class="badge">5</span></p> -->
        </div>
 
@@ -60,7 +60,7 @@
      <div class="row">
        <div id="detailsPanel" class="col-sm-12" style="background-color:#404040;">
          <p class="titre1">Plus</p>
-         <p id='comments' class="titre2">Commentaires à venir...</p><br>
+         <p class="titre2">Commentaires à venir...</p><br>
          <p class="titre2" id="hashtagsPlace"><span class="badge" id='hashtagsSpan'>
            <%= hashtags %></span></p>
          </div>

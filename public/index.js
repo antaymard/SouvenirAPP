@@ -85,8 +85,22 @@ $('#logoutButton').click(function(){
 //     $('#titreHeader, #searchBox').css('margin', "15px 0 7px 0");
 //   }
 // });
-$("#titreHeader").click(function() {
+$("#target").click(function() {
   $(location).attr('href', urlG);
+});
+
+var h = 0;
+$('.fa-bars').click(function () {
+  switch (h) {
+    case 0:
+    $('#sidebar').transition({ x: '300px' });
+    h=1;
+      break;
+    case 1:
+    $('#sidebar').transition({ x: '0px' });
+    h=0;
+      break;
+  }
 });
 
 //================PIED===============
