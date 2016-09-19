@@ -336,6 +336,7 @@ app.post('/focus/:idSvnr/update', function(req, res) {
     if (err) {
       console.log('titre = ' +req.body.titre);
       console.log('error update '.red + err);
+      res.end('err');
     }
     else {
       console.log('update ok'.green);

@@ -75,7 +75,7 @@ $(document).on('blur','#txt_' + txt, function(){
 
     var date = $('#date').text();
     if (!date) {
-      refillEmpty('#date');
+      $("#date").html('1900-01-01');
     }
 
     $.post(window.location.pathname + "/update", {lieu:lieu, titre:titre, presentfriends:presentfriends, sharedfriends:sharedfriends, linkedtoid:linkedtoid, date:date}, function(data){
