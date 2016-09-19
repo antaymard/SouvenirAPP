@@ -13,7 +13,7 @@
   z-index: 45;
 }*/
 
-.floating-btn {
+/*.floating-btn {
   position: fixed;
   bottom: 45px;
   right: 45px;
@@ -21,15 +21,16 @@
   border-radius: 50%;
   width: 70px;
   height: 70px;
-  text-align: center;
-  padding-top: 20px;
-  font-size: 20px;
+  padding-top: 18px;
+  padding-left: 2px;
+  font-size: 25px;
   transition-duration: 0.4s;
   cursor: pointer;
+  color: white;
 }
 .floating-btn:hover {
   background-color: #00796B;
-}
+}*/
 
 
 #logoutButton {
@@ -38,24 +39,25 @@
 }
 
 #addButton {
-  color: rgba(255, 255, 255, 0.7);
-  border: solid 1px rgb(77, 182, 172);
-  font-size: 20px;
-  transition: 0.3s;
-  border-radius: 45px;
-  height: auto;
-  width: 120px;
+  /*border-radius: 45px;*/
+  position: fixed;
+  bottom: 45px;
+  right: 65px;
+  color: white;
+  height: 70px;;
+  width: 70px;
   font-size: 20px;
   text-align: center;
   cursor: pointer;
-}
-.addButton-confirmed {
-  color: #4CAF50;
-  border: solid 1px #4CAF50;
+  background-color: #009688;
+  border-radius: 50%;
+  padding-top: 22px;
+  padding-left: -1px;
+  transition-duration: 0.4s;
 }
 #addButton:hover {
-   border: solid 1px white;
    color: white;
+   background-color: #00796B;
 }
 
 #validButtDiv {

@@ -1,5 +1,9 @@
 var urlG = "http://82.239.100.156:8000";
 
+$('#userPhoto').change(function() {
+  console.log('lolilol');
+});
+
 $( document ).ready(function() {
   $('#addButton').transition({x:'+20px'});
   $('#plusButtDiv').transition({ rotate: '180deg' });
@@ -61,9 +65,9 @@ function displayNewCard(idsvnr, titre, lieu, date, idFile, hour) {
   );
 };
 
-$(".floating-btn").click(function(){
-  $(location).attr('href', urlG + '/new');
-});
+// $(".floating-btn").click(function(){
+//   $(location).attr('href', urlG + '/new');
+// });
 
 $('#logoutButton').click(function(){
   $(location).attr('href', urlG + '/logout');

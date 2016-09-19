@@ -17,3 +17,33 @@
   margin-top: 45px;
   margin-bottom: 30px;
 }
+
+.inputFilePhoto {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	//position: absolute;
+	z-index: 80;
+  cursor: pointer;
+}
+#addButton {
+  color: rgb(77, 182, 172);
+  border: solid 1px rgb(77, 182, 172);
+  font-size: 20px;
+  transition: 0.3s;
+  border-radius: 45px;
+  height: auto;
+  width: 120px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+/*.addButton-confirmed {
+  color: #4CAF50;
+  border: solid 1px #4CAF50;
+}*/
+#addButton:hover {
+   background-color: rgb(77, 182, 172);
+   color: white;
+}

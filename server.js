@@ -327,6 +327,23 @@ client.query("DELETE FROM version2 WHERE idsvnr='" + idSvnr + "'", function(err)
 })
 });
 
+app.post('/focus/:idSvnr/update', function(req, res) {
+  var idSvnr = req.params.idSvnr;
+  client.query("UPDATE version2 SET titre='" + req.body.titre + "', lieu='" + req.body.lieu
+              + "', presentfriends='" + req.body.presentfriends
+              + "', date1='" + req.body.date
+              + "' WHERE idsvnr='" + idSvnr + "'", function(err){
+    if (err) {
+      console.log('titre = ' +req.body.titre);
+      console.log('error update '.red + err);
+    }
+    else {
+      console.log('update ok'.green);
+      res.end('synced');
+    }
+  })
+})
+
 
 app.get('/new', function(req, res) {
   res.sendFile(__dirname + '/views/new.html');
@@ -337,6 +354,7 @@ app.get('/profile', function(req, res) {
 });
 
 app.post('/new/uploadFile',function(req,res){
+  var id;
     upload(req,res,function(err) {
         if(err) {
             return res.end("Error uploading file.".red);
@@ -344,9 +362,21 @@ app.post('/new/uploadFile',function(req,res){
         //Reçoit le fichier, le nomme et l'enregistre.
         //idFile a normalement la valeur du nom du new file.
         console.log("fichier uploadé - ".green + idFile);
-        io.emit('FileUploaded', 'ok');
+        storageDB(sess.userid, "titre", "lieu", idFile, "typeSvnr", "", "", "comments",
+                "hashtags", "presentFriends", "sharedFriends", "linkedToId", "stats");
+        client.query("SELECT * FROM version2 WHERE idfile='" + idFile + "'",
+          function(err, result) {
+            if(err) {console.log('Erreur de recover datas après upload'.red + err);}
+            id = result.rows[0].idsvnr;
+            console.log('id = '.red + id);
+            res.redirect('/focus/'+ id);
+          });
     });
 });
+
+// app.get('/new/:idSvnr', function(req,res) {
+//   var idSvnr=req.params.idSvnr;
+// });
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -394,13 +424,9 @@ var now;
 function getNow() {
   now = new Date();
   var hh = now.getHours();
-  console.log(hh);
   var min = now.getMinutes();
-  console.log(min);
   var ss = now.getSeconds();
-  console.log(ss);
   now = hh + ':' + min + ':' + ss;
-  console.log(now);
   return now;
 }
 

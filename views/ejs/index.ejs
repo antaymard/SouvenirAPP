@@ -58,9 +58,19 @@
     <section class="grid">
     </section>
 
-    <div class="floating-btn">
+    <form id="fileUpForm" enctype = "multipart/form-data"
+      action="/new/uploadFile" method="post">
+      <div class="">
+        <label id="addButton" for="userPhoto"><i class="fa fa-picture-o" aria-hidden="true"></i></label>
+        <input type="file" name="userPhoto" id="userPhoto" class='inputFilePhoto'/>
+        <!-- <img id="blah" src="#" alt="your image" /> -->
+        <!-- <input class="btn btn-warning" type="submit" value="Ajouter" id="validationButtonFile"/> -->
+      </div>
+    </form>
+
+    <!-- <div class="floating-btn">
       <i class="fa fa-pencil" aria-hidden="true" style="color:white"></i>
-    </div>
+    </div> -->
 
 
     <div id="buttDivFixed">

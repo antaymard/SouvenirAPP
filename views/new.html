@@ -42,9 +42,9 @@
     <form id="fileUpForm" enctype = "multipart/form-data"
       action="/new/uploadFile" method="post">
       <div class="form-group">
-        <h4><i class="fa fa-picture-o" aria-hidden="true"></i> Image</h4>
-        <label for="userPhoto">Choose a file</label>
+        <label id="addButton" for="userPhoto"><i class="fa fa-picture-o" aria-hidden="true"></i></label>
         <input type="file" name="userPhoto" id="userPhoto" class='inputFilePhoto'/>
+        <img id="blah" src="#" alt="your image" />
         <input class="btn btn-warning" type="submit" value="Ajouter" id="validationButtonFile"/>
       </div>
     </form>
