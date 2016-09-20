@@ -331,7 +331,8 @@ app.post('/focus/:idSvnr/update', function(req, res) {
   var idSvnr = req.params.idSvnr;
   client.query("UPDATE version2 SET titre='" + req.body.titre + "', lieu='" + req.body.lieu
               + "', presentfriends='" + req.body.presentfriends
-              + "', date1='" + req.body.date
+              + "', date1='" + req.body.date1
+              + "', comments='" + req.body.comments
               + "' WHERE idsvnr='" + idSvnr + "'", function(err){
     if (err) {
       console.log('titre = ' +req.body.titre);

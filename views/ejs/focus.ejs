@@ -35,6 +35,8 @@
 
 <div id="bodyGlobal"> <br>
 
+  <div id='state'></div>
+
    <img id="img1" alt="Château du Taureau" width="100%" height="auto" src="/<%= idfile %>">
 
    <div class="container-fluid">
@@ -60,7 +62,7 @@
      <div class="row">
        <div id="detailsPanel" class="col-sm-12" style="background-color:#404040;">
          <p class="titre1">Plus</p>
-         <p class="titre2" id='comments'>Commentaires à venir...</p><br>
+         <p class="titre2" id='comments'><%= comments %></p><br>
          <p class="titre2" id="hashtagsPlace"><span class="badge" id='hashtagsSpan'>
            <%= hashtags %></span></p>
          </div>
@@ -77,6 +79,7 @@
 
 </div>
 
+<script type="text/javascript" src='/jquery.transit.min.js'></script>
 <link rel="stylesheet" href="/styleGeneral.css">
 <link rel="stylesheet" href="/styleFocus.css">
 <script type="text/javascript" src="/focus.js"></script>

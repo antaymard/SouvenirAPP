@@ -72,22 +72,49 @@ $(document).on('blur','#txt_' + txt, function(){
     if (!linkedtoid) {
       refillEmpty('#linkedtoid');
     }
-
     var date = $('#date').text();
     if (!date) {
       $("#date").text('1900-01-01');
     }
+    var comments = $('#comments').text();
+    com = comments.split("'");
+    console.log(com.length);
+    if (com.length > 1) {
+      var n;
+      comments = "";
+      for (n in com) {
+        comments += com[n] + "''";
+      }
+      comments = comments.toString().slice(0, -2);
+    }
+    console.log(comments);
+    if (!comments) {
+      refillEmpty("#comments");
+    }
 
-    $.post(window.location.pathname + "/update", {lieu:lieu, titre:titre, presentfriends:presentfriends, sharedfriends:sharedfriends, linkedtoid:linkedtoid, date:date}, function(data){
+    $.post(window.location.pathname + "/update", {lieu:lieu, titre:titre,
+      presentfriends:presentfriends, sharedfriends:sharedfriends,
+      linkedtoid:linkedtoid, date1:date, comments:comments}, function(data){
       if(data==='synced'){
         console.log('synchronisé');
+        alerte("#8BC34A");
       }
       if (data==='err') {
         console.log('error synch');
+        alerte("red");
       }
     });
 });
 }
+
+function alerte(state) {
+  $('#header').css('border-bottom', '3px solid ' + state);
+
+  setTimeout(function(){
+    $('#header').css('border-bottom', '3px solid #199894');
+  }, 1000);
+}
+
 
 function refillEmpty(id) {
   $(id).html('<i>Non renseigné</i>');
