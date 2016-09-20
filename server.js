@@ -254,7 +254,7 @@ app.post('/searchbytag',function(request,response){
 
 app.post('/recall',function(req,res){
   //recall des 10 derniers souvenirs from DB
-  client.query("SELECT * FROM version2 WHERE iduser='" + sess.userid + "' ORDER BY idsvnr DESC LIMIT 10",
+  client.query("SELECT * FROM version2 WHERE iduser='" + sess.userid + "' ORDER BY idsvnr DESC LIMIT 30",
   function(err, result) {
     if(err) {
       console.log("X-------erreur DB recall 10 last".red + err);
