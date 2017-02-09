@@ -15,6 +15,8 @@ $( document ).ready(function() {
     }
 });
 
+console.log($('#supprButton').text());
+
 $('#supprButton').click(function(){
   $.get(window.location.pathname + "/delete", function(data){
     if(data==='done');

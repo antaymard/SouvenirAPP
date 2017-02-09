@@ -22,8 +22,9 @@ $("input").keypress(function(event) {
 });
 
 function submitForm () {
-  username=$("#username").val().toUpperCase();
+  username=$("#username").val();
   pwd=$("#password").val();
+  console.log(username);
 
   if (!pwd) {
     alertLogin("warning", "", "Veuillez indiquer votre mot de passe.")

@@ -1,0 +1,28 @@
+.search_btn {
+  float: right;
+}
+
+#modal1 {
+  height : 3000px;
+  /*background-color: blue;*/
+}
+
+.input-field {
+  display: block;
+}
+
+#profilePic_modal {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  float : left;
+}
+
+#modal_pseudo {
+  font-size: 17px;
+  font-weight: 400;
+}
+#modal_prenom {
+  font-size: 15px;
+  font-weight: 200;
+}
