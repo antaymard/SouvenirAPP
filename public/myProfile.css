@@ -1,0 +1,13 @@
+#myProfile_pic:hover ~ #change_PPic_btn{
+      bottom: 20px;
+}
+#change_PPic_btn:hover{
+  bottom: 20px;
+}
+
+#change_PPic_btn {
+  position: absolute;
+  bottom: -60px;
+  left: 20px;
+  transition: 0.3s;
+}

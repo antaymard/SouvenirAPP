@@ -1,16 +1,30 @@
 $( document).ready(function() {
   $('.modal').modal();
 
-  var postData = 1, responseData;
+  //RECALL DES SOUVENRIS
+  var recall = 1, svnrs;
+  $.post("/svnr_recall", {recall:recall}, function (svnrs) {
+    console.log(svnrs);
+    if(svnrs) {
+      var n;
+      for (n in svnrs) {
+        displaySvnr(svnrs[n].titre, svnrs[n].file_address, svnrs[n].description);
+      }
+      console.log(svnrs);
+    }
+  });
+
+  //CHARGER LES NOMS DES USERS POUR L'AUTOCOMPLETE DE LA RECHERCHE
+  var postData = 1, all_users_listNFO;
     $.ajax({
       type : "post",
       url  : "/get_all_users_names",
       data : postData,
-      success: function(responseData, textStatus, jqXHR) {
+      success: function(all_users_listNFO, textStatus, jqXHR) {
         var auto = "{"
         var i;
-        for (i in responseData) {
-          auto += '"' + responseData[i].username + '" : "' + responseData[i].photo_adress + '",'
+        for (i in all_users_listNFO) {
+          auto += '"' + all_users_listNFO[i].username + '" : "' + all_users_listNFO[i].photo_address + '",'
         };
         auto = auto.slice(0, -1);
         auto += "}"
@@ -26,6 +40,7 @@ $( document).ready(function() {
     });
 });
 
+//AFFICHER LA CARTE CORRESPONDANT A L'AMI RECHERCHE
 $('#search_friend').click(function() {
   var username = $('#input_addFriends').val();
   $('#modal_card').empty();
@@ -34,9 +49,9 @@ $('#search_friend').click(function() {
 
       var user_age = calcAge(data[0].birthday);
       $('#modal_card').append(
-        "<div class='z-depth-1 card blue-grey' id='modal_card_response'>"
+        "<div class='z-depth-1 card blue-grey hoverable' id='modal_card_response'>"
         + "<div class='card-content white-text'>"
-        +   "<img id='profilePic_modal' class='circle responsive-img' src='" + data[0].photo_adress + "'>"
+        +   "<img id='profilePic_modal' class='circle responsive-img' src='" + data[0].photo_address + "'>"
         +   "<div id='panel_text'>"
         +      "<p id='modal_pseudo'>" + data[0].username + "</p>"
         +      "<p id='modal_prenom'>" + data[0].prenom + " " + data[0].nom + "</p>"
@@ -49,29 +64,62 @@ $('#search_friend').click(function() {
         + "</div>"
       );
 
+//REACTION LORS DE L'AJOUT DE L'AMI EN APPUYANT SUR LE BOUTON DE LA CARTE
       $('#add_as_friend_btn').click(function(){
         $.post("/add_as_friend",{friendid:data[0]._id},function(data2){
-          if(data2 == 'ok') {
-            console.log('tout est ok');
-            Materialize.toast(data[0].prenom + ' a reçu votre demande', 4000);
+          if(data2 == 'added') {
+            Materialize.toast(data[0].prenom + ' a reçu votre demande', 3000);
             $('#modal_card').modal('close');
-          }else{console.log('NONONO');}
+          }
+          if(data2 == 'déjà amis') {
+            Materialize.toast("Déjà amis ! Pour supprimer un ami, aller dans vos options de profil", 3000);
+          }
+          if(data2 == 'autoajout') {
+            Materialize.toast("Vous êtes déjà votre meilleur ami :)", 3000);}
+          if(data2 == 'err') {      //ICI CA bug niveau message d'alerte d'erreur
+            // Materialize.toast("Erreur du serveur", 3000);
+          }
         });
       });
-
-    }else{console.log('no result');}
+    }
+    else{Materialize.toast("No match", 3000);}
   });
 });
 
-
-
+function displaySvnr(titre, img_address, description) {
+  $("#svnr_recall_space").append(
+     '<div class="col m4">'
+    +  '<div class="card sticky-action card_svnr hoverable">'
+    +    '<div class="card-image waves-effect waves-block waves-light card_img">'
+    +      '<img class="activator" style="object-fit:cover; height:100%" src="'+ img_address + '">'
+    +    '</div>'
+    +    '<div class="card-content">'
+    +      '<span class="card-title activator grey-text text-darken-4" style="font-size:17px;">'+ titre 
+    // +'<i class="material-icons right">more_vert</i>'
+    + '</span>'
+    // +      '<p><a href="#">This is a link</a></p>'
+    +    '</div>'
+    +    '<div class="card-action"><a href="#">SHARE</a>'
+    +  '<a href="#">EXPLORE</a></div>'
+    +    '<div class="card-reveal">'
+    +      '<span class="card-title grey-text text-darken-4">'+ titre +'<i class="material-icons right">close</i></span>'
+    +      '<p>'+ description +'</p>'
+    +    '</div>'
+    +  '</div>'
+    +'</div>'
+  );
+};
 
   function calcAge(dateString) {
   var birthday = +new Date(dateString);
   return ~~((Date.now() - birthday) / (31557600000));
 };
 
-
+$("#input_photo").change(function() {
+  console.log('click');
+  //Envoie file
+  $('#fileUp').submit();
+});
 
 
 

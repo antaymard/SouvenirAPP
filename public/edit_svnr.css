@@ -1,0 +1,19 @@
+#edit_panel {
+  margin: 15px -5px 2px 5px;
+  background-color: white;
+  /*height: 650px;*/
+  max-height: 700px;
+  overflow: auto;
+}
+
+#photo_panel {
+  margin-top: 5px;
+  max-height: 90%;
+}
+
+body {
+}
+
+#map {
+        height: 170px;
+      }

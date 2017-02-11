@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Remember</title>
+  <meta name="description" content="A cool thing made with HyperDev">
+  <link id="favicon" rel="icon" href="https://hyperdev.com/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://use.fontawesome.com/d5a570f79a.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"> -->
+  <script src="http://malsup.github.com/jquery.form.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+<body class="blue-grey lighten-5">
+
+  <div class="row">
+
+    <div id="edit_panel" class="col m3 z-depth-1">
+
+      <div class="row">
+        <h5>Création d'un nouveau souvenir</h5>
+        <div class="input-field col s12">
+          <input id="titre" type="text" class="validate">
+          <label for="titre">Titre du souvenir</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="lieu" type="text" class="validate">
+          <label for="lieu">Lieu du souvenir</label>
+        </div>
+        <div class="input-field col s12">
+          <select id="type" class="icons">
+            <!-- <option value="" disabled selected>Choose your option</option> -->
+            <option value="event" selected data-icon="http://musicinafrica.net/sites/default/files/styles/tile_square/public/images/mia-articles/201601/gaelmanangou01.jpg?itok=DbZHwT7I" class="circle">Evénement</option>
+            <option value="place" data-icon="http://www.la-fenetriere.fr/images/porte_pvc---defilement3.jpg?crc=486740505" class="circle">Lieu</option>
+            <option value="person" data-icon="http://www.dotpod.com.ar/wp-content/uploads/2010/10/18-actuaciones-de-Hugh-Laurie-previas-a-Dr.-House.png" class="circle">Personne</option>
+            <option value="objet" data-icon="http://4.bp.blogspot.com/-k1IABa1HKf0/TrfovcL5ZLI/AAAAAAAADoM/Xcct47Y9hso/s1600/kado1.jpg" class="circle">Objet</option>
+          </select>
+          <label>Type de souvenir</label>
+        </div>
+        <div class="input-field col s12">
+          <label for="svnr_date">Date du souvenir (par défaut = ajourd'hui)</label>
+          <input id="svnr_date" type="date" class="datepicker">
+        </div>
+        <div class="input-field col s12">
+          <textarea id="description" class="materialize-textarea" data-length="120"></textarea>
+          <label for="description">Description du souvenir</label>
+        </div>
+        <div class="col s12">
+        <div id="enter_tagfriends" class="chips chips-placeholder"></div>
+      </div>
+        <div class="col s12">
+        <div id="enter_hashtags" class="chips chips-placeholder"></div>
+      </div>
+      <div class="card-action">
+        <button id="valider_btn" class='right waves-effect waves-light btn green' onclick="getIdFile('<%= userphotoid %>')">Valider</button>
+        <a href="" style="margin-right:10px" class='right waves-effect waves-red btn-flat red-text'>Annuler</a>
+      </div>
+
+      </div>
+
+    </div>
+
+    <div id="photo_panel" class="col m9">
+      <img class="responsive-img" src= "/<%= userphotoid %>"></a>
+    </div>
+  </div>
+
+
+
+  <link rel="stylesheet" href="/styleGeneral.css">
+  <link rel="stylesheet" href="/edit_svnr.css">
+  <script type="text/javascript" src="/edit_svnr.js"></script>
+  <script type="text/javascript" src='/jquery.transit.min.js'></script>
+  <script type="text/javascript" src='/jquery.jMosaic.js'></script>
+
+</body>
+</html>

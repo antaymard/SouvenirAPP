@@ -35,42 +35,42 @@ var profileNom, profilePseudo, profilePNom;
 // Chargement de la page index
 app.get("/", function (req, res) {
   sess = req.session;
-if(sess.username){
-  client.query("SELECT * FROM userdb WHERE userid='" + sess.userid + "'", function(err, result) {
-    if(err) {
-      return console.error('PB Check pseudo'.red, err);
-    }
-    if(result.rows[0]) {
-      userphotoid = result.rows[0].userphotoid;
-      profilePseudo = result.rows[0].username;
-      profileNom = result.rows[0].nom;
-      profilePNom = result.rows[0].prenom;
-      console.log(profilePNom);
-      res.render('ejs/index', {
-        userphotoid : userphotoid,
-        profilePseudo : profilePseudo,
-        profileNom : profileNom,
-        profilePNom : profilePNom
-      });
-    }
-  });
-  // res.sendFile(__dirname + '/views/index.html');
-  console.log("____Page index chargée - ID : ".green + sess.username);
-}else {
-  res.sendFile(__dirname + '/views/login.html');
-}
+  if(sess.username){
+    client.query("SELECT * FROM userdb WHERE userid='" + sess.userid + "'", function(err, result) {
+      if(err) {
+        return console.error('PB Check pseudo'.red, err);
+      }
+      if(result.rows[0]) {
+        userphotoid = result.rows[0].userphotoid;
+        profilePseudo = result.rows[0].username;
+        profileNom = result.rows[0].nom;
+        profilePNom = result.rows[0].prenom;
+        console.log(profilePNom);
+        res.render('ejs/index', {
+          userphotoid : userphotoid,
+          profilePseudo : profilePseudo,
+          profileNom : profileNom,
+          profilePNom : profilePNom
+        });
+      }
+    });
+    // res.sendFile(__dirname + '/views/index.html');
+    console.log("____Page index chargée - ID : ".green + sess.username);
+  }else {
+    res.sendFile(__dirname + '/views/login.html');
+  }
 });
 
 app.post('/login',function(req,response){
   sess = req.session;
-//In this we are assigning email to sess.email variable.
-//email comes from HTML page.
+  //In this we are assigning email to sess.email variable.
+  //email comes from HTML page.
   client.query("SELECT * FROM userdb WHERE username='" + req.body.username + "'", function(err, res) {
     if(err) {
       return console.error('PB recall userdb'.red, err);
     }
     if(res.rows.length > 1) {
-    console.log("problème : il y a " + res.rows.length + ' profil qui correspondent à ' + res.rows[0].username);
+      console.log("problème : il y a " + res.rows.length + ' profil qui correspondent à ' + res.rows[0].username);
     }
     if(!res.rows[0]) {
       console.log('no match'.red);
@@ -139,13 +139,13 @@ app.post('/register/checkpseudo', function (req,res) {
 
 
 app.get('/logout',function(req,res){
-req.session.destroy(function(err) {
-  if(err) {
-    console.log(err);
-  } else {
-    res.redirect('/');
-  }
-});
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
 });
 
 app.post("/checkfriend", function(req, res) {
@@ -226,11 +226,6 @@ app.post('/friendsRecall', function(req, response) {
   });
 });
 
-
-
-
-
-
 app.get("/changelog", function (req, res) {
   var usernb;
   var svnrnb;
@@ -277,25 +272,6 @@ app.get("/changelog", function (req, res) {
 
 
 //TEST----TEST----TEST----TEST----over
-
-//Upload de fichiers (images de svnrs)
-var multer  =   require('multer');
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './stockageLocal');  //définit dossier cible.
-  },
-  filename: function (req, file, callback) {
-    idFile = file.fieldname + '-' + Date.now() + '.jpg';
-    callback(null, idFile);
-    console.log("Fichier enregistré ".green + idFile);
-  }
-});
-var upload = multer({ storage : storage}).single('userPhoto');
-
-var idSvnrDB; //id du souvenir
-var idFile; //id de l'image après réception et enregistrement
-var userphotoid;
-
 
 //=====================SOCKET.IO================
 var io = require('socket.io').listen(8080);
@@ -391,14 +367,14 @@ app.get('/focus/:idSvnr', function(req, res) {
 
 app.get('/focus/:idSvnr/delete', function(req, res) {
   var idSvnr = req.params.idSvnr;
-client.query("DELETE FROM version2 WHERE idsvnr='" + idSvnr + "'", function(err){
-  if (err) {
-    console.log('ERR de suppr de datas'.red + err);
-  } else {
-    console.log('suppression de souvenir ok'.green);
-    res.end('done');
-  }
-})
+  client.query("DELETE FROM version2 WHERE idsvnr='" + idSvnr + "'", function(err){
+    if (err) {
+      console.log('ERR de suppr de datas'.red + err);
+    } else {
+      console.log('suppression de souvenir ok'.green);
+      res.end('done');
+    }
+  })
 });
 
 app.post('/focus/:idSvnr/update', function(req, res) {
@@ -428,6 +404,26 @@ app.get('/new', function(req, res) {
 app.get('/myProfile', function(req, res) {
   res.render('ejs/profile', {})
 });
+
+
+//Upload de fichiers (images de svnrs)
+var multer  =   require('multer');
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './stockageLocal');  //définit dossier cible.
+  },
+  filename: function (req, file, callback) {
+    idFile = file.fieldname + '-' + Date.now() + '.jpg';
+    callback(null, idFile);
+    console.log("Fichier enregistré ".green + idFile);
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+
+var idSvnrDB; //id du souvenir
+var idFile; //id de l'image après réception et enregistrement
+var userphotoid;
+
 
 app.post('/new/uploadFile',function(req,res){
   var id;

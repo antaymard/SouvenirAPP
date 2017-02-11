@@ -1,6 +1,30 @@
-.search_btn {
+.section_btn {
   float: right;
 }
+
+.inputWrapper_btn {
+  overflow: hidden;
+  position: relative;
+  top: -51px;
+  /*right: 10px;*/
+  margin-bottom: -100px;
+  cursor: pointer;
+}
+#input_photo {
+  cursor: pointer;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    right: 0;
+    /*This makes the button huge so that it can be clicked on*/
+    font-size:50px;
+    opacity: 0;
+}
+/*#addButton {
+  height: 70px;
+  width: 70px;
+  cursor: pointer;
+}*/
 
 #modal1 {
   height : 3000px;
@@ -10,6 +34,9 @@
 .input-field {
   display: block;
 }
+/*#friend_researchinput {
+  margin-top: -115px;
+}*/
 
 #profilePic_modal {
   height: 145px;
@@ -39,3 +66,22 @@
   padding-left: 180px;
   padding-top: 0px;
 }
+
+.card_svnr {
+  margin: 0 -8px 6px -8px;
+}
+.card_img {
+  height: 170px;
+}
+
+.section_title {
+  font-weight: 300;
+  font-size: 20px;
+  margin-top: 70px;
+}
+
+
+
+/*.container {
+    padding-top: 60px;
+}*/

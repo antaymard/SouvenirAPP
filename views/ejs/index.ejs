@@ -30,25 +30,28 @@
 <body>
 
   <!-- NAVIGATION BAR -->
+  <div class="navbar-fixed">
   <nav class= "header z-depth-0">
     <a href="#" class="brand-logo">Logo</a>
     <div class="nav-wrapper">
       <ul class="right hide-on-med-and-down">
-        <li><a href="#" id="lol">HOME</a></li>
+        <li><a href="/" id="lol">HOME</a></li>
         <li><a href="#">Afficher tout</a></li>
         <li><a href='/myProfile'><%= profilePNom %> <%= profileNom %>
           <img id="profilePic" class="circle responsive-img" src= "/<%= userphotoid %>"></a></li>
         </ul>
       </div>
     </nav>
+  </div>
 
 
     <!-- CORPS -->
     <div class="container">
 
+
       <!-- Bottom Modal Structure -->
       <div id="modal1" class="modal bottom-sheet">
-        <div class="container">
+        <div id="friend_researchinput" class="container">
         <div class="modal-content">
           <div class="row">
           <div class="col s9">
@@ -71,33 +74,50 @@
       </div></div>
 
 
-        <div class="row">
-          <div class="col s7">
-            <p class='section_title'>Derniers Souvenirs</p>
-          </div>
-
-          <div class="col s5">
-            <p class='section_title'>Social Feed <button data-target="modal1" class="btn waves-effect waves-light search_btn">
-              +<i class="material-icons prefix ">perm_identity</i></button></p>
-
-
+      <div class="row">
+        <div class="col m7">
+          <p class='section_title'>Derniers Souvenirs</p>
+            <!-- <button class="btn waves-effect waves-light green section_btn">
+            Nouveau</button> -->
+            <div class="inputWrapper_btn btn waves-effect waves-light green section_btn">
+            <form id="fileUp" enctype = "multipart/form-data" action="/new/uploadFile" method="post">
+              <label id="addButton" for="userPhoto"><i class="fa fa-picture-o white-text" aria-hidden="true"></i></label>
+              <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
+            </form>
             </div>
 
-          </div>
+          <div class="row" id="svnr_recall_space">
 
-          <!-- <div class='z-depth-1 card blue-grey' id="modal_card_response">
-            <div class='card-content white-text'>
-              <img id='profilePic_modal' class='circle responsive-img' src='AYMARD.jpg'>
-              <div id='panel_text'>
-                <p id='modal_pseudo'>data[0].username</p>
-                <p id='modal_prenom'>data[0].prenom + data[0].nom</p>
-                <p class='modal_desc'>user_age + "," + data[0].living_city</p>
+            <!-- <div class="col m6">
+              <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="images/office.jpg">
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+                  <p><a href="#">This is a link</a></p>
+                </div>
+                <div class="card-action"><a href="#">This is a link</a>
+              <a href="#">This is a link</a></div>
+                <div class="card-reveal">
+                  <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                  <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                </div>
               </div>
+            </div> -->
+
+          </div>
+        </div>
+
+          <div class="col m5">
+            <p class='section_title'>Social Feed <button data-target="modal1" class="btn-flat waves-effect waves-green grey lighten-2 section_btn">
+              +<i class="material-icons prefix ">perm_identity</i></button></p>
             </div>
-            <div class='modal-footer blue-grey'>
-              <a href='/add_as_friend + data[0]._oid' style='float : right; margin-right : 30px' class='modal-action white-text modal-close waves-effect waves-green btn-flat'>Ajouter</a>
-            </div>
-          </div> -->
+
+          </div>
+
+        </div>
+
 
 
 
