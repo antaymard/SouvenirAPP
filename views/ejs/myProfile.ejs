@@ -43,7 +43,13 @@
         <div class="card horizontal" style='display: flex;'>
               <div class="card-image" style="overflow: hidden;">
                 <img id="myProfile_pic" style="height:100%; width:270px; object-fit: cover;" src="<%= userphotoid %>">
-                <button id="change_PPic_btn" class="btn-floating waves-effect waves-light green" tabindex="-1"><i class="material-icons">publish</i></button>
+                <div class="inputWrapper_btn btn waves-effect waves-light green">
+                <form id="fileUp" enctype = "multipart/form-data" action="/myProfile/updateImg" method="post">
+                  <label id="addButton" for="userPhoto"><i class="material-icons white-text">publish</i></label>
+                  <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
+                </form>
+                </div>
+                <!-- <button id="" class="btn-floating waves-effect waves-light green" tabindex="-1"><i class="material-icons">publish</i></button> -->
               </div>
               <div class="card-stacked">
                 <div class="card-content row" style='font-size:17px'>
@@ -62,9 +68,9 @@
                   <p><%= username %></p>
                   <p><%= profileNom %></p>
                   <P><%= profilePNom %></P>
-                  <p><%= living_city %></p>
-                  <p>26 mars 1992</p>
                   <p><%= current_city %></p>
+                  <p><%= birthday %></p>
+                  <p><%= living_city %></p>
                   <p><%= email %></p>
                 </div>
                 </div>

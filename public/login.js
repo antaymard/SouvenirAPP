@@ -8,9 +8,9 @@ $(document).ready(function(){
   });
 });
 
-$("#register").click(function(){
-  window.location = '/register';
-});
+// $("#register").click(function(){
+//   window.location = '/register';
+// });
 
 //Entrer pour valider form
 $("input").keypress(function(event) {
@@ -22,7 +22,7 @@ $("input").keypress(function(event) {
 });
 
 function submitForm () {
-  username=$("#username").val();
+  username=$("#username").val().toUpperCase();
   pwd=$("#password").val();
   console.log(username);
 

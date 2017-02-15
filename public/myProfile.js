@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  console.log('ready');
 
   $.post("/friends_recall",{send : "1"},function(myFriends_data){
     if(myFriends_data) {
@@ -31,6 +30,13 @@ $(document).ready(function(){
   });
 
 });
+
+$("#input_photo").change(function() {
+  console.log('click');
+  //Envoie file
+  $('#fileUp').submit();
+});
+
 
 function calcAge(dateString) {
 var birthday = +new Date(dateString);

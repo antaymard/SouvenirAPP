@@ -3,22 +3,23 @@ colors = require('colors'),
 app = express(),
 session = require('express-session'),
 bodyParser = require('body-parser'),
-async = require('async');
+async = require('async'),
+fs = require("fs");
 
 var mongoose = require('mongoose'),
 db = mongoose.connection;
 
 
 app
-.use(express.static('public'))
-.use(express.static('./ImgSouvenir'))
-.use(express.static('./SiteSrc'))
-.use(express.static('./ImgUsers'))
-.use(bodyParser.json())
-.use(bodyParser.urlencoded({extended:true}))
-.set('view engine', 'ejs')
-.use(session({secret: 'ssshhhhh'}))
-.listen(8000);
+  .use(express.static('public'))
+  .use(express.static('./ImgSouvenir'))
+  .use(express.static('./SiteSrc'))
+  .use(express.static('./ImgUsers'))
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({extended:true}))
+  .set('view engine', 'ejs')
+  .use(session({secret: 'ssshhhhh'}))
+  .listen(8000);
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://antaymard:splinTer00@ds135039.mlab.com:35039/svnrapp');
@@ -82,8 +83,23 @@ app.post('/login', function(req, response) {
   sess = req.session;
   User.find({"username" : req.body.username}, function(err, users) {
     if(err) return console.log(err + 'login err'.red);
-    sess.userid = users[0]._id;
-    response.end('done');
+    if(users.length>1) return console.error("LOGIN - il y a %s profils correspondant".red, users.length);
+    if (!users[0]) {
+      console.log("LOGIN - no match");
+      response.end('no match');
+    }
+    if (users[0]) {
+      if (req.body.pwd !== users[0].password) {
+        console.log(req.body.pwd);
+        console.log(users[0].password);
+        console.log('pb pwd'.red);
+        response.end('pb pwd');
+      }
+      if (req.body.pwd == users[0].password) {
+        sess.userid = users[0]._id;
+        response.end('done');
+      }
+    }
   })
 });
 
@@ -128,6 +144,66 @@ app.post('/add_as_friend', function(req, res){
   }).select("friends_id");
 });
 
+app.post('/svnr_recall', function(req,res) {
+  sess = req.session;
+  Svnr.find({"userid":sess.userid}, function(err, svnrs) {
+    if (err) return console.error(err);
+    res.json(svnrs);
+  }).sort("-creation_date");
+});
+
+//creation du processus d'ajout (upload) image souvenir
+var idFileSvnr;
+var multer  =   require('multer');
+var storageSvnr =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './ImgSouvenir');  //définit dossier cible.
+  },
+  filename: function (req, file, callback) {
+    idFileSvnr = file.fieldname + '-' + Date.now() + '.jpg';
+    callback(null, idFileSvnr);
+    console.log("Fichier enregistré ".green + idFileSvnr);
+  }
+});
+// var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
+var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
+
+
+app.post('/new/uploadFile',function(req,res){
+    uploadSvnr(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.".red);
+        }
+        console.log("fichier uploadé - ".green + idFileSvnr);
+        res.render('ejs/edit_svnr', {
+          userphotoid : idFileSvnr
+        });
+    });
+});
+
+app.post('/create_svnr', function(req,res) {
+  var re = req.body;
+  var s = new Svnr({userid:sess.userid, titre:re.titre, lieu:re.lieu, type:re.type, svnr_date:re.svnr_date, creation_date:re.creation_date, description:re.description, file_address:re.file_address});
+  s.save(function(){
+    console.log("souvenir enregistré".green);
+    res.end('done');
+  })
+});
+
+app.post('/deleteImg', function(req, res) {
+  var id =  "./ImgSouvenir/"+ req.body.file_address;
+  console.log(id);
+  fs.unlink(id, function(err) {
+    if (err) return console.error(err);
+    console.log('fichier supprimé'.green);
+    res.end('done');
+  })
+});
+
+
+//SECTION GESTION DE PROFIL ----------------------------------------------------
+
+//Affichage de la page MyProfile
 app.get('/myProfile', function(req, res){
   sess = req.session;
   if(sess.userid){
@@ -154,6 +230,18 @@ app.get('/myProfile', function(req, res){
   // u.save();
 });
 
+//Fermeture de sessions
+app.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
+//Affichage des cartes amis (répond à myProfile.js)
 app.post('/friends_recall', function(req, res) {
   sess = req.session;
   var friend_list=[];
@@ -162,76 +250,46 @@ app.post('/friends_recall', function(req, res) {
     async.eachSeries(users[0].friends_id, function(elem, callback) {
       User.find({"_id":elem}, function(err, friendslist) {
         friend_list.push(friendslist[0]);
-        console.log("test ".yellow + friend_list);
         callback(false);
       });
     },function(error) {
       if (error) { console.error(error);}
-      console.log(friend_list);
       res.json(friend_list);
     }
     )
   })
 });
 
-app.get('/logout',function(req,res){
-req.session.destroy(function(err) {
-  if(err) {
-    console.log(err);
-  } else {
-    res.redirect('/');
+//creation du processus d'ajout (upload) photo profil
+var idFileProPic;
+var storageProPic =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './ImgUsers');  //définit dossier cible.
+  },
+  filename: function (req, file, callback) {
+    idFileProPic = file.fieldname + '-' + Date.now() + '.jpg';
+    callback(null, idFileProPic);
+    console.log("ProPic enregistré ".green + idFileProPic);
   }
 });
-});
+var uploadProPic = multer({ storage : storageProPic}).single('userPhoto');
 
-app.post('/svnr_recall', function(req,res) {
+
+app.post('/myProfile/updateImg', function(req, res){
   sess = req.session;
-  Svnr.find({"userid":sess.userid}, function(err, svnrs) {
-    if (err) return console.error(err);
-    console.log(svnrs);
-    res.json(svnrs);
+  console.log('click');
+  uploadProPic(req,res,function(err) {
+    if(err) {
+      return res.end("Error uploading ProPic file.".red);
+    }
+    User.update({"_id" : sess.userid}, {"photo_address" : idFileProPic}, function(err) {
+      if(err) return console.error("PB uplaod ProPic ".red + err);
+      res.end('done');
+    });
   });
 });
 
-var idFileSvnr;
-var multer  =   require('multer');
-var storageSvnr =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './ImgSouvenir');  //définit dossier cible.
-  },
-  filename: function (req, file, callback) {
-    idFileSvnr = file.fieldname + '-' + Date.now() + '.jpg';
-    callback(null, idFileSvnr);
-    console.log("Fichier enregistré ".green + idFileSvnr);
-  }
-});
-// var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
-var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
-
-app.post('/new/uploadFile',function(req,res){
-    uploadSvnr(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.".red);
-        }
-        console.log("fichier uploadé - ".green + idFileSvnr);
-        res.render('ejs/edit_svnr', {
-          userphotoid : idFileSvnr
-        });
-    });
-});
-
-app.post('/create_svnr', function(req,res) {
-  var re = req.body;
-  var s = new Svnr({userid:sess.userid, titre:re.titre, lieu:re.lieu, type:re.type, svnr_date:re.svnr_date, description:re.description, file_address:re.file_address});
-  s.save(function(){
-    console.log("souvenir enregistré".green);
-    res.end('done');
-  })
-});
-
-
-
-//FONCTION
+//FONCTION UTILITAIRES ---------------------------------------------------------
 //Checker si la valeur est déjà dans l'array
 function isInArray(value, array) {
   return array.indexOf(value) > -1; //answer T or F

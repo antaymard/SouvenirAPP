@@ -1,13 +1,33 @@
-#myProfile_pic:hover ~ #change_PPic_btn{
-      bottom: 20px;
+#myProfile_pic:hover ~ .inputWrapper_btn {
+  bottom: 60px;
+  transition: 0.3s;
 }
-#change_PPic_btn:hover{
-  bottom: 20px;
+.inputWrapper_btn:hover{
+  bottom: 60px;
 }
 
-#change_PPic_btn {
+/*#addButton {
   position: absolute;
   bottom: -60px;
   left: 20px;
   transition: 0.3s;
+}*/
+
+.inputWrapper_btn {
+  overflow: hidden;
+  position: relative;
+  /*top: -51px;*/
+  /*right: 10px;*/
+  margin-left: 30px;
+  cursor: pointer;
+}
+#input_photo {
+  cursor: pointer;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    right: 0;
+    /*This makes the button huge so that it can be clicked on*/
+    font-size:50px;
+    opacity: 0;
 }

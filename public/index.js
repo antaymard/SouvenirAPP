@@ -94,7 +94,7 @@ function displaySvnr(titre, img_address, description) {
     +      '<img class="activator" style="object-fit:cover; height:100%" src="'+ img_address + '">'
     +    '</div>'
     +    '<div class="card-content">'
-    +      '<span class="card-title activator grey-text text-darken-4" style="font-size:17px;">'+ titre 
+    +      '<span class="card-title activator grey-text text-darken-4" style="font-size:17px;">'+ titre
     // +'<i class="material-icons right">more_vert</i>'
     + '</span>'
     // +      '<p><a href="#">This is a link</a></p>'
