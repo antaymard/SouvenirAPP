@@ -43,7 +43,9 @@
         <div class="card horizontal" style='display: flex;'>
               <div class="card-image" style="overflow: hidden;">
                 <img id="myProfile_pic" style="height:100%; width:270px; object-fit: cover;" src="<%= userphotoid %>">
+
                 <div class="inputWrapper_btn btn waves-effect waves-light green">
+
                 <form id="fileUp" enctype = "multipart/form-data" action="/myProfile/updateImg" method="post">
                   <label id="addButton" for="userPhoto"><i class="material-icons white-text">publish</i></label>
                   <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>

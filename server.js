@@ -39,19 +39,24 @@ var userSchema = mongoose.Schema({
   password : String,
   photo_address : String,
   friends_id : Array,
+  friends : [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
   birthday : Date,                          //MAYBE PROBLEM !!!!!
   current_city : String,
-  living_city : String
+  living_city : String,
+  pers_color : String
+  // svnrs : [{type : mongoose.Schema.Types.ObjectId, ref : "Svnr"}]
 });
 var User = mongoose.model("User", userSchema);
 
 var svnrSchema = mongoose.Schema({
   userid : String,
+  createdBy : [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
   titre : String,
   lieu : String,
   file_address : String,
   creation_date : Date,
   svnr_date : Date,
+  sharedFriends: [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
   type : String,
   description : String,
   hastags : Array
@@ -103,6 +108,10 @@ app.post('/login', function(req, response) {
   })
 });
 
+
+//INDEX PAGE FUNCTIONS ---------------------------------------------------------
+
+//Permet de récupérer les infos de tous les utilisateurs pour autocomplete la barre de recheche
 app.post("/get_all_users_names", function (req, res) {
     User.find({}, function(err, users) {
       if(err) return console.error(err + 'err récupération all names users'.red);
@@ -110,6 +119,7 @@ app.post("/get_all_users_names", function (req, res) {
     }).select("nom prenom username photo_address");
 });
 
+//Permet l'affichage de la carte de l'ami recherché dans le panel de recherche d'ami
 app.post('/get_user_card_addFr', function(req, res) {
   User.find({"username" : req.body.username}, function(err, users) {
     if(err) return console.log(err + 'login err'.red);
@@ -117,23 +127,21 @@ app.post('/get_user_card_addFr', function(req, res) {
   })
 });
 
+//Permet d'ajouter l'ami précédemment affiché par /get_user_card_addFr
 app.post('/add_as_friend', function(req, res){
   sess = req.session;
   var friend_in_adding_id = req.body.friendid;
   var already_friends;
 
   User.find({"_id" : sess.userid}, function(err, users) {
-    already_friends = String(isInArray(friend_in_adding_id, users[0].friends_id));
+    already_friends = String(isInArray(friend_in_adding_id, users[0].friends));
 
     if (already_friends == "false" && sess.userid !== friend_in_adding_id) { //Pas déjà amis
-      User.findOne({"_id" : sess.userid}, function(err, u){
-        if(err){return console.error(err + " erreur inscription ami".red);}
-        if(!u) {console.log('aucun match inscription ami'.red);return;}
-        u.friends_id.push(friend_in_adding_id);
-        u.save(function(error, user) {
-          if(error){return console.error(error);}
-          res.end('added');
-        });
+      User.update(
+        {"_id" : sess.userid},
+        {"$push":{ friends : friend_in_adding_id}}, function(error, user) {
+          if (error) {return console.error(error);}
+        res.end('added');
       });
     } if (sess.userid == friend_in_adding_id) {
       res.end('autoajout');
@@ -141,16 +149,74 @@ app.post('/add_as_friend', function(req, res){
     if (already_friends == 'true') {
       res.end('déjà amis');
     } if(err){console.log(err);res.end('err');}
-  }).select("friends_id");
+  }).select("friends");
 });
 
+//Affiche mes souvenirs ajoutés par moi (avec mon _id) + oùmon id est présent en sharedFriends
 app.post('/svnr_recall', function(req,res) {
   sess = req.session;
-  Svnr.find({"userid":sess.userid}, function(err, svnrs) {
+  Svnr.find({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}, function(err, svnrs) {
     if (err) return console.error(err);
     res.json(svnrs);
-  }).sort("-creation_date");
+  }).populate("createdBy").sort("-creation_date");
 });
+
+//renvoie ceux qui m'ont ajouté en amis
+app.post('/users_who_friended_me', function(req, res) {
+  sess = req.session;
+  var research = req.body.research;
+  console.log(research);
+  User.find({"friends" : sess.userid, "username": new RegExp(research, "i")}, function(err, users) {
+    if(err) return console.log(err);
+    console.log(users);
+    res.json(users);
+  })
+});
+
+//Enregistrer partage avec ami
+app.post('/add_as_shared', function(req, res) {
+  sess = req.session;
+  var sharedF = req.body.sharedF;
+  var idSvnr = req.body.idSvnr;
+  console.log("Id Friend = ".blue + sharedF + " & idsvnr = " + idSvnr);
+  Svnr.find({"_id" : idSvnr}, function(error, sv) {
+    if (error) {return console.error(error);}
+    console.log("sv = ".blue + sv[0]);
+    if (String(isInArray(sharedF, sv[0].sharedFriends)) == 'false') {
+      console.log("shared is being added".green);
+      Svnr.update({"_id": idSvnr}, {"$push":{ sharedFriends : sharedF}}, function(error, ret){
+        if (error) { return console.error(error);}
+        console.log("ADDED".green);
+        res.end('added');
+      });
+    } else {
+      res.end('already_shared');
+    }
+  });
+});
+
+app.post('/sharedFriends_Supp', function(req, res) {
+  sess = req.session;
+  var idFriend = req.body.idFriend;
+  var idSv = req.body.idSvnr;
+  console.log(idFriend + " " + idSv);
+  Svnr.update({"_id": idSv}, {$pullAll: {sharedFriends: [idFriend]}}, function(err, ret){
+    if (err) {return console.error(err);}
+    console.log("DELETED ".green + ret);
+    res.json(ret);
+  })
+});
+
+//Récupère les infos d'un focused Svnr
+app.post("/focusedRecall", function(req, res) {
+  sess = req.session;
+  Svnr.find({"_id":req.body.focusId}, function(err, Fsvnr) {
+    if (err) return console.log(err);
+    res.json(Fsvnr);
+  }).populate("sharedFriends").select("-password");
+});
+
+//CREATION ET MODIFICATIONS DE SOUVENIRS ---------------------------------------
 
 //creation du processus d'ajout (upload) image souvenir
 var idFileSvnr;
@@ -171,9 +237,8 @@ var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
 
 app.post('/new/uploadFile',function(req,res){
     uploadSvnr(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.".red);
-        }
+        if(err) {return res.end("Error uploading file.".red);}
+
         console.log("fichier uploadé - ".green + idFileSvnr);
         res.render('ejs/edit_svnr', {
           userphotoid : idFileSvnr
@@ -182,8 +247,9 @@ app.post('/new/uploadFile',function(req,res){
 });
 
 app.post('/create_svnr', function(req,res) {
+  sess = req.session;
   var re = req.body;
-  var s = new Svnr({userid:sess.userid, titre:re.titre, lieu:re.lieu, type:re.type, svnr_date:re.svnr_date, creation_date:re.creation_date, description:re.description, file_address:re.file_address});
+  var s = new Svnr({createdBy:sess.userid, titre:re.titre, lieu:re.lieu, type:re.type, svnr_date:re.svnr_date, creation_date:re.creation_date, description:re.description, file_address:re.file_address});
   s.save(function(){
     console.log("souvenir enregistré".green);
     res.end('done');
@@ -202,7 +268,6 @@ app.post('/deleteImg', function(req, res) {
 
 
 //SECTION GESTION DE PROFIL ----------------------------------------------------
-
 //Affichage de la page MyProfile
 app.get('/myProfile', function(req, res){
   sess = req.session;
@@ -241,13 +306,13 @@ app.get('/logout',function(req,res){
   });
 });
 
-//Affichage des cartes amis (répond à myProfile.js)
+//Affichage des cartes amis (répond à myProfile.js) = ceux que j'ai dans Ma liste
 app.post('/friends_recall', function(req, res) {
   sess = req.session;
   var friend_list=[];
   User.find({"_id":sess.userid}, function(err, users) {
     if(err) return console.error(err);
-    async.eachSeries(users[0].friends_id, function(elem, callback) {
+    async.eachSeries(users[0].friends, function(elem, callback) {
       User.find({"_id":elem}, function(err, friendslist) {
         friend_list.push(friendslist[0]);
         callback(false);

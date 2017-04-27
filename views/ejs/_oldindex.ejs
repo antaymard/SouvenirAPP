@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Remember</title>
+  <meta name="description" content="A cool thing made with HyperDev">
+  <link id="favicon" rel="icon" href="https://hyperdev.com/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://use.fontawesome.com/d5a570f79a.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"> -->
+  <script src="http://malsup.github.com/jquery.form.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+<body>
+
+  <!-- NAVIGATION BAR -->
+  <div class="navbar-fixed">
+    <nav class= "header z-depth-0">
+      <a href="#" class="brand-logo">Logo</a>
+      <div class="nav-wrapper">
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/" id="lol">HOME</a></li>
+          <li><a href="#">Afficher tout</a></li>
+          <li><a href='/myProfile'><%= profilePNom %> <%= profileNom %>
+            <img id="profilePic" class="circle responsive-img" src= "/<%= userphotoid %>"></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+
+    <!-- CORPS -->
+    <div class="container">
+
+
+      <!-- Bottom Modal Structure -->
+      <div id="modal1" class="modal bottom-sheet">
+        <div id="friend_researchinput" class="container">
+          <div class="modal-content">
+            <div class="row">
+              <div class="col s9">
+                <div class="input-field">
+                  <i class="material-icons prefix">search</i>
+                  <input type="text" id="input_addFriends" class="autocomplete">
+                  <label for="autocomplete-input">Rechercher un ami</label>
+                </div>
+              </div>
+              <div class="col s3">
+                <button id='search_friend' data-target="modal1" class="btn waves-effect waves-light">
+                  <i class="material-icons prefix ">search</i></button>
+                </div>
+              </div>
+              <div id="modal_card"></div>
+            </div>
+            <!-- <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ajouter</a>
+          </div> -->
+        </div></div>
+
+
+        <div class="row">
+
+          <div class="col m7">
+            <p class='section_title'>Derniers Souvenirs</p>
+            <!-- <button class="btn waves-effect waves-light green section_btn">
+            Nouveau</button> -->
+            <div class="inputWrapper_btn btn waves-effect waves-light green section_btn">
+              <form id="fileUp" enctype = "multipart/form-data" action="/new/uploadFile" method="post">
+                <label id="addButton" for="userPhoto"><i class="fa fa-picture-o white-text" aria-hidden="true"></i></label>
+                <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
+              </form>
+            </div>
+          </div>
+
+          <div class="col m5">
+            <p class='section_title'>Social Feed <button data-target="modal1" class="btn-flat waves-effect waves-green grey lighten-2 section_btn">
+              +<i class="material-icons prefix ">perm_identity</i></button></p>
+          </div>
+
+
+
+          </div>
+          <div class="row" id="svnr_recall_space"></div>
+        </div>
+
+
+
+
+        <link rel="stylesheet" href="/styleGeneral.css">
+        <link rel="stylesheet" href="/styleIndex.css">
+        <script type="text/javascript" src="/index.js"></script>
+        <script type="text/javascript" src='/jquery.transit.min.js'></script>
+        <script type="text/javascript" src='/jquery.jMosaic.js'></script>
+        <!-- <link rel="stylesheet" href="css/jquery.jMosaic.css"/> -->
+
+        <!-- <script src="http://82.239.100.156:8080/socket.io/socket.io.js"></script> -->
+
+      </body>
+      </html>

@@ -1,0 +1,95 @@
+#svnr_recall_space {
+  background-color: black;
+  position: fixed;
+}
+
+.section_btn {
+  float: right;
+}
+
+.inputWrapper_btn {
+  overflow: hidden;
+  position: relative;
+  top: -51px;
+  /*right: 10px;*/
+  margin-bottom: -100px;
+  cursor: pointer;
+}
+#input_photo {
+  cursor: pointer;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    right: 0;
+    /*This makes the button huge so that it can be clicked on*/
+    font-size:50px;
+    opacity: 0;
+}
+/*#addButton {
+  height: 70px;
+  width: 70px;
+  cursor: pointer;
+}*/
+
+#modal1 {
+  height : 3000px;
+  /*background-color: blue;*/
+}
+
+.input-field {
+  display: block;
+}
+/*#friend_researchinput {
+  margin-top: -115px;
+}*/
+
+#profilePic_modal {
+  height: 145px;
+  width: 145px;
+  object-fit: cover;
+  float : left;
+}
+
+#modal_pseudo {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 7px;
+  margin-top: 3px;
+}
+#modal_prenom {
+  font-size: 15px;
+  font-weight: 400;
+}
+.modal_desc {
+}
+
+#modal_card_response {
+  height : 190px;
+}
+
+#panel_text {
+  padding-left: 180px;
+  padding-top: 0px;
+}
+
+.card_svnr {
+  margin: 0 -8px 6px -8px;
+  height: 150px;
+  max-height: 150px;
+
+}
+.card_img {
+  height: 60px;
+}
+
+.section_title {
+  font-weight: 300;
+  font-size: 20px;
+  margin-top: 70px;
+}
+
+
+
+/*.container {
+    padding-top: 60px;
+}*/
