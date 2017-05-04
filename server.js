@@ -5,9 +5,11 @@ session = require('express-session'),
 bodyParser = require('body-parser'),
 async = require('async'),
 fs = require("fs");
-
 var mongoose = require('mongoose'),
 db = mongoose.connection;
+
+var tinify = require("tinify");
+tinify.key = "wpmznfn7MXAweJeAMF1uPIKBmKOYe-2r";
 
 
 app
@@ -238,7 +240,9 @@ var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
 app.post('/new/uploadFile',function(req,res){
     uploadSvnr(req,res,function(err) {
         if(err) {return res.end("Error uploading file.".red);}
-
+        // var CidFileSvnr = idFileSvnr.slice(0, -4) + "_compd.jpg"
+        // console.log("CidFileSvnr = ".blue + CidFileSvnr);
+        tinify.fromFile("ImgSouvenir/" + idFileSvnr).toFile("ImgSouvenir/" + idFileSvnr);
         console.log("fichier uploadé - ".green + idFileSvnr);
         res.render('ejs/edit_svnr', {
           userphotoid : idFileSvnr

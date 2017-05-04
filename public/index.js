@@ -14,10 +14,11 @@ $( document ).ready(function() {
       var n;
       for (n in svnrs) {
         var s = svnrs[n];
-        displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.createdBy[0].pers_color);
+        displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
       }
       displayFocusedSvnr(svnrs[0]._id);
       $('.tooltipped').tooltip({delay: 50});
+      hidePannelFct();
     }
   });
 
@@ -55,19 +56,6 @@ $('#search_friend').click(function() {
 
       var user_age = calcAge(data[0].birthday);
       $('#modal_card').append(
-        // "<div class='z-depth-1 card blue-grey hoverable' id='modal_card_response'>"
-        // + "<div class='card-content white-text'>"
-        // +   "<img id='profilePic_modal' class='circle responsive-img' src='" + data[0].photo_address + "'>"
-        // +   "<div id='panel_text'>"
-        // +      "<p id='modal_pseudo'>" + data[0].username + "</p>"
-        // +      "<p id='modal_prenom'>" + data[0].prenom + " " + data[0].nom + "</p>"
-        // +      "<p class='modal_desc'>" + user_age + " ans, de " + data[0].living_city + "</p>"
-        // +     "</div>"
-        // +   "</div>"
-        // +   "<div class='modal-footer blue-grey'>"
-        // +     "<button id='add_as_friend_btn' style='float : right; margin-right : 30px' class='modal-action white-text waves-effect waves-green btn-flat'>Ajouter</button>"
-        // +   "</div>"
-        // + "</div>"
         '<div class="card horizontal" style="max-height:220px; max-width:70%; margin-right:auto; margin-left:40px;">'
         + '<div class="card-image" style="width:30%;">'
         + '<img style="max-height:100%; max-width:100%; object-fit:cover" src="' + data[0].photo_address +'">'
@@ -116,20 +104,21 @@ function displayFocusedSvnr(focusId) {
       $("#JSprintedSpace").empty();
 
       $("#JSprintedSpace").append(
-        '<div class="focusImgSpace col s6">'
-        +    '<img id="imgFocus" class="focusImg" src="'+ data4[0].file_address +'" alt="">'
+        '<div class="focusImgSpace col l6 m6">'
+        +    '<img id="imgFocus" onclick="seeFullScreenImg()" class="focusImg" src="'+ data4[0].file_address +'" alt="">'
         + '</div>'
 
-        + '<div class="col s4">'
+        + '<div class="col l4 m6">'
+        + '<div id="minusPx">'
         +   '<div class="focusDataSpace" id="topSpace">'
         +       '<h1>'+ data4[0].titre +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></h1>'
         +       '<h2>'+ data4[0].lieu +'</h2>'
-        +       '<h3>'+ data4[0].svnr_date +'</h3>'
+        +       '<h3>'+ data4[0].svnr_date.slice(0, -14) +'</h3>'
         +   '</div>'
 
         +   '<div class="focusDataSpace" id="descSpace">'
         +       '<p>'+ data4[0].description +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></p>'
-        +   '</div>'
+        +   '</div></div>'
 
         +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
         +     '<div class="">'
@@ -139,9 +128,11 @@ function displayFocusedSvnr(focusId) {
         +   '</div>'
         + '</div>'
 
-        +  '<div class="col s2" style="color: rgba(0,0,0,0.3);">'
+        +  '<div class="col l2 m0" style="color: rgba(0,0,0,0.3);">'
         +    'Comments'
-        +  '</div>');
+        +  '</div>'
+        + '<button id="closeStorySpace_btn" onclick="hidePannelFct()"><i class="material-icons">view_carousel</i></button>'
+      );
       };
 
       var t;
@@ -235,13 +226,13 @@ function acsharedFriends() {
 
 //------------------------------------------------------------------------------
   //Affichage du panel inférieur Story avec svnrs
-  function displaySvnr(titre, img_address, description, idsvnr, cBusername, cBphotoAdress, cBcolor) {
+  function displaySvnr(titre, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date) {
     $("#svnr_recall_space").append(
       '<div onclick="displayFocusedSvnr('+ "'" + idsvnr + "'" +')" class="myCard">'
       + '<img src="'+ img_address + '">'
       + '<img class="who_posted tooltipped" data-position="top" data-delay="50" data-tooltip="' + cBusername + '" style="border: 2px solid white '// + cBcolor
       + '" src="' + cBphotoAdress + '">'
-      + '<h2>' + 'il y a 3 min' + '</h2>'
+      + '<h2>' + calcAgo(creation_date) + '</h2>'
       + '<h1>' + titre + '</h1>'
       + '</div>'
     );
@@ -272,7 +263,7 @@ function acsharedFriends() {
 // )
 // });
 
-  //FUNCTIONS --------------------------------------------------------------------
+  //FUNCTIONS ------------------------------------------------------------------
   //Checker si la valeur est déjà dans l'array
   function isInArray(value, array) {
     return array.indexOf(value) > -1; //answer T or F
@@ -283,11 +274,92 @@ function acsharedFriends() {
     return ~~((Date.now() - birthday) / (31557600000));
   };
 
+  function calcAgo(dateString) {
+    var creaDate = +new Date(dateString);
+    var result = ((Date.now() - creaDate) / (86400000));
+    if (result > 30) {
+      return "il y a " + ~~(result/30) + " mois";
+    }
+    if (result<2 && result >1) {
+      return "il y a " + ~~(result) + " jour";
+    }
+    if (result>=1) {
+      return "il y a " + ~~(result) + " jours";
+    }
+    if (result<1) { //si moins d'un jour
+      result = result * 24; //on passe en heures
+      if (result<1) { //si moins d'une heure
+        result = result * 60; // on passe en minutes
+        return "il y a " + ~~(result) + " minutes";
+      } else {
+      return "il y a " + ~~(result) + " heures";
+      }
+    }
+  };
+
+var k = 1; //1 = ouvert
+function hidePannelFct () {
+  console.log("click");
+  if (k == 0) {
+    closeHidePannelFct();
+    return null;
+  } if (k == 1) {
+    openHidePannelFct();
+    return null;
+  }
+};
+function closeHidePannelFct() {
+  $('#closeStorySpace_btn').transition({ y: '170px' });
+  $('.storySpace').transition({ y: '170px' });
+  // $( ".focusSpace" ).css( "padding-bottom", "20px" );
+  $( ".focusSpace" ).animate({paddingBottom: "20px"}, "easin");
+  k = 1;
+};
+function openHidePannelFct() {
+  $('#closeStorySpace_btn').transition({ y: '0px' });
+  $('.storySpace').transition({ y: '0px' });
+  // $( ".focusSpace" ).css( "padding-bottom", "200px" )
+  $( ".focusSpace" ).animate({paddingBottom: "200px"}, "easin");
+  k = 0;
+};
 
 
+var k2 = 0;
+function seeFullScreenImg () {
+  var $img = $('.focusImg');
+  if (k2 == 0) {
+    hidePannelFct();
 
+  var imageWidth = $img[0].width, //need the raw width due to a jquery bug that affects chrome
+      imageHeight = $img[0].height, //need the raw height due to a jquery bug that affects chrome
+      maxWidth = $(window).width(),
+      maxHeight = $(window).height(),
+      widthRatio = maxWidth / imageWidth,
+      heightRatio = maxHeight / imageHeight;
 
+  var ratio = widthRatio; //default to the width ratio until proven wrong
 
+  if (widthRatio * imageHeight > maxHeight) {
+      ratio = heightRatio;
+  }
+
+  //now resize the image relative to the ratio
+  $img.attr('width', imageWidth * ratio)
+      .attr('height', imageHeight * ratio);
+
+  //and center the image vertically and horizontally
+  $img.addClass('focusImg-fullscreened');
+
+  closeHidePannelFct();
+  k2 = 1;
+  return null
+} if (k2 == 1) {
+  $img.removeClass('focusImg-fullscreened');
+  openHidePannelFct();
+  k2 = 0;
+  return null;
+}
+};
 
 
   // var postData = 10; //Changé...
