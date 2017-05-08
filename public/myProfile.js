@@ -22,8 +22,6 @@ $(document).ready(function(){
         + '<div class="card-action">'
         + '<a href="#" class="red-text">UNFRIEND</a>'
         + '</div></div></div></div>'
-
-
         );
       };
     }

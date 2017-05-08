@@ -86,6 +86,25 @@ app.get("/", function (req, res) {
   // u.save();
 });
 
+app.get("/mobileIndex", function (req, res) {
+  sess = req.session;
+  if(sess.userid){
+    User.find({"_id" : sess.userid}, function(err, users) {
+      if(err) return console.error(err + ' home display err'.red);
+      res.render('ejs/mobileIndex', {
+        userphotoid : users[0].photo_address,
+        profileNom : users[0].nom,
+        profilePNom : users[0].prenom
+      });
+    });
+  }else {
+    res.sendFile(__dirname + '/views/login.html');
+  };
+  // var u = new User({ username : "test1"});
+  // u.save();
+});
+
+
 app.post('/login', function(req, response) {
   sess = req.session;
   User.find({"username" : req.body.username}, function(err, users) {
@@ -167,12 +186,10 @@ app.post('/svnr_recall', function(req,res) {
 app.post('/users_who_friended_me', function(req, res) {
   sess = req.session;
   var research = req.body.research;
-  console.log(research);
   User.find({"friends" : sess.userid, "username": new RegExp(research, "i")}, function(err, users) {
     if(err) return console.log(err);
-    console.log(users);
     res.json(users);
-  })
+  }).select("_id username photo_address pers_color ");
 });
 
 //Enregistrer partage avec ami
@@ -183,12 +200,12 @@ app.post('/add_as_shared', function(req, res) {
   console.log("Id Friend = ".blue + sharedF + " & idsvnr = " + idSvnr);
   Svnr.find({"_id" : idSvnr}, function(error, sv) {
     if (error) {return console.error(error);}
-    console.log("sv = ".blue + sv[0]);
+    // console.log("sv = ".blue + sv[0]);
     if (String(isInArray(sharedF, sv[0].sharedFriends)) == 'false') {
       console.log("shared is being added".green);
       Svnr.update({"_id": idSvnr}, {"$push":{ sharedFriends : sharedF}}, function(error, ret){
         if (error) { return console.error(error);}
-        console.log("ADDED".green);
+        // console.log("ADDED".green);
         res.end('added');
       });
     } else {
@@ -201,10 +218,10 @@ app.post('/sharedFriends_Supp', function(req, res) {
   sess = req.session;
   var idFriend = req.body.idFriend;
   var idSv = req.body.idSvnr;
-  console.log(idFriend + " " + idSv);
+  // console.log(idFriend + " " + idSv);
   Svnr.update({"_id": idSv}, {$pullAll: {sharedFriends: [idFriend]}}, function(err, ret){
     if (err) {return console.error(err);}
-    console.log("DELETED ".green + ret);
+    // console.log("DELETED ".green + ret);
     res.json(ret);
   })
 });
@@ -353,7 +370,7 @@ app.post('/myProfile/updateImg', function(req, res){
     }
     User.update({"_id" : sess.userid}, {"photo_address" : idFileProPic}, function(err) {
       if(err) return console.error("PB uplaod ProPic ".red + err);
-      res.end('done');
+      res.redirect('/myProfile');
     });
   });
 });

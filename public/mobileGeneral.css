@@ -1,0 +1,85 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat+Subrayada';
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400';
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background: #ececec;
+  margin: 0px;
+}
+.trueBody {
+  margin-top: 70px;
+  padding: 5px;
+}
+
+.myHeader {
+  position: fixed;
+  top: 0px;
+  border-bottom: 1px solid white;
+  width: 100%;
+  height: 65px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  background-color: #FF9800;
+  z-index: 100;
+
+}
+#Header {
+  float: right;
+  margin: auto;
+  padding-top: 16px;
+  padding-right: 30px;
+}
+#homeLink {
+  position: absolute;
+  left: 10px;
+  top: 16px;
+}
+#Header a {
+  font-size: 15px;
+  color: white;
+  border-radius: 2px;
+}
+#Header a:hover {
+  color: rgba(0,0,0,0.5);
+  /*margin-left: 40px;*/
+  background-color: rgba(0,0,0,0.1);
+}
+
+
+/*.headerHidden {
+  top : -120px;
+}*/
+
+
+#profilePic {
+  height : 30px;
+  width: 30px;
+  vertical-align: middle;
+  margin-left: 5px;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.imgCard {
+  height: 150px;
+  object-fit: cover;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.
+
+/*::-webkit-scrollbar {
+    display: none;
+}*/
+
+
+
+
+ //  https://www.sanwebe.com/2014/08/css-html-forms-designs

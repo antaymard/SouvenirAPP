@@ -2,10 +2,6 @@ var postData = 1, all_users_listNFO;
 var dataS, dataA;
 var o;
 
-if (screen.width <= 800) {
-    window.location = "/mobileIndex";
-  }
-
 $( document ).ready(function() {
   $('.modal').modal();
 
@@ -19,7 +15,7 @@ $( document ).ready(function() {
         var s = svnrs[n];
         displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
       }
-      displayFocusedSvnr(svnrs[0]._id);
+      // displayFocusedSvnr(svnrs[0]._id);
       $('.tooltipped').tooltip({delay: 50});
       hidePannelFct();
     }
@@ -97,70 +93,70 @@ $('#search_friend').click(function() {
 });
 
 //Affichage du souvenir Focused
-function displayFocusedSvnr(focusId) {
-
-  $.post("/focusedRecall", {focusId:focusId}, function(data4) {
-    if (data4) {
-
-      dataA = data4[0]._id;
-
-      $("#JSprintedSpace").empty();
-
-      $("#JSprintedSpace").append(
-        '<div class="focusImgSpace col l6 m6">'
-        +    '<img id="imgFocus" onclick="seeFullScreenImg()" class="focusImg" src="'+ data4[0].file_address +'" alt="">'
-        + '</div>'
-
-        + '<div class="col l4 m6">'
-        + '<div id="minusPx">'
-        +   '<div class="focusDataSpace" id="topSpace">'
-        +       '<h1>'+ data4[0].titre +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></h1>'
-        +       '<h2>'+ data4[0].lieu +'</h2>'
-        +       '<h3>'+ data4[0].svnr_date.slice(0, -14) +'</h3>'
-        +   '</div>'
-
-        +   '<div class="focusDataSpace" id="descSpace">'
-        +       '<p>'+ data4[0].description +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></p>'
-        +   '</div></div>'
-
-        +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
-        +     '<div class="">'
-        +         '<input placeholder="Partager avec des amis" id="sharedFriends" type="text" class="autocomplete validate">'
-        +     '</div>'
-        +     '<div id="add_as_sharedSpace"></div>'
-        +   '</div>'
-        + '</div>'
-
-        +  '<div class="col l2 m0" style="color: rgba(0,0,0,0.3);">'
-        +    'Comments'
-        +  '</div>'
-        + '<button id="closeStorySpace_btn" onclick="hidePannelFct()"><i class="material-icons">view_carousel</i></button>'
-      );
-      };
-
-      var t;
-      for (t in data4[0].sharedFriends) {
-        $("#add_as_sharedSpace").append(
-          '<div class="divSharedFr" style="float:left;">'
-          + '<img data-position="top" data-delay="50" data-tooltip="' + data4[0].sharedFriends[t].username
-            + '" class="tooltipped img_sharedFr" src="'+ data4[0].sharedFriends[t].photo_address +'" alt="">'
-            + '<button class="sharedSupp_btn red" onclick="sharedFriendsSupp('+ "'" + data4[0].sharedFriends[t]._id + "'" +')"><i class="tiny material-icons">delete</i></button>'
-          + '</div>'
-        )
-      };
-
-      $('.tooltipped').tooltip({delay: 50});
-
-      //Dès qu'une lettre est entrée dans le champ addFriends, déclence la fct
-      var timeoutId = 0;
-      $("#sharedFriends").keypress(function(){
-        o = 0;
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(acsharedFriends, 300);
-      });
-    }); //END of POST
-
-};//FIN displayFocusedSvnr
+// function displayFocusedSvnr(focusId) {
+//
+//   $.post("/focusedRecall", {focusId:focusId}, function(data4) {
+//     if (data4) {
+//
+//       dataA = data4[0]._id;
+//
+//       $("#JSprintedSpace").empty();
+//
+//       $("#JSprintedSpace").append(
+//         '<div class="focusImgSpace col l6 m6">'
+//         +    '<img id="imgFocus" onclick="seeFullScreenImg()" class="focusImg" src="'+ data4[0].file_address +'" alt="">'
+//         + '</div>'
+//
+//         + '<div class="col l4 m6">'
+//         + '<div id="minusPx">'
+//         +   '<div class="focusDataSpace" id="topSpace">'
+//         +       '<h1>'+ data4[0].titre +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></h1>'
+//         +       '<h2>'+ data4[0].lieu +'</h2>'
+//         +       '<h3>'+ data4[0].svnr_date.slice(0, -14) +'</h3>'
+//         +   '</div>'
+//
+//         +   '<div class="focusDataSpace" id="descSpace">'
+//         +       '<p>'+ data4[0].description +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></p>'
+//         +   '</div></div>'
+//
+//         +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
+//         +     '<div class="">'
+//         +         '<input placeholder="Partager avec des amis" id="sharedFriends" type="text" class="autocomplete validate">'
+//         +     '</div>'
+//         +     '<div id="add_as_sharedSpace"></div>'
+//         +   '</div>'
+//         + '</div>'
+//
+//         +  '<div class="col l2 m0" style="color: rgba(0,0,0,0.3);">'
+//         +    'Comments'
+//         +  '</div>'
+//         + '<button id="closeStorySpace_btn" onclick="hidePannelFct()"><i class="material-icons">view_carousel</i></button>'
+//       );
+//       };
+//
+//       var t;
+//       for (t in data4[0].sharedFriends) {
+//         $("#add_as_sharedSpace").append(
+//           '<div class="divSharedFr" style="float:left;">'
+//           + '<img data-position="top" data-delay="50" data-tooltip="' + data4[0].sharedFriends[t].username
+//             + '" class="tooltipped img_sharedFr" src="'+ data4[0].sharedFriends[t].photo_address +'" alt="">'
+//             + '<button class="sharedSupp_btn red" onclick="sharedFriendsSupp('+ "'" + data4[0].sharedFriends[t]._id + "'" +')"><i class="tiny material-icons">delete</i></button>'
+//           + '</div>'
+//         )
+//       };
+//
+//       $('.tooltipped').tooltip({delay: 50});
+//
+//       //Dès qu'une lettre est entrée dans le champ addFriends, déclence la fct
+//       var timeoutId = 0;
+//       $("#sharedFriends").keypress(function(){
+//         o = 0;
+//           clearTimeout(timeoutId);
+//           timeoutId = setTimeout(acsharedFriends, 300);
+//       });
+//     }); //END of POST
+//
+// };//FIN displayFocusedSvnr
 
 
 function sharedFriendsSupp(idFriend) {
@@ -239,8 +235,8 @@ function acsharedFriends() {
       + '<h1>' + titre + '</h1>'
       + '</div>'
     );
-    var imageWidth = 210;
-    $("#svnr_recall_space").width($(".myCard").length*imageWidth);
+    // var imageWidth = 210;
+    // $("#svnr_recall_space").width($(".myCard").length*imageWidth);
   };
 
 
