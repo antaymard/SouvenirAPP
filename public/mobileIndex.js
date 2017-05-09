@@ -14,6 +14,7 @@ $( document ).ready(function() {
       for (n in svnrs) {
         var s = svnrs[n];
         displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
+        console.log(s);
       }
       // displayFocusedSvnr(svnrs[0]._id);
       $('.tooltipped').tooltip({delay: 50});
@@ -228,11 +229,16 @@ function acsharedFriends() {
   function displaySvnr(titre, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date) {
     $("#svnr_recall_space").append(
       '<div onclick="displayFocusedSvnr('+ "'" + idsvnr + "'" +')" class="myCard">'
+      + '<div class="topMyCardDiv">'
+        + '<img class="who_posted" style="border: 2px solid white '// + cBcolor
+        + '" src="' + cBphotoAdress + '">'
+        + '<div class="cBusername">' + cBusername
+          + '<span class="creationDate"> - ' + calcAgo(creation_date) + '</span>'
+        + '</div>'
+      + '<div class="titreDiv">' + titre + '</div>'
+      + '</div>'
       + '<img src="'+ img_address + '">'
-      + '<img class="who_posted tooltipped" data-position="top" data-delay="50" data-tooltip="' + cBusername + '" style="border: 2px solid white '// + cBcolor
-      + '" src="' + cBphotoAdress + '">'
-      + '<h2>' + calcAgo(creation_date) + '</h2>'
-      + '<h1>' + titre + '</h1>'
+      + '<div class="descriptionDiv">'+ description + '</div>'
       + '</div>'
     );
     // var imageWidth = 210;

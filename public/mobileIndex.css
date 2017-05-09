@@ -1,4 +1,4 @@
-.storySpace {
+/*.storySpace {
   object-fit: cover;
   overflow-x: auto;
   padding: 10px 20px 0px 10px;
@@ -6,14 +6,14 @@
   bottom: 0px;
   height: 190px;
   width: 100%;
-}
+}*/
 .myCard {
   float: left;
   height: 400px;
   background-color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  text-align: center;
+  /*text-align: center;*/
   width: 100%;
   border-radius: 2px;
   object-fit: cover;
@@ -23,32 +23,50 @@
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 .myCard img {
+  text-align: center;
   border-radius: 2px 2px 0 0;
   height: 200px;
   width: 100%;
   object-fit: cover;
+  margin-top: 5px;
 }
+/*.topMyCardDiv {
+}*/
 .myCard img.who_posted {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   border-radius: 50%;
   object-fit: cover;
   width: 50px;
   height: 50px;
-  position: relative;
-  top: -200px;
-  left: -43%;
+  float: left;
+  top: 0px;
+  left: 0px;
   z-index: 80;
 }
-.myCard h2 {
+.cBusername {
+  padding-top: 7px;
+  font-size: 12px;
+  padding-left: 55px;
+  color: rgba(0,0,0,0.5);
+}
+.creationDate {
   font-size: 10px;
-  color: rgba(0,0,0,0.3);
-  margin: -55px 0 0 0;
+  color: rgba(0,0,0,0.5);
 }
-.myCard h1 {
-  font-size: 14px;
-  margin: 10px 0 0 0;
+.titreDiv {
+  margin-top: -3px;
+  font-size: 20px;
+  padding-left: 55px;
 }
-#closeStorySpace_btn {
+.descriptionDiv {
+  object-fit: cover;
+  overflow: auto;
+  padding: 0 10px 10px 10px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/*#closeStorySpace_btn {
   position: absolute;
   bottom: 164px;
   right: 15px;
@@ -65,19 +83,19 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   z-index: 99;
-}
+}*/
 
 
 
 /*Zone de Focus*/
-.focusSpace {
+/*.focusSpace {
   height: 100vh;
   padding-top: 80px;
   padding-bottom: 200px;
   padding-left: 20px;
   padding-right: 20px;
   margin-bottom: -20px;
-}
+}*/
 /*.focusSpace button {
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -94,18 +112,18 @@
   background-color: rgba(0, 0, 0, 0.10);
   color: rgba(0, 0, 0, 0.25);
 }*/
-.focusImgSpace {
+/*.focusImgSpace {
   height: 100%;
-}
-.focusImg {
+}*/
+/*.focusImg {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   object-fit: cover;
   height: 100%;
   width: 100%;
   border-radius: 2px;
   cursor: pointer;
-}
-.focusImg-fullscreened {
+}*/
+/*.focusImg-fullscreened {
   margin: auto;
   position: absolute;
   top: 0px;
@@ -113,8 +131,8 @@
   left: 0px;
   right: 0px;
   padding: 15px;
-}
-.focusDataSpace {
+}*/
+/*.focusDataSpace {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   background-color: white;
   border-radius: 2px;
@@ -122,43 +140,43 @@
   padding: 5px 5px 10px 5px;
   object-fit: cover;
   overflow: auto;
-}
-.focusDataSpace h1 {
+}*/
+/*.focusDataSpace h1 {
   font-size: 18px;
   margin: 2px 5px 2px 5px;
-}
-.focusDataSpace h2 {
+}*/
+/*.focusDataSpace h2 {
   font-size: 12px;
   margin: 5px 0 0 5px;
   color: rgba(0,0,0,0.5);
   font-weight: 300;
-}
-.focusDataSpace h3 {
+}*/
+/*.focusDataSpace h3 {
   font-size: 12px;
   margin: 5px 0 0 5px;
   color: rgba(0,0,0,0.5);
   font-weight: 300;
-}
-.focusDataSpace p {
+}*/
+/*.focusDataSpace p {
   font-size: 12px;
   margin: 5px 0 0 5px;
   color: rgba(0,0,0,0.8);
   font-weight: 400;
-}
-.col {
+}*/
+/*.col {
   height: 100%;
-}
-#minusPx {
+}*/
+/*#minusPx {
   height: 100%;
   margin-bottom: -170px;
   padding-bottom: 190px;
-}
-#topSpace {
+}*/
+/*#topSpace {
   height: 20%;
-}
-#descSpace {
+}*/
+/*#descSpace {
   height: 80%;
-}
+}*/
 
 
 /*ESPACE AMIS PARTAGES*/

@@ -28,12 +28,12 @@ body {
 #Header {
   float: right;
   margin: auto;
-  padding-top: 16px;
+  padding-top: 12px;
   padding-right: 30px;
 }
 #homeLink {
   position: absolute;
-  left: 10px;
+  left: 13px;
   top: 16px;
 }
 #Header a {
@@ -54,8 +54,8 @@ body {
 
 
 #profilePic {
-  height : 30px;
-  width: 30px;
+  height : 40px;
+  width: 40px;
   vertical-align: middle;
   margin-left: 5px;
   object-fit: cover;
