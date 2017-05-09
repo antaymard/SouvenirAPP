@@ -33,7 +33,11 @@ function submitForm () {
     $.post("/login",{username:username,pwd:pwd},function(data){
       if(data==='done') {
         console.log('done');
-        window.location = '/';
+        if (screen.width <= 800) {
+            window.location = "/mobileIndex";
+          } else {
+            window.location = '/';
+          }
       }
       if(data==='pb pwd') {
         console.log('pb pwd');

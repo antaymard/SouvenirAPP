@@ -14,7 +14,6 @@ $( document ).ready(function() {
       for (n in svnrs) {
         var s = svnrs[n];
         displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
-        console.log(s);
       }
       // displayFocusedSvnr(svnrs[0]._id);
       $('.tooltipped').tooltip({delay: 50});
