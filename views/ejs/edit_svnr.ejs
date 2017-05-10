@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSFOc8dFE4Pnaa2_li81d8Uj0ircfHqk4&libraries=places&callback=initMap"
+          async defer></script>
 
 
 </head>
@@ -29,7 +31,7 @@
 
   <div class="row">
 
-    <div id="edit_panel" class="col m3 z-depth-1">
+    <div id="edit_panel" class="col m5 z-depth-1">
 
       <div class="row">
         <h5>Création d'un nouveau souvenir</h5>
@@ -37,20 +39,13 @@
           <input id="titre" type="text" class="validate">
           <label for="titre">Titre du souvenir</label>
         </div>
-        <div class="input-field col s12">
-          <input id="lieu" type="text" class="validate">
-          <label for="lieu">Lieu du souvenir</label>
+
+        <div class="col s12">
+          <!-- <input id="lieu" type="text" class="validate"> -->
+          <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+          <div id="map"></div>
         </div>
-        <div class="input-field col s12">
-          <select id="type" class="icons">
-            <!-- <option value="" disabled selected>Choose your option</option> -->
-            <option value="event" selected data-icon="http://musicinafrica.net/sites/default/files/styles/tile_square/public/images/mia-articles/201601/gaelmanangou01.jpg?itok=DbZHwT7I" class="circle">Evénement</option>
-            <option value="place" data-icon="http://www.la-fenetriere.fr/images/porte_pvc---defilement3.jpg?crc=486740505" class="circle">Lieu</option>
-            <option value="person" data-icon="http://www.dotpod.com.ar/wp-content/uploads/2010/10/18-actuaciones-de-Hugh-Laurie-previas-a-Dr.-House.png" class="circle">Personne</option>
-            <option value="objet" data-icon="http://4.bp.blogspot.com/-k1IABa1HKf0/TrfovcL5ZLI/AAAAAAAADoM/Xcct47Y9hso/s1600/kado1.jpg" class="circle">Objet</option>
-          </select>
-          <label>Type de souvenir</label>
-        </div>
+
         <div class="input-field col s12">
           <label for="svnr_date">Date du souvenir (par défaut = ajourd'hui)</label>
           <input id="svnr_date" type="date" class="datepicker">
@@ -59,12 +54,12 @@
           <textarea id="description" class="materialize-textarea" data-length="120"></textarea>
           <label for="description">Description du souvenir</label>
         </div>
-        <div class="col s12">
+        <!-- <div class="col s12">
         <div id="enter_tagfriends" class="chips chips-placeholder"></div>
-      </div>
-        <div class="col s12">
+      </div> -->
+        <!-- <div class="col s12">
         <div id="enter_hashtags" class="chips chips-placeholder"></div>
-      </div>
+      </div> -->
       <div class="card-action">
         <button id="valider_btn" class='right waves-effect waves-light btn green' onclick="getIdFile('<%= userphotoid %>')">Valider</button>
         <button id='cancel_btn' onclick="getIdFile('<%= userphotoid %>')"style="margin-right:10px" class='right waves-effect waves-red btn-flat red-text'>Annuler</button>
@@ -74,7 +69,7 @@
 
     </div>
 
-    <div id="photo_panel" class="col m9">
+    <div id="photo_panel" class="col m7">
       <img class="responsive-img" src= "/<%= userphotoid %>"></a>
     </div>
   </div>

@@ -7,6 +7,7 @@ if (screen.width <= 800) {
   }
 
 $( document ).ready(function() {
+
   $('.modal').modal();
 
   //RECALL DES SOUVENRIS
@@ -106,38 +107,48 @@ function displayFocusedSvnr(focusId) {
 
       $("#JSprintedSpace").empty();
 
+      var date_jour = data4[0].svnr_date.substring(8, 10);
+      var date_mois = returnMonth(Number(data4[0].svnr_date.substring(5, 7)));
+      var date_an = data4[0].svnr_date.substring(0, 4);
+
       $("#JSprintedSpace").append(
-        '<div class="focusImgSpace col l6 m6">'
+          '<div class="focusImgSpace col l8">'
         +    '<img id="imgFocus" onclick="seeFullScreenImg()" class="focusImg" src="'+ data4[0].file_address +'" alt="">'
         + '</div>'
 
         + '<div class="col l4 m6">'
-        + '<div id="minusPx">'
-        +   '<div class="focusDataSpace" id="topSpace">'
-        +       '<h1>'+ data4[0].titre +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></h1>'
-        +       '<h2>'+ data4[0].lieu +'</h2>'
-        +       '<h3>'+ data4[0].svnr_date.slice(0, -14) +'</h3>'
-        +   '</div>'
 
-        +   '<div class="focusDataSpace" id="descSpace">'
-        +       '<p>'+ data4[0].description +'<span style="float:right"><button class="waves-effect waves-teal btn-flat"><i class="tiny material-icons grey-text">mode_edit</i></span></button></p>'
-        +   '</div></div>'
-
-        +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
-        +     '<div class="">'
-        +         '<input placeholder="Partager avec des amis" id="sharedFriends" type="text" class="autocomplete validate">'
+        +     '<div class="focusDataSpace" id="topSpace">'
+        +       '<div class="row" id="textTop">'
+        +         '<div class="col s10" id="titreTop">'
+        +           '<h1>'+ data4[0].titre +'</h1>'
+        +         '</div>'
+        +         '<div class="col s2" id="dateTop">'
+        +           '<p id="dateY">'+ date_an +'</p>'
+        +           '<p id="dateJM">'+ date_jour + ' '+ date_mois +'</p>'
+        +         '</div>'
+        +       '</div>'
+        +       '<div id="map"></div>'
         +     '</div>'
-        +     '<div id="add_as_sharedSpace"></div>'
+
+        +   '<div class="" id="descSpace">'
+        +       '<p id="descP">'+ data4[0].description +'</p>'
         +   '</div>'
+
+        // +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
+        // +     '<div class="">'
+        // +         '<input placeholder="Partager avec des amis" id="sharedFriends" type="text" class="autocomplete validate">'
+        // +     '</div>'
+        // +     '<div id="add_as_sharedSpace"></div>'
+        // +   '</div>'
         + '</div>'
 
-        +  '<div class="col l2 m0" style="color: rgba(0,0,0,0.3);">'
-        +    'Comments'
-        +  '</div>'
+        // +  '<div class="col l0 m0" style="color: rgba(0,0,0,0.3);">'
+        // +    'Comments'
+        // +  '</div>'
         + '<button id="closeStorySpace_btn" onclick="hidePannelFct()"><i class="material-icons">view_carousel</i></button>'
       );
       };
-
       var t;
       for (t in data4[0].sharedFriends) {
         $("#add_as_sharedSpace").append(
@@ -161,6 +172,7 @@ function displayFocusedSvnr(focusId) {
     }); //END of POST
 
 };//FIN displayFocusedSvnr
+
 
 
 function sharedFriendsSupp(idFriend) {
@@ -249,22 +261,6 @@ function acsharedFriends() {
     //Envoie file
     $('#fileUp').submit();
   });
-
-// $('#fileUp').change(function(){
-//   console.log("changed");
-//   $("#Header").append(
-//     '<div style="margin-left: 80px;" class="preloader-wrapper small active">'
-//   +   '<div class="spinner-layer spinner-green-only">'
-//   +    '<div class="circle-clipper left">'
-//   +      '<div class="circle"></div>'
-//   +    '</div><div class="gap-patch">'
-//   +      '<div class="circle"></div>'
-//   +    '</div><div class="circle-clipper right">'
-//   +      '<div class="circle"></div>'
-//   +    '</div>'
-//   +  '</div></div>'
-// )
-// });
 
   //FUNCTIONS ------------------------------------------------------------------
   //Checker si la valeur est déjà dans l'array
@@ -363,6 +359,47 @@ function seeFullScreenImg () {
   return null;
 }
 };
+
+function returnMonth (month_numb) {
+  var ans;
+  switch (month_numb) {
+    case 1:
+      return "JAN";
+      break;
+    case 2:
+      return "FEV";
+      break;
+    case 3:
+      return "MAR";
+      break;
+    case 4:
+      return "AVR";
+      break;
+    case 5:
+      return "MAI";
+      break;
+    case 6:
+      return "JUIN";
+      break;
+    case 7:
+      return "JUIL";
+      break;
+    case 8:
+      return "AOUT";
+      break;
+    case 9:
+      return "SEPT";
+      break;
+    case 10:
+      return "OCT";
+      break;
+    case 11:
+      return "NOV";
+      break;
+    case 12:
+      return "DEC";
+      break;
+}};
 
 
   // var postData = 10; //Changé...
