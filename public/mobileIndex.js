@@ -1,25 +1,13 @@
 var postData = 1, all_users_listNFO;
 var dataS, dataA;
 var o;
+var recall = 0, limit = 10, svnrs;
 
 $( document ).ready(function() {
   $('.modal').modal();
 
   //RECALL DES SOUVENRIS
-  var recall = 1, svnrs;
-  $.post("/svnr_recall", {recall:recall}, function (svnrs) {
-    // console.log(svnrs);
-    if(svnrs) {
-      var n;
-      for (n in svnrs) {
-        var s = svnrs[n];
-        displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
-      }
-      // displayFocusedSvnr(svnrs[0]._id);
-      $('.tooltipped').tooltip({delay: 50});
-      hidePannelFct();
-    }
-  });
+  recallGlobal ();
 
   //CHARGER LES NOMS DES USERS POUR L'AUTOCOMPLETE DE LA RECHERCHE
   $.ajax({
@@ -45,6 +33,35 @@ $( document ).ready(function() {
     }
   });
 });
+
+function recallGlobal () {
+
+$("#loadMoreCard").remove();
+
+$.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
+  // console.log(svnrs);
+  if(svnrs) {
+    var n;
+    for (n in svnrs) {
+      var s = svnrs[n];
+      displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
+    }
+    displayFocusedSvnr(svnrs[0]._id);
+    $('.tooltipped').tooltip({delay: 50});
+    // hidePannelFct();
+
+    $("#svnr_recall_space").append(
+        '<div id="loadMoreCard" onclick="recallGlobal()" class="myCard">'
+      + '</div>'
+    );
+
+    // var imageWidth = 210;
+    // $("#svnr_recall_space").width($(".myCard").length*imageWidth);
+    //
+  }
+});
+recall ++;
+};
 
 //AFFICHER LA CARTE CORRESPONDANT A L'AMI RECHERCHE
 $('#search_friend').click(function() {
