@@ -179,7 +179,7 @@ app.post('/svnr_recall', function(req,res) {
   Svnr.find({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}, function(err, svnrs) {
     if (err) return console.error(err);
     res.json(svnrs);
-  }).populate("createdBy").sort("-creation_date").limit(7);
+  }).populate("createdBy").sort("-creation_date").limit(Number(req.body.limit)).skip(10*Number(req.body.recall);
 });
 
 //renvoie ceux qui m'ont ajouté en amis
