@@ -128,19 +128,23 @@ function displayFocusedSvnr(focusId) {
         +           '<p id="dateJM">'+ date_jour + ' '+ date_mois +'</p>'
         +         '</div>'
         +       '</div>'
-        +       '<div id="map"></div>'
+        +       '<div id="mapSpace">'
+        +         '<img data-position="top" data-delay="50" data-tooltip="' + data4[0].lieu
+        + '" class="tooltipped" id="mapImg" src="https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7C'+ data4[0].lieu +'&size=450x100&key=AIzaSyCIZJxUd_-Nr_QzFw3AEuc2OOuYECk0Nnk"></img>'
+
+        +       '</div>'
         +     '</div>'
 
         +   '<div class="" id="descSpace">'
         +       '<p id="descP">'+ data4[0].description +'</p>'
         +   '</div>'
 
-        // +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
-        // +     '<div class="">'
-        // +         '<input placeholder="Partager avec des amis" id="sharedFriends" type="text" class="autocomplete validate">'
-        // +     '</div>'
-        // +     '<div id="add_as_sharedSpace"></div>'
-        // +   '</div>'
+        +   '<div class="focusDataSpace" id="sharedFriendsSpace">'
+        +     '<div class="">'
+        +         '<input placeholder="Partager avec des amis" id="sharedFriends" type="text" class="autocomplete validate">'
+        +     '</div>'
+        +     '<div id="add_as_sharedSpace"></div>'
+        +   '</div>'
         + '</div>'
 
         // +  '<div class="col l0 m0" style="color: rgba(0,0,0,0.3);">'
@@ -400,6 +404,21 @@ function returnMonth (month_numb) {
       return "DEC";
       break;
 }};
+
+function initialisation(){
+		var optionsCarte = {
+			zoom: 8,
+			center: new google.maps.LatLng(47.389982, 0.688877)
+			// Remarque : Il est désormais possible de remplacer :
+			// center: new google.maps.LatLng(47.389982, 0.688877)
+			// par :
+			// center: {lat: 47.389982, lng: 0.688877}
+		}
+	var maCarte = new google.maps.Map(document.getElementById("map"), optionsCarte);
+	}
+
+
+
 
 
   // var postData = 10; //Changé...
