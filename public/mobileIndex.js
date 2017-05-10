@@ -46,7 +46,7 @@ $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
       var s = svnrs[n];
       displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
     }
-    displayFocusedSvnr(svnrs[0]._id);
+    // displayFocusedSvnr(svnrs[0]._id);
     $('.tooltipped').tooltip({delay: 50});
     // hidePannelFct();
 
