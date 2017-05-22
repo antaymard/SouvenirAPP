@@ -58,7 +58,7 @@ function openSharedFriendPanel(idSvnr) {
       for (i in myFriends_data) {
         if (!myFriends_data[i].photo_address) {myFriends_data[i].photo_address = "http://placehold.it/350x150"}
         $('#variablepopup').append(
-          '<div class="friendCard">'
+          '<div onclick="addAsShared('+ "'" + idSvnr +"'" + ','+"'"+ myFriends_data[i]._id +"'"+')" class="friendCard">'
         +    '<img class="friendImg" src="' + myFriends_data[i].photo_address + '">'
         +    myFriends_data[i].username
         +  '</div>'
@@ -70,6 +70,23 @@ function openSharedFriendPanel(idSvnr) {
   $('#popupDiv').transition({ y: '-300px' });
   //Ouvre un popup (= fonction)
   //Charge en AJAX la liste d'amis (server dejà fait) avec onclick = add idSvnr et userid
+};
+
+// A MODIFIER 
+function displaySharedFriends(idSvnr) {
+  $.post("/add_as_shared", {idSvnr:idSvnr}, function(data){
+    if (data == 'added') {
+      console.log("added");
+    }
+});
+}
+
+function addAsShared(idSvnr, idFriend) {
+  $.post("/add_as_shared", {sharedF:idFriend, idSvnr:idSvnr}, function(data){
+    if (data == 'added') {
+      console.log("added");
+    }
+});
 };
 
 function clearPopup(){

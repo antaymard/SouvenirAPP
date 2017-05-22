@@ -29,13 +29,6 @@ body {
 }
 #mapImg {
 }
-#bottomDiv {
-  position: fixed;
-  bottom: 0px;
-  background-color: white;
-  height: 50px;
-  width: 100vw;
-}
 #DescDiv {
   padding: 10px;
   color: white;

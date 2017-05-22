@@ -6,30 +6,30 @@
 }
 
 body {
-  background: #ececec;
+  background: white;
   margin: 0px;
 }
 .trueBody {
-  margin-top: 70px;
+  margin-top: 50px;
   padding: 5px;
 }
 
 .myHeader {
   position: fixed;
   top: 0px;
-  border-bottom: 1px solid white;
   width: 100%;
-  height: 65px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  background-color: #FF9800;
+  height: 45px;
+  /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+  background-color: #0D47A1;
   z-index: 100;
-
+  /*background: hsla(0,0%,70%,.4);*/
+  /*-webkit-backdrop-filter: blur(20px);*/
 }
 #Header {
   float: right;
   margin: auto;
-  padding-top: 12px;
-  padding-right: 30px;
+  padding-top: 8px;
+  padding-right: 20px;
 }
 #homeLink {
   position: absolute;
@@ -47,19 +47,59 @@ body {
   background-color: rgba(0,0,0,0.1);
 }
 
+#bottomDiv {
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
+  height: 45px;
+  width: 100vw;
+  border-top: solid 1px rgba(0,0,0,0.05);
+}
+.botNavIcon {
+  color: #0D47A1;
+  height: 45px;
+  text-align: center;
+}
+.navIcon {
+  font-size: 30px;
+  margin-top: 6px;
+}
+.row {
+  margin-bottom: 0px;
+}
 
 /*.headerHidden {
   top : -120px;
 }*/
 
+#inputNewPhoto {
+  float: left;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+#input_photo {
+    cursor: pointer;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    right: 0;
+    /*This makes the button huge so that it can be clicked on*/
+    opacity: 0;
+}
+#addButton {
+  font-size: 13px;
+  font-weight: 200;
+  color: white;
+}
 
 #profilePic {
-  height : 40px;
-  width: 40px;
+  height : 30px;
+  width: 30px;
   vertical-align: middle;
   margin-left: 5px;
   object-fit: cover;
-  border: 2px solid white;
+  /*border: 2px solid white;*/
 }
 
 .imgCard {

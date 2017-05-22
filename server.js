@@ -173,6 +173,32 @@ app.post('/add_as_friend', function(req, res){
   }).select("friends");
 });
 
+app.get("/search", function (req, res) {
+  sess = req.session;
+  if(sess.userid){
+    User.find({"_id" : sess.userid}, function(err, users) {
+      if(err) return console.error(err + ' home display err'.red);
+      res.render('ejs/search', {
+        userphotoid : users[0].photo_address,
+        profileNom : users[0].nom,
+        profilePNom : users[0].prenom
+      });
+    });
+  }else {
+    res.sendFile(__dirname + '/views/login.html');
+  };
+  // var u = new User({ username : "test1"});
+  // u.save();
+});
+
+app.post('/searchSvnr', function(req,res) {
+  sess = req.session;
+  Svnr.find({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}, function(err, svnrs) {
+    if (err) return console.error(err);
+    res.json(svnrs);
+  }).populate("createdBy").sort("-creation_date").limit(Number(req.body.limit)).skip(10*Number(req.body.recall));
+});
+
 //Affiche mes souvenirs ajoutés par moi (avec mon _id) + oùmon id est présent en sharedFriends
 app.post('/svnr_recall', function(req,res) {
   sess = req.session;
@@ -255,7 +281,18 @@ app.get("/focus/:id", function (req, res) {
   }).populate("createdBy");
 });
 
+app.post("/get_sharedWith", function (req, res) {
+  Svnr.find({"_id": req.body.idSvnr}, function (err, sharedfriends) {
+    if (err) {return console.error(err);}
+    res.json(sharedfriends);
+  }).populate("sharedfriends");
+});
+
 //CREATION ET MODIFICATIONS DE SOUVENIRS ---------------------------------------
+
+app.get("/open_camera", function (req,res) {
+  res.render('ejs/camera');
+});
 
 //creation du processus d'ajout (upload) image souvenir
 var idFileSvnr;

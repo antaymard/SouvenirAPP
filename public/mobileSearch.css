@@ -1,0 +1,16 @@
+#searchBar {
+  background-color: #1976D2;
+  position: absolute;
+  top: 45px;
+  height: 60px;
+  width: 100vw;
+}
+#searchForm {
+  width: 80vw;
+  margin: 10px auto;
+}
+#searchInput {
+  height: 40px;
+  margin-bottom: 0;
+  margin-top: 0;
+}

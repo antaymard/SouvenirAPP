@@ -1,0 +1,12 @@
+#video {
+  height: auto;
+  width: 100vw;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+#snap {
+  position: absolute;
+  bottom: 0px;
+
+}
