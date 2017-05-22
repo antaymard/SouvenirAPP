@@ -1,0 +1,74 @@
+
+<!-- 1 = UNE VALEUR URL A CHANGER -->
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Focus</title>
+  <meta name="description" content="A cool thing made with HyperDev">
+  <link id="favicon" rel="icon" href="https://hyperdev.com/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script src="https://use.fontawesome.com/d5a570f79a.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="imgDiv">
+  <img id="photo" src="/<%= file_address %>">
+</div>
+<div id="mapNdate">
+  <div id="map">
+    <%= lieu%>
+    <!-- <img id="mapImg" src="https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7C<%= lieu %>&size=450x80&key=AIzaSyCIZJxUd_-Nr_QzFw3AEuc2OOuYECk0Nnk"> -->
+    <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7C<%= lieu %>&size=450x80&key=AIzaSyCIZJxUd_-Nr_QzFw3AEuc2OOuYECk0Nnk&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xebe3cd&style=element:labels.text.fill%7Ccolor:0x523735&style=element:labels.text.stroke%7Ccolor:0xf5f1e6&style=feature:administrative%7Celement:geometry.stroke%7Ccolor:0xc9b2a6&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.land_parcel%7Celement:geometry.stroke%7Ccolor:0xdcd2be&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xae9e90&style=feature:administrative.neighborhood%7Cvisibility:off&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x93817c&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0xa5b076&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x447530&style=feature:road%7Celement:geometry%7Ccolor:0xf5f1e6&style=feature:road%7Celement:labels%7Cvisibility:off&style=feature:road.arterial%7Celement:geometry%7Ccolor:0xfdfcf8&style=feature:road.arterial%7Celement:labels%7Cvisibility:off&style=feature:road.highway%7Celement:geometry%7Ccolor:0xf8c967&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0xe9bc62&style=feature:road.highway%7Celement:labels%7Cvisibility:off&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0xe98d58&style=feature:road.highway.controlled_access%7Celement:geometry.stroke%7Ccolor:0xdb8555&style=feature:road.local%7Cvisibility:off&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x806b63&style=feature:transit.line%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:transit.line%7Celement:labels.text.fill%7Ccolor:0x8f7d77&style=feature:transit.line%7Celement:labels.text.stroke%7Ccolor:0xebe3cd&style=feature:transit.station%7Celement:geometry%7Ccolor:0xdfd2ae&style=feature:water%7Celement:geometry.fill%7Ccolor:0xb9d3c2&style=feature:water%7Celement:labels.text%7Cvisibility:off&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x92998d"> -->
+  </div>
+  <div id="date">
+    <%= date %>
+  </div>
+</div>
+
+<div id="DescDiv">
+  <%= description %>
+</div>
+<div id="socialDiv">
+  <div id="sharedDiv">
+    Partagé avec
+    <div id="socialSubDiv">
+      <button onclick="openSharedFriendPanel('<%= idSvnr %>')" id="addSharedFriend">+</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div id="bottomDiv">
+  <a href="/"><i class="large material-icons">mode_edit</i></a>
+</div>
+
+<div id="popupDiv">
+  <div id="titrepopup">
+  </div>
+  <div id="variablepopup">
+  </div>
+</div>
+
+</body>
+
+<script type="text/javascript" src='/jquery.transit.min.js'></script>
+<link rel="stylesheet" href="/styleGeneral.css">
+<link rel="stylesheet" href="/mobileFocus.css">
+<script type="text/javascript" src="/mobileFocus.js"></script>
+
+</html>

@@ -1,0 +1,103 @@
+body {
+  background: #404040;
+  width: 100vw;
+}
+
+#photo {
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height : 300px;
+}
+
+#mapNdate {
+  margin-top: 300px;
+  padding: 0px;
+  width: 100vw;
+  height: 80px;
+  background: white;
+}
+#map {
+  width: 80%;
+  float: left;
+}
+#date {
+  float: left;
+  width: 20%;
+  background-color: green;
+  height: 100%;
+}
+#mapImg {
+}
+#bottomDiv {
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
+  height: 50px;
+  width: 100vw;
+}
+#DescDiv {
+  padding: 10px;
+  color: white;
+  font-weight: 200;
+  text-align: justify;
+  font-size: 13px;
+}
+#sharedDiv {
+  background-color: white;
+  height: 50px;
+  font-size: 8px;
+  padding: 5px;
+  color: rgba(0,0,0,0.3);
+}
+#socialSubDiv {
+  padding: 2px;
+}
+#addSharedFriend {
+  border-radius: 50%;
+  background-color: rgba(0,0,0,0);
+  height: 40px;
+  width: 40px;
+  border: solid 1px rgba(0,0,0,0.3);
+  color: rgba(0,0,0,0.3);
+  font-size: 20px;
+  font-weight: 100;
+}
+#popupDiv {
+  height: 300px;
+  width: 100vw;
+  background-color: rgba(245,245,245,1);
+  margin: auto;
+  z-index: 99;
+  position: fixed;
+  bottom: -300px;
+}
+#titrepopup {
+  text-align: left;
+  height: 35px;
+  background-color: #03A9F4;
+  color: white;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+#variablepopup {
+  text-align: center;
+}
+.friendImg {
+  height: 80px;
+  width: 100%;
+  object-fit: cover;
+}
+.friendCard {
+  font-size: 12px;
+  font-weight: 200;
+  padding: 5px;
+  margin: 1%;
+  float: left;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}

@@ -235,6 +235,26 @@ app.post("/focusedRecall", function(req, res) {
   }).populate("sharedFriends").select("-password");
 });
 
+app.get("/focus/:id", function (req, res) {
+  sess = req.session;
+  Svnr.find({"_id": req.params.id}, function(err, focus){
+    if(err) return console.error(err);
+    var f = focus[0];
+    if (sess.userid === String(focus[0].createdBy[0]._id)) {
+      res.render("ejs/mobileFocus_full", {
+        file_address : f.file_address,
+        titre : f.titre,
+        lieu : f.lieu,
+        date : f.creation_date,
+        description : f.description,
+        idSvnr : f._id
+      });
+    } else {
+      res.render("ejs/mobileFocus_restricted");
+    }
+  }).populate("createdBy");
+});
+
 //CREATION ET MODIFICATIONS DE SOUVENIRS ---------------------------------------
 
 //creation du processus d'ajout (upload) image souvenir
