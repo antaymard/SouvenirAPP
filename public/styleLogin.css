@@ -3,24 +3,25 @@
 }
 
 body {
-  width: 100vh;
-  height: 100vh;
-  margin: 0px;
-  background-size: cover;
 }
 
 #bodyLogin {
+  margin: auto;
   padding: 30px;
   border-radius: 2px;
   color: white;
   text-align: center;
-  background-color: rgba(0,0,0,0.3);
+  background-color:#0D47A1;
   max-width: 30em;
   width: auto;
-  max-height: 80em;
+  height: 100vh;
   position: absolute;
-} h1 {
+}
+h1,h3 {
   font-weight: 100;
+}
+input {
+  padding: 40px;
 }
 
 
@@ -30,10 +31,6 @@ body {
   margin-right: auto;
   display: block;
   margin-bottom: -70px;
-}
-
-.form-control {
-  margin: 5px 0 5px 0;
 }
 
 .btn {
@@ -46,20 +43,4 @@ body {
   text-align: center;
   color: white;
   margin-bottom: -30px;
-}
-
-.bigMargin {
-  margin: 3em auto;
-  max-width: 20em;
-}
-
-#explainBody {
-  max-width: 50em;
-  margin: 0px auto;
-  /*background-color: grey;*/
-}
-
-#state {
-  margin-top : 15px;
-  opacity: 0;
 }
