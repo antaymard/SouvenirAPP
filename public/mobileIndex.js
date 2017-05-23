@@ -36,7 +36,7 @@ $( document ).ready(function() {
 
 function recallGlobal () {
 
-$("#loadMoreCard").remove();
+// $("#loadMoreCard").remove();
 
 $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
   // console.log(svnrs);
@@ -44,17 +44,17 @@ $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
     var n;
     for (n in svnrs) {
       var s = svnrs[n];
-      displaySvnr(s.titre, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date);
+      displaySvnr(s.titre, s.lieu, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date, s.sharedFriends.length, s.hastags);
     }
     // displayFocusedSvnr(svnrs[0]._id);
     $('.tooltipped').tooltip({delay: 50});
     // hidePannelFct();
 
-    $("#svnr_recall_space").append(
-        '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
-        + ' <i class="medium material-icons">replay_10</i>'
-      + '</div>'
-    );
+    // $("#svnr_recall_space").append(
+    //     '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
+    //     + ' <i class="medium material-icons">replay_10</i>'
+    //   + '</div>'
+    // );
 
     // var imageWidth = 210;
     // $("#svnr_recall_space").width($(".myCard").length*imageWidth);
@@ -79,11 +79,16 @@ function sharedFriendsSupp(idFriend) {
   })
 };
 
+$(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+       recallGlobal();
+   }
+});
 
 
 //------------------------------------------------------------------------------
   //Affichage du panel inférieur Story avec svnrs
-  function displaySvnr(titre, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date) {
+  function displaySvnr(titre, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
     $("#svnr_recall_space").append(
       '<div onclick="gotoFocusedSvnr('+ "'" + idsvnr + "'" +')" class="myCard">'
       + '<div class="topMyCardDiv">'
@@ -95,12 +100,28 @@ function sharedFriendsSupp(idFriend) {
       + '<div class="titreDiv">' + titre + '</div>'
       + '</div>'
       + '<img src="'+ img_address + '">'
-      + '<div class="descriptionDiv">'+ description + '</div>'
+      + '<div class="infoDiv">'
+      + '<div class="sharedDiv"><i class="material-icons">person</i>'+ nbShared + '</div>'
+      + '<div class="lieuDiv">'+ lieu + '</div>'
+      + '<div class="descriptionDiv"><span class="nameSpan">'+ cBusername + ' </span>'
+      + description + '</div>'
+      + '<div class="tagDiv">'+ displaytag(hashtags) + '</div>'
+      + '</div>'
       + '</div>'
     );
     // var imageWidth = 210;
     // $("#svnr_recall_space").width($(".myCard").length*imageWidth);
   };
+
+  function displaytag(hashtags) {
+    //pour chaque tag dans l'array
+    var z;
+    var hashtagsHTML = "";
+    for (z in hashtags) {
+      hashtagsHTML += '<span><a href="/search/tag/'+ hashtags[z] +'">#'+ hashtags[z] + ' </a></span>'
+    }
+    return hashtagsHTML;
+  }
 
 
   $("#input_photo").change(function() {

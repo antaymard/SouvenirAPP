@@ -62,14 +62,44 @@
   font-size: 15px;
   padding-left: 55px;
 }
-.descriptionDiv {
+.nameSpan {
+  font-weight: 800;
+  color: #607D8B;
+}
+.infoDiv {
   padding: 0 10px 10px 10px;
   text-align: justify;
   text-justify: inter-word;
   object-fit: cover;
   overflow: auto;
 }
-
+.lieuDiv {
+  height: 22px;
+}
+.sharedDiv {
+  color: #607D8B;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  height : 25px;
+}
+a {
+  color: grey;
+}
+.descriptionDiv {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 70px;
+}
+.tagDiv {
+  position: relative;
+  bottom: 0px;
+  border-top: solid 1px rgba(0,0,0,0.05);
+  height: 25px;
+  padding-top: 3px;
+}
 /*#closeStorySpace_btn {
   position: absolute;
   bottom: 164px;
