@@ -36,7 +36,7 @@ $( document ).ready(function() {
 
 function recallGlobal () {
 
-// $("#loadMoreCard").remove();
+$("#loadMoreCard").remove();
 
 $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
   // console.log(svnrs);
@@ -50,11 +50,11 @@ $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
     $('.tooltipped').tooltip({delay: 50});
     // hidePannelFct();
 
-    // $("#svnr_recall_space").append(
-    //     '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
-    //     + ' <i class="medium material-icons">replay_10</i>'
-    //   + '</div>'
-    // );
+    $("#svnr_recall_space").append(
+        '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
+        + ' <i class="medium material-icons">replay_10</i>'
+      + '</div>'
+    );
 
     // var imageWidth = 210;
     // $("#svnr_recall_space").width($(".myCard").length*imageWidth);
