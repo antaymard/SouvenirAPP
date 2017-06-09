@@ -7,6 +7,12 @@ async = require('async'),
 fs = require("fs");
 var mongoose = require('mongoose'),
 db = mongoose.connection;
+var Slack = require('slack-node');
+
+webhookUri = "__uri___";
+
+slack = new Slack();
+slack.setWebhook("https://hooks.slack.com/services/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");
 
 var tinify = require("tinify");
 tinify.key = "wpmznfn7MXAweJeAMF1uPIKBmKOYe-2r";
@@ -27,9 +33,11 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://antaymard:splinTer00@ds135039.mlab.com:35039/svnrapp');
 mongoose.connection.on("error", function() {
   console.log('Erreur connexion svnrapp DB'.red);
+  SendToSlack("*Erreur de connexion* à la database Svnr");
 });
 mongoose.connection.on('open', function() {
   console.log('Connexion réussie svnrapp DB'.green);
+  SendToSlack("*Connexion réussie* à la database Svnr");
 });
 
 
@@ -70,14 +78,18 @@ var sess;
 
 app.get("/", function (req, res) {
   sess = req.session;
+  SendToSlack("Site appelé");
   if(sess.userid){
     User.find({"_id" : sess.userid}, function(err, users) {
-      if(err) return console.error(err + ' home display err'.red);
+      if(err) {
+        SendToSlack('*Home Display Erreur : *\n' + err);
+        return console.error(err + ' home display err'.red)};
       res.render('ejs/index', {
         userphotoid : users[0].photo_address,
         profileNom : users[0].nom,
         profilePNom : users[0].prenom
       });
+      SendToSlack(users[0].prenom + " "+ users[0].nom + " connecté à son compte");
     });
   }else {
     res.sendFile(__dirname + '/views/login.html');
@@ -96,6 +108,7 @@ app.get("/mobileIndex", function (req, res) {
         profileNom : users[0].nom,
         profilePNom : users[0].prenom
       });
+      SendToSlack(users[0].prenom + " "+ users[0].nom + " connecté à son compte sur version mobile");
     });
   }else {
     res.sendFile(__dirname + '/views/login.html');
@@ -305,6 +318,7 @@ var storageSvnr =   multer.diskStorage({
     idFileSvnr = file.fieldname + '-' + Date.now() + '.jpg';
     callback(null, idFileSvnr);
     console.log("Fichier enregistré ".green + idFileSvnr);
+    SendToSlack("Nouvelle photo uploadée et enregistrée - " + idFileSvnr);
   }
 });
 // var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
@@ -330,6 +344,7 @@ app.post('/create_svnr', function(req,res) {
   var s = new Svnr({createdBy:sess.userid, titre:re.titre, lieu:re.lieu, type:re.type, svnr_date:re.svnr_date, creation_date:re.creation_date, description:re.description, file_address:re.file_address});
   s.save(function(){
     console.log("souvenir enregistré".green);
+    SendToSlack("Nouveau souvenir créé");
     res.end('done');
   })
 });
@@ -436,4 +451,15 @@ app.post('/myProfile/updateImg', function(req, res){
 //Checker si la valeur est déjà dans l'array
 function isInArray(value, array) {
   return array.indexOf(value) > -1; //answer T or F
+};
+
+function SendToSlack (message) {
+slack.webhook({
+  channel: "#server_feedback",
+  username: "webhookbot",
+  text: message
+}, function(err, response) {
+  if (err) { return console.error(err);}
+  console.dir(response);
+});
 };
