@@ -8,20 +8,19 @@ $(document).ready(function(){
         if (!myFriends_data[i].photo_address) {myFriends_data[i].photo_address = "http://placehold.it/350x150"}
         var user_age = calcAge(myFriends_data[i].birthday);
         $('#myFriends_Space').append(
-          '<div class="col m6">'
-        + '<div class="card horizontal" style="max-height:280px">'
-        + '<div class="card-image">'
-        + '<img style="height:100%; object-fit:cover" src="' + myFriends_data[i].photo_address +'">'
-        + '</div>'
-        + '<div class="card-stacked">'
-        + '<div class="card-content">'
-        + '<p style="font-size:19px;font-weight:500">'+ myFriends_data[i].username + '</p>'
-        + '<p style="font-size:17px;font-weight:400">'+ myFriends_data[i].prenom + ' ' + myFriends_data[i].nom + '</p>'
-        + '<p style="font-size:15px;font-weight:400">de '+ myFriends_data[i].living_city + '</p>'
-        + '<p style="font-size:15px;font-weight:400;margin-top:5px" class="teal-text">Actuellement à '+ myFriends_data[i].current_city + '</p></div>'
-        + '<div class="card-action">'
-        + '<a href="#" class="red-text">UNFRIEND</a>'
-        + '</div></div></div></div>'
+          '<div class="friendCard">'
+        +     '<div class="card-image">'
+        +       '<img class="imgFriend" src="' + myFriends_data[i].photo_address +'">'
+        +     '</div>'
+        +     '<div class="cardContent">'
+        +        '<p>'+ myFriends_data[i].username + " - "+ myFriends_data[i].prenom + ' ' + myFriends_data[i].nom + '</p>'
+        +        '<p>'+ user_age + " ans" + '</p>'
+        +        '<div class="cardAction">'
+        +        '<img class="togetherLogo" src="favicon-32x32.png"><span> 24</span>'
+        // +           '<a href="#" class="exploreBtn">EXPLORER</a>'
+        +        '</div>'
+        +      '</div>'
+        +  '</div>'
         );
       };
     }

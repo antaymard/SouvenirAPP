@@ -1,4 +1,4 @@
-
+/*Toute la partie fixe*/
 #Header{
   height: 30vh;
   width: 100vw;
@@ -8,24 +8,27 @@
   background-size: cover;
   position: fixed;
   top: 0;
-
+  z-index: 10;
 }
-
+/*La partie en avant de la photo de fond*/
 #profileCard {
   height: 23vh;
   width: 95vw;
   margin: 7vh auto 0 auto;
-  border-radius: 2px;
+  border-radius: 2px 2px 0 0;
   background-color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
 }
+/*La partie de gauche de la carte en avant de la photo de fond*/
 #profilePicDiv {
   height: 100%;
 }
+/*La partie de droite de la carte en avant de la photo de fond*/
 #profileInfoDiv {
   height: 100%;
-  padding: 3vh;
+  padding: 3vh 0 3vh 0;
 }
-
+/*La photo de profil*/
 #myProfile_pic {
   height: 17vh;
   width: 100%;
@@ -34,14 +37,74 @@
   border-radius: 2px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
 }
-
+/*La partie inf de la carte en avant de la photo de fond avec Editer et Fermer*/
+#botActionDiv {
+  position: absolute;
+  bottom: 2vh;
+  right: 5vw;;
+}
+/*Le gros bouton en dégradé pour afficher le contexte*/
 #contextButton {
   width: 95vw;
-  height: 40px;
+  height: 35px;
   vertical-align: middle;
   margin: 0 2.5vw 0 2.5vw;
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
 }
 
+p {
+  margin: 0 0 3px 0;
+}
+#section_title {
+  margin-top: 42vh;
+  margin-bottom: 13px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 85vw;
+  border-bottom: 1px solid rgba(0,0,0,0.24);
+  color: rgba(0,0,0,0.45);
+  padding-bottom: 2px;
+}
+#myFriends_Space {
+  width: 92vw;
+  margin: auto;
+  padding-bottom: 50px;
+}
+
+.friendCard {
+  background-color: white;
+  margin-bottom: 13px;
+  z-index: 1;
+}
+/*Image dans carte ami*/
+.imgFriend {
+  height: 12vh;
+  width: 12vh;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+  float: left;
+}
+.friendCard:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cardContent {
+  padding: 8px 0 8px 13vh;
+  position: absolute;
+  height: 12vh;
+  width: 92vw;
+}
+.cardAction {
+  position: absolute;
+  bottom: 1vh;
+}
+.togetherLogo {
+  width: 20px;
+  height: 20px;
+}
 
 #myProfile_pic:hover ~ .inputWrapper_btn {
   bottom: 60px;

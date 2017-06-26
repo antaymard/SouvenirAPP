@@ -20,68 +20,68 @@
 </head>
 <body>
 
-    <div id="Header">
-      <div id="globalProfile">
-        <div id="profileCard" class="row">
+  <div id="Header">
+    <div id="profileCard" class="row">
 
-          <div id="profilePicDiv" class="col-xs-5">
-            <img id="myProfile_pic" src="<%= userphotoid %>">
-          </div>
-
-          <div id='profileInfoDiv' class="col-xs-7">
-            <p><%= username %></p>
-            <p><%= profilePNom %> <%= profileNom %></P>
-            <button>EDITER</button>
-            <a href="/logout">FERMER SESSION</a>
-          </div>
-
-        </div>
-        <button id="contextButton" class="gradButton">GERER MES CONTEXTES</button>
+      <div id="profilePicDiv" class="col-xs-5">
+        <img id="myProfile_pic" src="<%= userphotoid %>">
       </div>
+
+      <div id='profileInfoDiv' class="col-xs-7">
+        <p><%= username %></p>
+        <p><%= profilePNom %> <%= profileNom %></P>
+          <div id="botActionDiv">
+            <button >EDITER</button>
+            <a href="/logout" style="color:red; margin-left:10px">FERMER SESSION</a>
+          </div>
+        </div>
+
+      </div>
+      <button id="contextButton" class="gradButton">GERER MES CONTEXTES</button>
     </div>
 
-      <!-- CORPS -->
-      <div class="container" style="margin-top : -80px">
+    <!-- CORPS -->
+    <div class="container" style="margin-top : -80px">
 
-        <div class="card horizontal" style='display: flex;'>
-              <div class="card-image" style="overflow: hidden;">
+      <div class="card horizontal" style='display: flex;'>
+        <div class="card-image" style="overflow: hidden;">
 
-                <div class="inputWrapper_btn btn waves-effect waves-light green">
+          <div class="inputWrapper_btn btn waves-effect waves-light green">
 
-                <form id="fileUp" enctype = "multipart/form-data" action="/myProfile/updateImg" method="post">
-                  <label id="addButton" for="userPhoto"><i class="material-icons white-text">publish</i></label>
-                  <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
-                </form>
-                </div>
-                <!-- <button id="" class="btn-floating waves-effect waves-light green" tabindex="-1"><i class="material-icons">publish</i></button> -->
-              </div>
-
-            </div>
-
-
-        <p class='section_title' style="margin: 30px 0 7px 0">Mes amis</p>
-        <div id="myFriends_Space" class="row">
-
-
-
+            <form id="fileUp" enctype = "multipart/form-data" action="/myProfile/updateImg" method="post">
+              <label id="addButton" for="userPhoto"><i class="material-icons white-text">publish</i></label>
+              <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
+            </form>
+          </div>
+          <!-- <button id="" class="btn-floating waves-effect waves-light green" tabindex="-1"><i class="material-icons">publish</i></button> -->
         </div>
 
-
-        <!-- <p class='section_title'>Mes informations</p> -->
       </div>
 
 
+      <p id='section_title'>Mes Amis</p>
+      <div id="myFriends_Space" class="row">
 
 
 
-  <link rel="stylesheet" href="/styleGeneral.css">
-  <link rel="stylesheet" href="/myProfile.css">
-  <script type="text/javascript" src="/myProfile.js"></script>
-  <script type="text/javascript" src='/jquery.transit.min.js'></script>
-  <script type="text/javascript" src='/jquery.jMosaic.js'></script>
-  <!-- <link rel="stylesheet" href="css/jquery.jMosaic.css"/> -->
+      </div>
 
-  <!-- <script src="http://82.239.100.156:8080/socket.io/socket.io.js"></script> -->
 
-</body>
-</html>
+      <!-- <p class='section_title'>Mes informations</p> -->
+    </div>
+
+
+
+
+
+    <link rel="stylesheet" href="/styleGeneral.css">
+    <link rel="stylesheet" href="/myProfile.css">
+    <script type="text/javascript" src="/myProfile.js"></script>
+    <script type="text/javascript" src='/jquery.transit.min.js'></script>
+    <script type="text/javascript" src='/jquery.jMosaic.js'></script>
+    <!-- <link rel="stylesheet" href="css/jquery.jMosaic.css"/> -->
+
+    <!-- <script src="http://82.239.100.156:8080/socket.io/socket.io.js"></script> -->
+
+  </body>
+  </html>

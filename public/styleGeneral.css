@@ -3,6 +3,7 @@
 
 * {
   font-family: 'Roboto', sans-serif;
+  font-size: 11px;
 }
 
 .gradButton {
@@ -15,7 +16,7 @@
 }
 
 body {
-  background: #ececec;
+  background: rgba(0,0,0,0.02);
   margin: 0px;
 }
 .trueBody {
