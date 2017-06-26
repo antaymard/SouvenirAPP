@@ -5,6 +5,15 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.gradButton {
+  background: linear-gradient(45deg, rgba(117, 251, 233, 1), rgba(84, 153, 248, 1)); /* Standard syntax */
+  border: 0;
+  border-radius: 2px;
+  color: white;
+  height: 30px;
+  padding: 10px 0 10px 0;
+}
+
 body {
   background: #ececec;
   margin: 0px;
@@ -23,22 +32,6 @@ body {
   width: 100%;
   height: 70px;
   padding-top: 5px;
-}
-#Header {
-  float: right;
-  margin: auto;
-  margin-right: 70px;
-}
-#Header a {
-  color: rgba(0,0,0,0.3);
-  margin-left: 40px;
-  padding: 10px;
-  border-radius: 2px;
-}
-#Header a:hover {
-  color: rgba(0,0,0,0.5);
-  margin-left: 40px;
-  background-color: rgba(0,0,0,0.1);
 }
 
 

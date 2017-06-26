@@ -1,3 +1,48 @@
+
+#Header{
+  height: 30vh;
+  width: 100vw;
+  background-image: url("http://68.media.tumblr.com/ad427d1df8a05deb6690ceba13ceb7c7/tumblr_nfptdyGdK51s4fnuao1_1280.jpg");
+  background-repeat:no-repeat;
+  background-position:30% 50%;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+
+}
+
+#profileCard {
+  height: 23vh;
+  width: 95vw;
+  margin: 7vh auto 0 auto;
+  border-radius: 2px;
+  background-color: white;
+}
+#profilePicDiv {
+  height: 100%;
+}
+#profileInfoDiv {
+  height: 100%;
+  padding: 3vh;
+}
+
+#myProfile_pic {
+  height: 17vh;
+  width: 100%;
+  object-fit: cover;
+  margin: 3vh 0 ;
+  border-radius: 2px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+}
+
+#contextButton {
+  width: 95vw;
+  height: 40px;
+  vertical-align: middle;
+  margin: 0 2.5vw 0 2.5vw;
+}
+
+
 #myProfile_pic:hover ~ .inputWrapper_btn {
   bottom: 60px;
   transition: 0.3s;

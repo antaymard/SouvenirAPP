@@ -2,60 +2,54 @@
 <html>
 <head>
 
-  <title>Remember</title>
-  <meta name="description" content="A cool thing made with HyperDev">
-  <link id="favicon" rel="icon" href="https://hyperdev.com/favicon.ico" type="image/x-icon">
+  <title>Remember.</title>
+  <meta name="description" content="Remember.">
+  <link id="favicon" rel="icon" href="favicon-32x32.png" type="image/x-icon">
   <meta name="theme-color" content="#0D47A1">
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script src="https://use.fontawesome.com/d5a570f79a.js"></script>
-  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-  <script src="http://malsup.github.com/jquery.form.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
 
 
 </head>
 
 <body>
 
-    <div id="bodyLogin">
-      <h1>The Place to Remember...</h1>
-      <h3> Connectez-vous</h3>
-        <form>
-          <div class="form-group">
-            <input type="text" placeholder="Username" id="username" class="form-control"/>
-            <input type="password" placeholder="Password" id="password" class="form-control"/>
-            <span id='response'></span>
-          </div>
-        </form>
+  <div id="bodyLogin" class="darkGradient">
 
-        <div class='row row-eq-height'>
-          <!-- <div class="col-xs-6">
-            <button id='register' type="button" class="btn btn-warning">Register</button>
-          </div> -->
-          <div class="col-xs-12">
-            <button id='login' type="button" class="btn btn-success">Login</button>
-          </div>
+    <div id="contentDiv">
+      <img id='logo' src="logo.png">
+      <p id="titre">Remember.</p>
+      <form>
+        <div class="">
+          <input type="text" placeholder="Username" id="username" class=""/>
+          <input type="password" placeholder="Password" id="password" class=""/>
+          <span id='response'></span>
         </div>
+      </form>
 
-        <div id='state'></div>
+      <div class="">
+        <button id='login' type="button" class="gradButton">CONNEXION</button>
+        <div>
+          <a>Créer un compte.</a>
+        </div>
+      </div>
+
     </div>
 
-  <link rel="stylesheet" href="/styleGeneral.css">
-  <link rel="stylesheet" href="/styleLogin.css">
-  <script type="text/javascript" src="/login.js"></script>
-  <script type="text/javascript" src='/jquery.transit.min.js'></script>
-  <script src="http://82.239.100.156:8080/socket.io/socket.io.js"></script>
+  </div>
+
+<link rel="stylesheet" href="/styleGeneral.css">
+<link rel="stylesheet" href="/login.css">
+<script type="text/javascript" src="/login.js"></script>
+<script type="text/javascript" src='/jquery.transit.min.js'></script>
+<!-- <script src="http://82.239.100.156:8080/socket.io/socket.io.js"></script> -->
 
 </body>
 </html>

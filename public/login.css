@@ -1,0 +1,63 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-image: url("http://68.media.tumblr.com/ad427d1df8a05deb6690ceba13ceb7c7/tumblr_nfptdyGdK51s4fnuao1_1280.jpg");
+  background-repeat:no-repeat;
+  background-position:30% 50%;
+  background-size: cover;
+  overflow-x: scroll;
+}
+
+.darkGradient {
+  background: rgba(84, 153, 248, 0.69); /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(0deg, rgba(69, 90, 100, 0.69), rgba(84, 153, 248, 0.69)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(0deg, rgba(69, 90, 100, 0.69), rgba(84, 153, 248, 0.69)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(0deg, rgba(69, 90, 100, 0.69), rgba(84, 153, 248, 0.69)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(0deg, rgba(69, 90, 100, 0.69), rgba(84, 153, 248, 0.69)); /* Standard syntax */
+}
+#bodyLogin {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+#contentDiv {
+  transform: translateY(13vh); /* tiré de la moitié de sa propre hauteur */
+}
+
+input{
+	height: 30px;
+	width: 80%;
+	border: none;
+	border-bottom: 1px solid white;
+  margin: 15px 0 0 0;
+  background-color: rgba(0,0,0,0);
+  color: white;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: white;
+}
+a {
+  color: white;
+  font-size: 12px;
+  float: right;
+  margin-right: 20%;
+  text-decoration: underline;
+}
+
+#logo {
+  width: 60vw;
+  height: auto;
+}
+
+#login {
+  width: 80%;
+  margin: 30px 0 10px 0;
+}
+
+#titre {
+  font-weight: 100;
+  color: white;
+  margin-bottom: 60px;
+}
