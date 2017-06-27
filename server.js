@@ -73,6 +73,13 @@ var svnrSchema = mongoose.Schema({
 });
 var Svnr = mongoose.model("Svnr", svnrSchema);
 
+var notifSchema = mongoose.Schema({
+  createdBy : String,
+  targetTo : String,
+  creationDate : Date,
+  type : String
+});
+var Notif = mongoose.model('Notif', notifSchema);
 
 var sess;
 

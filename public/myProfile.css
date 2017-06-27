@@ -1,3 +1,8 @@
+body {
+  background: rgba(0,0,0,0.02);
+  margin: 0px;
+}
+
 /*Toute la partie fixe*/
 #Header{
   height: 30vh;

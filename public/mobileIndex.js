@@ -4,7 +4,6 @@ var o;
 var recall = 0, limit = 10, svnrs;
 
 $( document ).ready(function() {
-  $('.modal').modal();
 
   //RECALL DES SOUVENRIS
   recallGlobal ();
@@ -71,7 +70,6 @@ function sharedFriendsSupp(idFriend) {
     if(data6) {
       //supprimer la bulle côté client
       console.log(data6);
-      Materialize.toast("Partage supprimé", 3000);
 
       displayFocusedSvnr(dataA);
 
@@ -90,23 +88,22 @@ $(window).scroll(function() {
   //Affichage du panel inférieur Story avec svnrs
   function displaySvnr(titre, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
     $("#svnr_recall_space").append(
-      '<div onclick="gotoFocusedSvnr('+ "'" + idsvnr + "'" +')" class="myCard">'
-      + '<div class="topMyCardDiv">'
-        + '<img class="who_posted" style="border: 2px solid white '// + cBcolor
-        + '" src="' + cBphotoAdress + '">'
-        + '<div class="cBusername">' + cBusername
-          + '<span class="creationDate"> - ' + calcAgo(creation_date) + '</span>'
+        '<div onclick="gotoFocusedSvnr()" class="svnrCard">'
+      + '<div class="svnrCard_topDiv">'
+        + '<img class="who_posted" src="/'+ cBphotoAdress + '">'
+        + '<div class="svnrCard_topDiv_rightPart">'
+          + '<div class="cBusername">' + cBusername
+            + '<span class="actionType">a ajouté une anécdote</span>'
+          + '</div>'
+          + '<div class="creationDate">'+ calcAgo(creation_date) +'</div>'
         + '</div>'
-      + '<div class="titreDiv">' + titre + '</div>'
       + '</div>'
-      + '<img src="'+ img_address + '">'
-      + '<div class="infoDiv">'
-      + '<div class="sharedDiv"><i class="material-icons">person</i>'+ nbShared + '</div>'
-      + '<div class="lieuDiv">'+ lieu + '</div>'
-      + '<div class="descriptionDiv"><span class="nameSpan">'+ cBusername + ' </span>'
-      + description + '</div>'
-      + '<div class="tagDiv">'+ displaytag(hashtags) + '</div>'
-      + '</div>'
+        + '<img class="svnrImg" src="/'+ img_address +'">'
+        + '<div class="svnrCard_botDiv">'
+          + '<div class="titreDiv">'+ titre +'</div>'
+          + '<div class="dateDiv">date</div>'
+          + '<div class="lieuDiv">'+ lieu +'</div>'
+        + '</div>'
       + '</div>'
     );
     // var imageWidth = 210;

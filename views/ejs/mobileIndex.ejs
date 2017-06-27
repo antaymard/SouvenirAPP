@@ -20,15 +20,19 @@
   <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"> -->
   <script src="http://malsup.github.com/jquery.form.js"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 
 </head>
 <body>
 
-    <section class="myHeader">
+  <div class="transparentHeader">
+    <a href='/myProfile'>
+      <img id="myProfilePic" class="" src= "/<%= userphotoid %>">
+    </a>
+    <img id="whitelogo" src="whitelogo.png" alt="logo">
+    <span id="rememberTitle">Remember.</span>
+  </div>
+
+    <!-- <section class="">
 
       <div id="Header">
 
@@ -38,21 +42,18 @@
             <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
           </form>
         </div>
-        <!-- <button data-target="modal1" class="btn-flat waves-effect waves-green grey lighten-2 section_btn">
-        +<i class="material-icons prefix ">perm_identity</i></button> -->
-        <!-- <a href="/mobileIndex" id="homeLink"><i class="small material-icons">reorder</i></a> -->
-        <!-- <a href="#">Afficher tout</a> -->
-        <a href='/myProfile'>
-          <!-- <%= profilePNom %> <%= profileNom %> -->
-          <img id="profilePic" class="circle responsive-img" src= "/<%= userphotoid %>"></a>
         </div>
 
-      </section>
+      </section> -->
 
 
     <section class="trueBody">
+      <div id="researchBarDiv" class="">
+        ICI c'est la barre de recherche uesh
+      </div>
 
         <div id="svnr_recall_space">
+
 
 
         </div>
@@ -60,14 +61,9 @@
 
     </section>
 
-    <div id="bottomDiv" class="row">
-      <a class="botNavIcon col s3" href="/open_camera"><i class="material-icons navIcon">camera_enhance</i></a>
-      <a class="botNavIcon col s3" href="/mobileIndex"><i class="material-icons navIcon">home</i></a>
-      <a class="botNavIcon col s3" href="/search"><i class="material-icons navIcon">search</i></a>
-      <a class="botNavIcon col s3" href="/mobileIndex"><i class="material-icons navIcon">sms_failed</i></a>
-    </div>
+    <button id="addButton" class="gradButton">+</button>
 
-    <link rel="stylesheet" href="/mobileGeneral.css">
+    <link rel="stylesheet" href="/styleGeneral.css">
     <link rel="stylesheet" href="/mobileIndex.css">
     <script type="text/javascript" src="/mobileIndex.js"></script>
     <script type="text/javascript" src='/jquery.transit.min.js'></script>
