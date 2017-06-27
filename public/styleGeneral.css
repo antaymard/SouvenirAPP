@@ -35,7 +35,7 @@ body {
   padding: 10px 0 10px 0;
 }
 
-#addButton {
+.addButton {
   position: fixed;
   bottom: 3vh;
   right: 4vw;

@@ -36,12 +36,6 @@
 
       <div id="Header">
 
-        <div id='inputNewPhoto'>
-          <form id="fileUp" enctype = "multipart/form-data" action="/new/uploadFile" method="post">
-            <label id="addButton" for="userPhoto"><i class="material-icons">vertical_align_top</i></label>
-            <input type="file" name="userPhoto" id="input_photo" class='inputFilePhoto'/>
-          </form>
-        </div>
         </div>
 
       </section> -->
@@ -61,7 +55,13 @@
 
     </section>
 
-    <button id="addButton" class="gradButton">+</button>
+    <!-- <button id="" class="gradButton">+</button> -->
+    <div id='inputNewPhoto'>
+      <form id="fileUp" enctype = "multipart/form-data" action="/new/uploadFile" method="post">
+        <label id="addButton_label" for="userPhoto"></label>
+        <input type="file" name="userPhoto" id="input_photo" class='gradButton addButton'/>
+      </form>
+    </div>
 
     <link rel="stylesheet" href="/styleGeneral.css">
     <link rel="stylesheet" href="/mobileIndex.css">

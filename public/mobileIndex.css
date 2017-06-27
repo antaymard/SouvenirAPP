@@ -12,7 +12,6 @@
   flex-direction: column;
 }
 
-/*OLD*/
 .svnrCard {
   height: auto;
   background-color: white;
@@ -78,13 +77,24 @@
   padding-top: 5px;
   font-size: 12px;
 }
+#fileUp {
+  width: 0;
+  height: 0;
+}
+#addButton_label {
+  width: 0;
+  height: 0;
+}
+#input_photo {
+  object-fit: cover;
+  padding: 0;
+}
 
-
-
+/* NOTE: OLD */
 #loadMoreCard {
   float: left;
   height: 100px;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(255,255,255,0.3);
   width: 100%;
   border-radius: 2px;
   margin-bottom: 10px;

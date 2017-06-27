@@ -119,13 +119,6 @@ p {
   bottom: 60px;
 }
 
-/*#addButton {
-  position: absolute;
-  bottom: -60px;
-  left: 20px;
-  transition: 0.3s;
-}*/
-
 .inputWrapper_btn {
   overflow: hidden;
   position: relative;
