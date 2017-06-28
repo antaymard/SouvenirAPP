@@ -24,12 +24,14 @@
 </head>
 <body>
 
-  <div class="transparentHeader">
+  <div id="myHeader" class="transparentHeader">
     <a href='/myProfile'>
       <img id="myProfilePic" class="" src= "/<%= userphotoid %>">
     </a>
-    <img id="whitelogo" src="whitelogo.png" alt="logo">
-    <span id="rememberTitle">Remember.</span>
+    <a href="/mobileIndex">
+      <img id="whitelogo" src="whitelogo.png" alt="logo">
+      <span href="/mobileIndex" id="rememberTitle">Remember.</span>
+    </a>
   </div>
 
     <!-- <section class="">
@@ -42,9 +44,12 @@
 
 
     <section class="trueBody">
-      <div id="researchBarDiv" class="">
-        ICI c'est la barre de recherche uesh
-      </div>
+
+        <input type="text" placeholder="Rechercher un souvenir..." id="searchInput"/>
+
+        <div id="searchTipsDiv">
+          <p></p>
+        </div>
 
         <div id="svnr_recall_space">
 

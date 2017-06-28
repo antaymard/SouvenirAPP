@@ -193,12 +193,13 @@ app.post('/add_as_friend', function(req, res){
   }).select("friends");
 });
 
+// NOTE: WTF ???
 app.get("/search", function (req, res) {
   sess = req.session;
   if(sess.userid){
     User.find({"_id" : sess.userid}, function(err, users) {
       if(err) return console.error(err + ' home display err'.red);
-      res.render('ejs/search', {
+      res.json('ejs/search', {
         userphotoid : users[0].photo_address,
         profileNom : users[0].nom,
         profilePNom : users[0].prenom
@@ -211,13 +212,15 @@ app.get("/search", function (req, res) {
   // u.save();
 });
 
-app.post('/searchSvnr', function(req,res) {
-  sess = req.session;
-  Svnr.find({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}, function(err, svnrs) {
-    if (err) return console.error(err);
-    res.json(svnrs);
-  }).populate("createdBy").sort("-creation_date").limit(Number(req.body.limit)).skip(10*Number(req.body.recall));
-});
+// NOTE: Work in Progress
+// app.post('/searchSvnr', function(req,res) {
+//   sess = req.session;
+//   var query = req.body.query;
+//   Svnr.find([{$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]},  ], function(err, resultSvnrs) {
+//     if (err) return console.error(err);
+//     res.json(resultSvnrs);
+//   }).populate("createdBy").sort("-creation_date").limit(Number(req.body.limit)).skip(10*Number(req.body.recall));
+// });
 
 //Affiche mes souvenirs ajoutés par moi (avec mon _id) + oùmon id est présent en sharedFriends
 app.post('/svnr_recall', function(req,res) {

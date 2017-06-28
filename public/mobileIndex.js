@@ -3,6 +3,10 @@ var dataS, dataA;
 var o;
 var recall = 0, limit = 10, svnrs;
 
+$(window).on("scroll touchmove", function () {
+    $('#myHeader').toggleClass('noTransparentHeader', $(document).scrollTop() > 50);
+});
+
 $( document ).ready(function() {
 
   //RECALL DES SOUVENRIS
