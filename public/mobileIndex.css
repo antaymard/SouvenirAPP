@@ -17,22 +17,6 @@
   width: 89vw;
   margin: 0 -1vw 10px -1vw;
 }
-#searchTipsDiv {
-  height: 20vh;
-  background-color: white;
-  width: 87vw;
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px 10px 20px 10px;
-  display: none;
-  transition: 0.3s;
-}
-#searchInput:focus ~ #searchTipsDiv {
-  display: block;
-  margin-bottom: 100vh;
-  transition: 0.3s;
-}
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: rgba(69, 90, 100, 0.79);

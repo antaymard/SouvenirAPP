@@ -16,6 +16,7 @@ body {
   width: 100vw;
   background-attachment: fixed;
   margin: 0;
+  transition: 0.3s;
 }
 
 .darkGradient {

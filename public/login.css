@@ -34,6 +34,7 @@ input{
   margin: 15px 0 0 0;
   background-color: rgba(0,0,0,0);
   color: white;
+  padding: 0 10px;
 }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: white;

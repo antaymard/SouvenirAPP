@@ -213,14 +213,20 @@ app.get("/search", function (req, res) {
 });
 
 // NOTE: Work in Progress
-// app.post('/searchSvnr', function(req,res) {
-//   sess = req.session;
-//   var query = req.body.query;
-//   Svnr.find([{$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]},  ], function(err, resultSvnrs) {
-//     if (err) return console.error(err);
-//     res.json(resultSvnrs);
-//   }).populate("createdBy").sort("-creation_date").limit(Number(req.body.limit)).skip(10*Number(req.body.recall));
-// });
+app.post('/searchSvnr', function(req,res) {
+    sess = req.session;
+    var query = req.body.query;
+    console.log(query);
+  Svnr.find(
+      { "$or" : [{"createdBy": sess.userid}, {"sharedFriends":sess.userid}]}
+  ).where("titre").regex(query)
+    .populate("createdBy").sort("-creation_date")
+    .exec(
+      function(err, resultSvnrs) {
+        if (err) return console.error(err);
+        res.json(resultSvnrs);
+    });
+});
 
 //Affiche mes souvenirs ajoutés par moi (avec mon _id) + oùmon id est présent en sharedFriends
 app.post('/svnr_recall', function(req,res) {
