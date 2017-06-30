@@ -1,4 +1,5 @@
 var recall = 0, limit = 10, svnrs;
+var query_type;
 
 //OBSCURCIR HEADER QUAND SCROLLED
 $(window).on("scroll touchmove", function () {
@@ -48,6 +49,17 @@ $( document ).ready(function() {
   //RECALL DES SOUVENRIS
   recallGlobal ();
 
+  //auto load more souvenris
+  $(window).scroll(function() {
+     if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        //  recallGlobal();
+     }
+  });
+
+// NOTE: WORK IN PROGRESS defocus la barre quand on scroll vers le bas
+  if ($(document).scrollTop() > 50) {
+    $("#searchInput").blur();
+  }
 });
 
 function recallGlobal () {
@@ -74,21 +86,21 @@ $("#searchInput").keypress(function(event) {
     if (event.which == 13) {
         event.preventDefault();
         console.log('enter');
-        var query = $('#searchInput').val();
-        console.log(query);
-        searchSvnr(query);
+        var query_word = $('#searchInput').val();
+        console.log(query_word);
+        searchSvnr(query_word);
     }
 });
 $(document).on('keydown', '#searchInput', function(e) {
     if (e.keyCode == 32) return false;
 });
-function searchSvnr (query) {
-  $.post("/searchSvnr", {query:query}, function (resultSvnrs) {
+function searchSvnr (query_word) {
+  $.post("/searchSvnr", {query_word:query_word}, function (resultSvnrs) {
     if(resultSvnrs) {
       console.log(resultSvnrs);
       $('#svnr_recall_space').empty();
       $("#svnr_recall_space").append(
-        '<p style="color:white">'+ resultSvnrs.length + ' Souvenirs trouvé(s) avec "'+ query + '" dans le titre</p>'
+        '<p style="color:white">'+ resultSvnrs.length + ' Souvenirs trouvé(s) avec "'+ query_word + '" dans le titre<span id="searchCancel"><button onclick="cancelSearch()">Annuler</button></span></p>'
       );
       var n;
       for (n in resultSvnrs) {
@@ -101,13 +113,10 @@ function searchSvnr (query) {
   });
 }
 
+function cancelSearch () {
+  window.location.href = "/";
+}
 
-//auto load more souvenris
-$(window).scroll(function() {
-   if($(window).scrollTop() + $(window).height() == $(document).height()) {
-       recallGlobal();
-   }
-});
 
 
 //------------------------------------------------------------------------------

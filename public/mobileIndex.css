@@ -18,6 +18,15 @@
   margin: 0 -1vw 10px -1vw;
 }
 
+#searchCancel {
+  color: white;
+  float: right;
+}
+#searchCancel button {
+  color: white;
+  text-decoration: underline;
+}
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: rgba(69, 90, 100, 0.79);
 }
