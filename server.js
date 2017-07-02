@@ -300,18 +300,13 @@ app.get("/focus/:id", function (req, res) {
   Svnr.find({"_id": req.params.id}, function(err, focus){
     if(err) return console.error(err);
     var f = focus[0];
-    if (sess.userid === String(focus[0].createdBy[0]._id)) {
+    // if (sess.userid === String(focus[0].createdBy[0]._id)) {
       res.render("ejs/mobileFocus_full", {
-        file_address : f.file_address,
-        titre : f.titre,
-        lieu : f.lieu,
-        date : f.creation_date,
-        description : f.description,
-        idSvnr : f._id
+        f : f
       });
-    } else {
-      res.render("ejs/mobileFocus_restricted");
-    }
+    // } else {
+    //   res.render("ejs/mobileFocus_restricted");
+    // }
   }).populate("createdBy");
 });
 

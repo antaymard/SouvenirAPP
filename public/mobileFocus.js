@@ -1,3 +1,4 @@
+
 function niceDate(input) {
   var date_jour = input.substring(8, 10);
   var date_mois = returnMonth(Number(input.substring(5, 7)));
@@ -72,7 +73,7 @@ function openSharedFriendPanel(idSvnr) {
   //Charge en AJAX la liste d'amis (server dejà fait) avec onclick = add idSvnr et userid
 };
 
-// A MODIFIER 
+// A MODIFIER
 function displaySharedFriends(idSvnr) {
   $.post("/add_as_shared", {idSvnr:idSvnr}, function(data){
     if (data == 'added') {

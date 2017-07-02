@@ -1,12 +1,148 @@
-body {
-  background: #404040;
-  width: 100vw;
+@import 'https://fonts.googleapis.com/css?family=Montserrat+Subrayada';
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400';
+
+/* NOTE: GENERAL */
+* {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
 }
 
-#photo {
-  position: fixed;
-  top: 0px;
+.FtransparentHeader {
+  z-index: 25;
   width: 100vw;
+  height: 65px;
+  position: fixed;
+  top: 0;
+  display: inline;
+  transition: 1s;
+  background-color: ;
+}
+body {
+  background-image: url("background.png");
+  background-repeat:no-repeat;
+  background-position:30% 50%;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  background-attachment: fixed;
+  margin: 0;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.trueBody {
+  padding: 20px;
+}
+
+#creatorDiv {
+  margin: 15px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+.creatorDivPicture {
+  height : 35px;
+  width: 35px;
+  object-fit: cover;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+#creatorDivInfo {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 3px 0 0 5px;
+}
+#creatorDivInfo p {
+  margin: 0;
+  font-weight: 100;
+}
+
+#svnrTitre {
+  font-size: 16px;
+}
+
+.svnrImg {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+  border-radius: 3px;
+  height: auto;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.chapterP {
+  color: white;
+  padding: 6px 0;
+  width: 90%;
+  margin: 5px auto;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+
+#avecDiv {
+
+}
+
+#presentFriendsDiv {
+
+}
+
+#descriptionDiv {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 3px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+#descDivTxt {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 0px 9px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+#sharedDiv {
+  min-height: 70px;
+  height: auto;
+  padding: 0px 9px;
+}
+
+#anecdoteDiv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+.anecdoteDivTxt {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  border-radius: 3px;
+  width: 100%;
+  height: auto;
+  margin-top: 9px;
+}
+.anecdotePic {
+  margin: 10px 9px;
+}
+.anecdoteDivTxtLeft {
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+.anecdoteDivTxtRight {
+  padding: 10px 9px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+
+
+/* NOTE: OLD */
+
+
+#photo {
+  width: 80vw;
   height : 300px;
 }
 
@@ -35,13 +171,6 @@ body {
   font-weight: 200;
   text-align: justify;
   font-size: 13px;
-}
-#sharedDiv {
-  background-color: white;
-  height: 50px;
-  font-size: 8px;
-  padding: 5px;
-  color: rgba(0,0,0,0.3);
 }
 #socialSubDiv {
   padding: 2px;

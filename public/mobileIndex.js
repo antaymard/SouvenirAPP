@@ -123,7 +123,7 @@ function cancelSearch () {
   //Affichage des souvenirs
   function displaySvnr(titre, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
     $("#svnr_recall_space").append(
-        '<div onclick="gotoFocusedSvnr()" class="svnrCard">'
+        '<div onclick="gotoFocusedSvnr('+ "'" + idsvnr + "'" + ')" class="svnrCard">'
       + '<div class="svnrCard_topDiv">'
         + '<img class="who_posted" src="/'+ cBphotoAdress + '">'
         + '<div class="svnrCard_topDiv_rightPart">'
