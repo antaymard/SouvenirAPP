@@ -1,3 +1,8 @@
+console.log(_date);
+
+$("#svnrDate").append(_date);
+console.log(niceDate(_date));
+
 
 function niceDate(input) {
   var date_jour = input.substring(8, 10);

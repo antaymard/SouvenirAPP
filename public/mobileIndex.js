@@ -82,6 +82,7 @@ $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
 recall ++;
 };
 
+//USER PRESS ENTRER APRES AVOIR SAISI LES MOTS DE RECHERCHE
 $("#searchInput").keypress(function(event) {
     if (event.which == 13) {
         event.preventDefault();
@@ -91,9 +92,12 @@ $("#searchInput").keypress(function(event) {
         searchSvnr(query_word);
     }
 });
+//EMPECHER LA TOUCHE ESPACE DANS LE INPUT RECHERCHE
 $(document).on('keydown', '#searchInput', function(e) {
     if (e.keyCode == 32) return false;
 });
+
+//FONCTION DE RECHERCHE
 function searchSvnr (query_word) {
   $.post("/searchSvnr", {query_word:query_word}, function (resultSvnrs) {
     if(resultSvnrs) {
@@ -112,9 +116,9 @@ function searchSvnr (query_word) {
     }
   });
 }
-
+//QUAND APPUIE SUR CANCEL DE RECHERCHE
 function cancelSearch () {
-  window.location.href = "/";
+  window.location.href = "/mobileIndex";
 }
 
 
@@ -123,7 +127,7 @@ function cancelSearch () {
   //Affichage des souvenirs
   function displaySvnr(titre, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
     $("#svnr_recall_space").append(
-        '<div onclick="gotoFocusedSvnr('+ "'" + idsvnr + "'" + ')" class="svnrCard">'
+        '<div onclick="displayFocusedSvnr('+ "'" + idsvnr + "'" + ')" class="svnrCard">'
       + '<div class="svnrCard_topDiv">'
         + '<img class="who_posted" src="/'+ cBphotoAdress + '">'
         + '<div class="svnrCard_topDiv_rightPart">'
@@ -150,9 +154,130 @@ $("#input_photo").change(function() {
   $('#fileUp').submit();
 });
 
-function gotoFocusedSvnr(id) {
-  window.location.href = "/focus/"+ id;
+
+//=============================== AFFICHE UN FOCUS SOUVENIR ====================
+
+function displayFocusedSvnr(focusId) {
+
+  //Enlever le HEADER
+  $('#myHeader').transition({ y: '-65px' });
+
+  //Enlever la  barre de recherche
+  $( "#searchInput" ).transition({y: '-150px'});
+
+  //Crée le nouveau header
+  $(".trueBody").append(
+     '<div id="myFHeader" class="FtransparentHeader">'
+    +  '<button onclick="closeFocus()"><i class="material-icons">keyboard_arrow_left</i></button>'
+    +'</div>'
+  );
+
+  //Récupère les infos du souvenir focused
+  $.post("/focusedRecall", {focusId : focusId}, function (resultFocus) {
+    if(resultFocus) {
+      console.log(resultFocus);
+      $('#svnr_recall_space').empty();
+
+      displayFocusedSvnrLayout (resultFocus[0]);
+
+      // getPresentFriends(resultFocus[0]._id);
+
+      getSharedFriends(resultFocus[0]._id);
+  };
+});
+} //Fin displayFocusedSvnr
+
+function displayFocusedSvnrLayout (f) {
+  $(".trueBody").append(
+     '<div id="creatorDiv">'
+    +  '<img class="creatorDivPicture" src="/'+ f.createdBy[0].photo_address + '" alt="photo de profil">'
+    +  '<div id="creatorDivInfo">'
+    +    '<p id="svnrTitre">' + f.titre + '</p>'
+    +    '<p id="svnrDate">'+ f.creation_date +'</p>'
+    +  '</div>'
+    + '</div>'
+
+    + '<img class="svnrImg" src="/' + f.file_address + '">'
+
+    +'<p class="chapterP">Avec</p>'
+
+    +'<div id="avecDiv">'
+    +    '<div id="presentFriendsDiv">'
+    +      'ici photos des present friends'
+    +    '</div>'
+    +  '</div>'
+
+    + '<div id="descriptionDiv">'
+    +    '<div id="descDivTxt">'
+    +      '<p style="font-size: 13px; font-weight:800">Description</p>'
+    +      '<p>'+ f.description +'</p>'
+    +    '</div>'
+    +    '<div id="sharedDiv">'
+    +      '<p class="chapterP" style="color:black; margin:0 2px 0 2px">Partagé avec</p>'
+    +    '</div>'
+    +  '</div>'
+
+    + '<p class="chapterP">Anecdotes</p>'
+
+    + '<div id="anecdoteDiv">'
+    +    '<div class="anecdoteDivTxt">'
+    +      '<div class="anecdoteDivTxtLeft">'
+    +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+    +      '</div>'
+    +      '<div class="anecdoteDivTxtRight">'
+    + 'Aximus est reptaque por ad moluptatum dolestiberum qui- busam et aut aped magnam aut omnimil laboreicabo. Disi- mi, quas eatus et et unt re non porior siti ut a sin et et aut l'
+    +   '</div>'
+    +   '</div>'
+    +    '<div class="anecdoteDivTxt">'
+    +      '<div class="anecdoteDivTxtLeft">'
+    +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+    +      '</div>'
+    +      '<div class="anecdoteDivTxtRight">'
+    + 'i dolutes cullam, comnim aceaquias et molorem rehendae voluptate natum fugitae nonet fuga. Vitaers pidunt oditior emolu- picia aut in nullaboribus autatem int, sunt eate nonsequam, tet quia- ti beat eum qui doluptae. Nus, quam res il il ma int omnisquatur? Agnis aceprorionet earunto elictae peliatquam, ulparum laccum utenis excesto maximet uriscius dite late sus des et ducidis aliquiam fugit mo- lore evelibe rspedi od ma aspicipsus adias quibusam explatet erio beritat. Archill acculpa sum etur aut evel ipiet hiciaep '
+    +   '</div>'
+    +   ' </div>'
+    +  '</div>'
+  );
+};
+
+function getPresentFriends (p) {
+  $.post("/getPresentFriends", {idSvnr : p}, function (result) {
+    if(result) {
+      console.log(result);
+      //APPEND DANS L'ESPACE CORRESPONDANT
+  };
+});
+};
+
+function getSharedFriends (sh) {
+  $.post("/getSharedFriends", {idSvnr : sh}, function (result) {
+    if(result) {
+      console.log(result);
+      var n;
+      for (n in result[0].sharedFriends) {
+        $("#sharedDiv").append(
+          '<img src="/'+ result[0].sharedFriends[0].photo_address +'" class="creatorDivPicture"/>'
+        )
+      };
+      //AJOUTER BOUTON AJOUT DE SHAREDFRIENDS
+    };
+  });
+};
+
+function closeFocus() {
+  //Remettre le HEADER
+  $('#myHeader').transition({ y: '0px' });
+
+  //Remettre la  barre de recherche
+  $( "#searchInput" ).transition({y: '0px'});
+
+  //Supprimer le focus svnr
+  $('#svnr_recall_space').empty();
+
+  //RECALL DES SOUVENRIS
+  recallGlobal ();
 }
+
 
   //FUNCTIONS ------------------------------------------------------------------
   //Checker si la valeur est déjà dans l'array

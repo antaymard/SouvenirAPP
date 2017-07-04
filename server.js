@@ -69,7 +69,8 @@ var svnrSchema = mongoose.Schema({
   sharedFriends: [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
   type : String,
   description : String,
-  hastags : Array
+  hastags : Array,
+  presentFriends: [{type : mongoose.Schema.Types.ObjectId, ref : "User"}]
 });
 var Svnr = mongoose.model("Svnr", svnrSchema);
 // svnrSchema.index({titre: 'text'});
@@ -150,6 +151,17 @@ app.post('/login', function(req, response) {
   })
 });
 
+app.post('/MyInfo', function(req, res) {
+  sess = req.session;
+  User.find({"_id" : sess.userid}, function(err, infos) {
+    if (err) {  return console.error(err);  }
+    if (infos) {
+      console.log(infos);
+      res.json(infos);
+    }
+  })
+});
+
 
 //INDEX PAGE FUNCTIONS ---------------------------------------------------------
 
@@ -194,24 +206,6 @@ app.post('/add_as_friend', function(req, res){
   }).select("friends");
 });
 
-// NOTE: WTF ???
-app.get("/search", function (req, res) {
-  sess = req.session;
-  if(sess.userid){
-    User.find({"_id" : sess.userid}, function(err, users) {
-      if(err) return console.error(err + ' home display err'.red);
-      res.json('ejs/search', {
-        userphotoid : users[0].photo_address,
-        profileNom : users[0].nom,
-        profilePNom : users[0].prenom
-      });
-    });
-  }else {
-    res.sendFile(__dirname + '/views/login.html');
-  };
-  // var u = new User({ username : "test1"});
-  // u.save();
-});
 
 // NOTE: Work in Progress
 app.post('/searchSvnr', function(req,res) {
@@ -233,6 +227,7 @@ app.post('/searchSvnr', function(req,res) {
   });
 });
 
+//========  IMPORTANT  ========
 //Affiche mes souvenirs ajoutés par moi (avec mon _id) + oùmon id est présent en sharedFriends
 app.post('/svnr_recall', function(req,res) {
   sess = req.session;
@@ -286,42 +281,43 @@ app.post('/sharedFriends_Supp', function(req, res) {
   })
 });
 
+// ==============ALL AJAX FOR FOCUS SVNR ============================
+
 //Récupère les infos d'un focused Svnr
 app.post("/focusedRecall", function(req, res) {
   sess = req.session;
   Svnr.find({"_id":req.body.focusId}, function(err, Fsvnr) {
     if (err) return console.log(err);
     res.json(Fsvnr);
-  }).populate("sharedFriends").select("-password");
-});
-
-app.get("/focus/:id", function (req, res) {
-  sess = req.session;
-  Svnr.find({"_id": req.params.id}, function(err, focus){
-    if(err) return console.error(err);
-    var f = focus[0];
-    // if (sess.userid === String(focus[0].createdBy[0]._id)) {
-      res.render("ejs/mobileFocus_full", {
-        f : f
-      });
-    // } else {
-    //   res.render("ejs/mobileFocus_restricted");
-    // }
   }).populate("createdBy");
 });
 
-app.post("/get_sharedWith", function (req, res) {
-  Svnr.find({"_id": req.body.idSvnr}, function (err, sharedfriends) {
+//Récupère les amis présents
+app.post("/getPresentFriends", function (req, res) {
+  Svnr.find({"_id": req.body.idSvnr}, function (err, presentFriends) {
     if (err) {return console.error(err);}
-    res.json(sharedfriends);
-  }).populate("sharedfriends");
+    res.json(presentFriends);
+  }).populate("presentFriends");
 });
 
-//CREATION ET MODIFICATIONS DE SOUVENIRS ---------------------------------------
-
-app.get("/open_camera", function (req,res) {
-  res.render('ejs/camera');
+//Récupère les amis avec lesquels le souvenir est partagé
+app.post("/getSharedFriends", function (req, res) {
+  Svnr.find({"_id": req.body.idSvnr}, function (err, sharedFriends) {
+    if (err) {return console.error(err);}
+    res.json(sharedFriends);
+  }).populate("sharedFriends");
 });
+
+// ==============ALL AJAX FOR EDIT SVNR ============================
+
+//Ajoute un ami présent
+app.post("/addPresentFriends", function (req, res) {
+  Svnr.find({"_id": req.body.idSvnr}, function (err, presentFriends) {
+    if (err) {return console.error(err);}
+    res.json(presentFriends);
+  }).populate("presentFriends");
+});
+
 
 //creation du processus d'ajout (upload) image souvenir
 var idFileSvnr;
@@ -337,6 +333,8 @@ var storageSvnr =   multer.diskStorage({
     SendToSlack("Nouvelle photo uploadée et enregistrée - " + idFileSvnr);
   }
 });
+
+
 // var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
 var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
 

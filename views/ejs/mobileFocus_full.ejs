@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
 </head>
 
 <body>
@@ -36,7 +35,7 @@
         <img class="creatorDivPicture" src="/<%= f.createdBy[0].photo_address %>" alt="photo de profil">
         <div id="creatorDivInfo">
           <p id="svnrTitre"><%= f.titre %></p>
-          <p id="svnrDate"><%= f.svnr_date %></p>
+          <p id="svnrDate"></p>
         </div>
       </div>
 
@@ -82,6 +81,11 @@ i dolutes cullam, comnim aceaquias et molorem rehendae voluptate natum fugitae n
       </div>
 
     </section>
+
+    <script>
+      var _svnr = "<%= f._id %>";
+      var _date = "<%= f.svnr_date %>";
+    </script>
 
 
 
