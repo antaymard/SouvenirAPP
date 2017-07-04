@@ -332,6 +332,7 @@ app.post("/getComments", function (req, res) {
   Comments.find({"svnrId": req.body.idSvnr}, function (err, comments) {
     if (err) {return console.error(err);}
     res.json(comments);
+    console.log(comments);
   }).populate("createdBy");
 });
 

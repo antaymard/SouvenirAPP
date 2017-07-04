@@ -304,12 +304,13 @@ function getAnecdotes (an) {
 
   $.post("/getComments", {idSvnr : an}, function (result) {
     if (result) {
+      console.log(result);
       var n;
       for (n in result) {
         $("#anecdoteDiv").append(
               '<div class="anecdoteDivTxt">'
           +      '<div class="anecdoteDivTxtLeft">'
-          +        '<img src="/'+ result[n].createdBy.photo_address +'" class="creatorDivPicture anecdotePic">'
+          +        '<img src="/'+ result[n].createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
           +      '</div>'
           +      '<div class="anecdoteDivTxtRight">'
           +         result[n].content
@@ -394,17 +395,24 @@ function submitAnecdote(idSouv) {
   var date = new Date();
   console.log(content + " " + date);
 
-  $.post("/addComment", {idSouv : idSouv, content:content, date:date}, function (result) {
-    if(result) {
-      console.log(result);
-      if (result == 'done') {
-        //Refresh le module
-      } else {
-        console.log("erreur d'ajout d'anecdote");
-      }
-    };
-  });
+  if (content) {
+    $.post("/addComment", {idSouv : idSouv, content:content, date:date}, function (result) {
+      if(result) {
+        console.log(result);
+        if (result == 'done') {
 
+          //Refresh le module
+          getAnecdotes (idSouv);
+          //Vide le textarea
+          $("#anecdoteInput").val('');
+          content = null;
+
+        } else {
+          console.log("erreur d'ajout d'anecdote");
+        }
+      };
+    });
+  }
 };
 
   //FUNCTIONS ------------------------------------------------------------------
