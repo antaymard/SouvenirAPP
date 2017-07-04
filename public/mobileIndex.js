@@ -63,23 +63,23 @@ $( document ).ready(function() {
 });
 
 function recallGlobal () {
-$("#loadMoreCard").remove();
-$.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
-  // console.log(svnrs);
-  if(svnrs) {
-    var n;
-    for (n in svnrs) {
-      var s = svnrs[n];
-      displaySvnr(s.titre, s.lieu, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date, s.sharedFriends.length, s.hastags);
+  $("#loadMoreCard").remove();
+  $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
+    // console.log(svnrs);
+    if(svnrs) {
+      var n;
+      for (n in svnrs) {
+        var s = svnrs[n];
+        displaySvnr(s.titre, s.lieu, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date, s.sharedFriends.length, s.hastags);
+      }
+      $("#svnr_recall_space").append(
+          '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
+          + ' <i class="medium material-icons">replay_10</i>'
+        + '</div>'
+      );
     }
-    $("#svnr_recall_space").append(
-        '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
-        + ' <i class="medium material-icons">replay_10</i>'
-      + '</div>'
-    );
-  }
-});
-recall ++;
+  });
+  recall ++;
 };
 
 //USER PRESS ENTRER APRES AVOIR SAISI LES MOTS DE RECHERCHE
@@ -92,12 +92,13 @@ $("#searchInput").keypress(function(event) {
         searchSvnr(query_word);
     }
 });
+
 //EMPECHER LA TOUCHE ESPACE DANS LE INPUT RECHERCHE
 $(document).on('keydown', '#searchInput', function(e) {
     if (e.keyCode == 32) return false;
 });
 
-//FONCTION DE RECHERCHE
+//FONCTION AJAX DE RECHERCHE de souvenir
 function searchSvnr (query_word) {
   $.post("/searchSvnr", {query_word:query_word}, function (resultSvnrs) {
     if(resultSvnrs) {
@@ -116,7 +117,8 @@ function searchSvnr (query_word) {
     }
   });
 }
-//QUAND APPUIE SUR CANCEL DE RECHERCHE
+
+//QUAND APPUIE SUR CANCEL DE RECHERCHE === A passer en dynamique
 function cancelSearch () {
   window.location.href = "/mobileIndex";
 }
@@ -180,10 +182,12 @@ function displayFocusedSvnr(focusId) {
     if(resultFocus) {
       console.log(resultFocus);
 
+      //Affiche photo, description etc et le layout vide pour amis
       displayFocusedSvnrLayout (resultFocus[0]);
 
       // getPresentFriends(resultFocus[0]._id);
 
+      //Affiche les amis avec lesquels le svnr est partagé
       getSharedFriends(resultFocus[0]._id);
   };
 });
@@ -216,6 +220,8 @@ function displayFocusedSvnrLayout (f) {
     +    '</div>'
     +    '<div id="sharedDiv">'
     +      '<p class="chapterP" style="color:black; margin:0 2px 0 2px">Partagé avec</p>'
+    +       '<div id="sharedDivDiv">'
+    +       '</div>'
     +    '</div>'
     +  '</div>'
 
@@ -252,18 +258,74 @@ function getPresentFriends (p) {
 };
 
 function getSharedFriends (sh) {
+  $("#sharedDivDiv").empty();
+  
   $.post("/getSharedFriends", {idSvnr : sh}, function (result) {
     if(result) {
       console.log(result);
       var n;
       for (n in result[0].sharedFriends) {
-        $("#sharedDiv").append(
-          '<img src="/'+ result[0].sharedFriends[0].photo_address +'" class="creatorDivPicture"/>'
+        $("#sharedDivDiv").append(
+          '<img src="/'+ result[0].sharedFriends[n].photo_address +'" class="creatorDivPicture"/>'
         )
       };
-      //AJOUTER BOUTON AJOUT DE SHAREDFRIENDS
+      //Affiche le bouton pour ajouter un sharedFriends
+      $("#sharedDivDiv").append(
+        '<button onclick="openAddFriendDiv('+ "'" + sh + "'" + ')" class="gradButton addFriendBtn">+</button>'
+      )
     };
   });
+};//fin getSharedFriends
+
+function openAddFriendDiv (idSouv) {
+  displayAllMyFriends (idSouv);
+};
+
+function displayAllMyFriends (idSouv) {
+
+  //Affiche le popup
+  $("#svnr_recall_space").append(
+    '<div onclick="closeAddFriendDiv()" id="popupDivBckGround">'
+    + '<p>Partager avec un ami</p>'
+    +   '<div id="popupDiv">'
+    +   '</div>'
+    +'</div>'
+  );
+
+  //Insère les cartes d'amis dans le popup
+  $.post("/getAllMyFriends", {lol : 1}, function (response) {
+    if(response) {
+      console.log(response);
+      var n;
+      for (n in response) {
+        $("#popupDiv").append(
+            '<div onclick="addAsShared('+ "'" + response[n]._id + "', '" + idSouv + "'" + ')" class="friendCard">'
+          +    '<img class="creatorDivPicture" src="/'+ response[n].photo_address +'">'
+          +   '<p>'+ response[n].username + '</p'
+          + '</div>'
+        )
+      }
+    }
+  });
+};
+
+//Ajouter l'ami cliqué comme partagé avec
+function addAsShared (idFriend, idSouv) {
+  console.log(idFriend + " " + idSouv);
+  $.post("/addSharedFriend", {idFriend : idFriend, idSouv : idSouv}, function (state) {
+    if(state == 'added') {
+      console.log("added");
+      getSharedFriends(idSouv);
+    }
+    if (state == 'already_shared') {
+      console.log("dejà partagé");
+    }
+  });
+};
+
+//Fermer le popup d'ajout d'ami (share)
+function closeAddFriendDiv () {
+  $("#popupDivBckGround").remove();
 };
 
 function closeFocus() {

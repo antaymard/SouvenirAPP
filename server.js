@@ -237,37 +237,9 @@ app.post('/svnr_recall', function(req,res) {
   }).populate("createdBy").sort("-creation_date").limit(Number(req.body.limit)).skip(10*Number(req.body.recall));
 });
 
-//renvoie ceux qui m'ont ajouté en amis
-app.post('/users_who_friended_me', function(req, res) {
-  sess = req.session;
-  var research = req.body.research;
-  User.find({"friends" : sess.userid, "username": new RegExp(research, "i")}, function(err, users) {
-    if(err) return console.log(err);
-    res.json(users);
-  }).select("_id username photo_address pers_color ");
-});
 
-//Enregistrer partage avec ami
-app.post('/add_as_shared', function(req, res) {
-  sess = req.session;
-  var sharedF = req.body.sharedF;
-  var idSvnr = req.body.idSvnr;
-  console.log("Id Friend = ".blue + sharedF + " & idsvnr = " + idSvnr);
-  Svnr.find({"_id" : idSvnr}, function(error, sv) {
-    if (error) {return console.error(error);}
-    // console.log("sv = ".blue + sv[0]);
-    if (String(isInArray(sharedF, sv[0].sharedFriends)) == 'false') {
-      console.log("shared is being added".green);
-      Svnr.update({"_id": idSvnr}, {"$push":{ sharedFriends : sharedF}}, function(error, ret){
-        if (error) { return console.error(error);}
-        // console.log("ADDED".green);
-        res.end('added');
-      });
-    } else {
-      res.end('already_shared');
-    }
-  });
-});
+
+
 
 app.post('/sharedFriends_Supp', function(req, res) {
   sess = req.session;
@@ -318,6 +290,35 @@ app.post("/addPresentFriends", function (req, res) {
   }).populate("presentFriends");
 });
 
+//Renvoie mes amis
+//A Ajouter plus tard = search engine
+app.post('/getAllMyFriends', function(req, res) {
+  sess = req.session;
+  User.find({"friends" : sess.userid}, function(err, users) {
+    if(err) return console.log(err);
+    res.json(users);
+  }).select("_id username photo_address nom prenom");
+});
+
+//Enregistrer partage avec ami
+app.post('/addSharedFriend', function(req, res) {
+  sess = req.session;
+  var idFriend = req.body.idFriend;
+  var idSouv = req.body.idSouv;
+  Svnr.find({"_id" : idSouv}, function(error, sv) {
+    if (error) {return console.error(error);}
+    if (String(isInArray(idFriend, sv[0].sharedFriends)) == 'false') {
+      console.log("shared is being added".green);
+      Svnr.update({"_id": idSouv}, {"$push":{ sharedFriends : idFriend}}, function(error, ret){
+        if (error) { return console.error(error);}
+        // console.log("ADDED".green);
+        res.end('added');
+      });
+    } else {
+      res.end('already_shared');
+    }
+  });
+});
 
 //creation du processus d'ajout (upload) image souvenir
 var idFileSvnr;
@@ -413,6 +414,7 @@ app.get('/logout',function(req,res){
   });
 });
 
+// BUG: OBESOLETE !!
 //Affichage des cartes amis (répond à myProfile.js) = ceux que j'ai dans Ma liste
 app.post('/friends_recall', function(req, res) {
   sess = req.session;

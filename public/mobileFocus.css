@@ -30,6 +30,14 @@
   border: 0px solid white;
 }
 
+.addFriendBtn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0px;
+  padding: 0;
+}
+
 
 /*.trueBody {
   padding: 20px;
@@ -108,6 +116,10 @@
   height: auto;
   padding: 0px 9px;
 }
+#sharedDivDiv {
+  display: flex;
+  flex-direction: row;
+}
 
 #anecdoteDiv {
   display: flex;
@@ -136,90 +148,38 @@
   text-justify: inter-word;
 }
 
-
-
-/* NOTE: OLD */
-
-
-#photo {
-  width: 80vw;
-  height : 300px;
-}
-
-#mapNdate {
-  margin-top: 300px;
-  padding: 0px;
+#popupDivBckGround {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 98;
+  background-color: rgba(0,0,0,0.5);
   width: 100vw;
-  height: 80px;
-  background: white;
-}
-#map {
-  width: 80%;
-  float: left;
-}
-#date {
-  float: left;
-  width: 20%;
-  background-color: green;
-  height: 100%;
-}
-#mapImg {
-}
-#DescDiv {
-  padding: 10px;
-  color: white;
-  font-weight: 200;
-  text-align: justify;
-  font-size: 13px;
-}
-#socialSubDiv {
-  padding: 2px;
-}
-#addSharedFriend {
-  border-radius: 50%;
-  background-color: rgba(0,0,0,0);
-  height: 40px;
-  width: 40px;
-  border: solid 1px rgba(0,0,0,0.3);
-  color: rgba(0,0,0,0.3);
-  font-size: 20px;
-  font-weight: 100;
+  height: 66vh;
 }
 #popupDiv {
-  height: 300px;
-  width: 100vw;
-  background-color: rgba(245,245,245,1);
-  margin: auto;
-  z-index: 99;
+  padding-top : 15px;
   position: fixed;
-  bottom: -300px;
-}
-#titrepopup {
-  text-align: left;
-  height: 35px;
-  background-color: #03A9F4;
-  color: white;
-  padding-top: 10px;
-  padding-left: 10px;
-}
-#variablepopup {
-  text-align: center;
-}
-.friendImg {
-  height: 80px;
-  width: 100%;
-  object-fit: cover;
-}
-.friendCard {
-  font-size: 12px;
-  font-weight: 200;
-  padding: 5px;
-  margin: 1%;
-  float: left;
-  height: 100px;
-  width: 20%;
-  text-align: center;
+  top: 66vh;
+  left: 0;
+  z-index: 98;
+  height: 34vh;
+  width: 100vw;
   background-color: white;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  display: flex;
+  flex-direction: row;
+}
+
+.friendCard {
+  height: 100px;
+  width: 70px;
+  background-color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+  border-radius: 3px;
+  text-align: center;
+  margin: 5px;
+}
+.friendCardImg {
+  width: 50px;
+  height: auto;
 }
