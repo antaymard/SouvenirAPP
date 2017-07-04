@@ -16,12 +16,18 @@
   display: inline;
   transition: 1s;
   background-color: ;
+  margin-left: -9px;
 }
 
 .material-icons {
   margin-top: 10px;
   color: white;
   font-size: 35px;
+}
+
+.headerButton {
+  background-color: rgba(0,0,0,0);
+  border: 0px solid white;
 }
 
 

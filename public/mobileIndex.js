@@ -158,6 +158,7 @@ $("#input_photo").change(function() {
 //=============================== AFFICHE UN FOCUS SOUVENIR ====================
 
 function displayFocusedSvnr(focusId) {
+  $('#svnr_recall_space').empty();
 
   //Enlever le HEADER
   $('#myHeader').transition({ y: '-65px' });
@@ -166,9 +167,11 @@ function displayFocusedSvnr(focusId) {
   $( "#searchInput" ).transition({y: '-150px'});
 
   //Crée le nouveau header
-  $(".trueBody").append(
+  $("#svnr_recall_space").append(
      '<div id="myFHeader" class="FtransparentHeader">'
-    +  '<button onclick="closeFocus()"><i class="material-icons">keyboard_arrow_left</i></button>'
+    +  '<button class="headerButton" onclick="closeFocus()">'
+    +     '<i class="material-icons">keyboard_arrow_left</i>'
+    +   '</button>'
     +'</div>'
   );
 
@@ -176,7 +179,6 @@ function displayFocusedSvnr(focusId) {
   $.post("/focusedRecall", {focusId : focusId}, function (resultFocus) {
     if(resultFocus) {
       console.log(resultFocus);
-      $('#svnr_recall_space').empty();
 
       displayFocusedSvnrLayout (resultFocus[0]);
 
@@ -188,7 +190,7 @@ function displayFocusedSvnr(focusId) {
 } //Fin displayFocusedSvnr
 
 function displayFocusedSvnrLayout (f) {
-  $(".trueBody").append(
+  $("#svnr_recall_space").append(
      '<div id="creatorDiv">'
     +  '<img class="creatorDivPicture" src="/'+ f.createdBy[0].photo_address + '" alt="photo de profil">'
     +  '<div id="creatorDivInfo">'
@@ -265,16 +267,17 @@ function getSharedFriends (sh) {
 };
 
 function closeFocus() {
+  //Supprimer le focus svnr
+  $('#svnr_recall_space').empty();
+
   //Remettre le HEADER
   $('#myHeader').transition({ y: '0px' });
 
   //Remettre la  barre de recherche
   $( "#searchInput" ).transition({y: '0px'});
 
-  //Supprimer le focus svnr
-  $('#svnr_recall_space').empty();
-
   //RECALL DES SOUVENRIS
+  recall --;
   recallGlobal ();
 }
 
