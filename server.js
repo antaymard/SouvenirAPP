@@ -79,9 +79,20 @@ var notifSchema = mongoose.Schema({
   createdBy : String,
   targetTo : String,
   creationDate : Date,
-  type : String
+  type : String,
+  beenRead : Array
 });
 var Notif = mongoose.model('Notif', notifSchema);
+
+var commentSchema = mongoose.Schema({
+  svnrId : String,
+  createdBy : [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
+  content : String,
+  creationDate : Date,
+  beenRead : Array,
+  beenEdited : Array
+});
+var Comments = mongoose.model('Comments', commentSchema);
 
 var sess;
 
@@ -93,7 +104,7 @@ app.get("/", function (req, res) {
       if(err) {
         SendToSlack('*Home Display Erreur : *\n' + err);
         return console.error(err + ' home display err'.red)};
-      res.render('ejs/index', {
+      res.render('ejs/mobileIndex', {
         userphotoid : users[0].photo_address,
         profileNom : users[0].nom,
         profilePNom : users[0].prenom
@@ -280,6 +291,51 @@ app.post("/getSharedFriends", function (req, res) {
   }).populate("sharedFriends");
 });
 
+//Enregistrer partage avec ami
+app.post('/addSharedFriend', function(req, res) {
+  sess = req.session;
+  var idFriend = req.body.idFriend;
+  var idSouv = req.body.idSouv;
+  Svnr.find({"_id" : idSouv}, function(error, sv) {
+    if (error) {return console.error(error);}
+    if (String(isInArray(idFriend, sv[0].sharedFriends)) == 'false') {
+      console.log("shared is being added".green);
+      Svnr.update({"_id": idSouv}, {"$push":{ sharedFriends : idFriend}}, function(error, ret){
+        if (error) { return console.error(error);}
+        // console.log("ADDED".green);
+        res.end('added');
+      });
+    } else {
+      res.end('already_shared');
+    }
+  });
+});
+
+//Ecrit un nouveau Comment
+app.post("/addComment", function (req, res) {
+  sess = req.session;
+  var cont = req.body;
+  console.log(cont.idSouv);
+  var c = new Comments({
+      svnrId : cont.idSouv,
+      createdBy:sess.userid,
+      content: cont.content,
+      creationDate : cont.date
+    });
+  c.save(function(){
+    console.log("nouveau comment ajouté");
+    res.end('done');
+  })
+});
+
+app.post("/getComments", function (req, res) {
+  Comments.find({"svnrId": req.body.idSvnr}, function (err, comments) {
+    if (err) {return console.error(err);}
+    res.json(comments);
+  }).populate("createdBy");
+});
+
+
 // ==============ALL AJAX FOR EDIT SVNR ============================
 
 //Ajoute un ami présent
@@ -300,25 +356,7 @@ app.post('/getAllMyFriends', function(req, res) {
   }).select("_id username photo_address nom prenom");
 });
 
-//Enregistrer partage avec ami
-app.post('/addSharedFriend', function(req, res) {
-  sess = req.session;
-  var idFriend = req.body.idFriend;
-  var idSouv = req.body.idSouv;
-  Svnr.find({"_id" : idSouv}, function(error, sv) {
-    if (error) {return console.error(error);}
-    if (String(isInArray(idFriend, sv[0].sharedFriends)) == 'false') {
-      console.log("shared is being added".green);
-      Svnr.update({"_id": idSouv}, {"$push":{ sharedFriends : idFriend}}, function(error, ret){
-        if (error) { return console.error(error);}
-        // console.log("ADDED".green);
-        res.end('added');
-      });
-    } else {
-      res.end('already_shared');
-    }
-  });
-});
+
 
 //creation du processus d'ajout (upload) image souvenir
 var idFileSvnr;
@@ -414,26 +452,6 @@ app.get('/logout',function(req,res){
   });
 });
 
-// BUG: OBESOLETE !!
-//Affichage des cartes amis (répond à myProfile.js) = ceux que j'ai dans Ma liste
-app.post('/friends_recall', function(req, res) {
-  sess = req.session;
-  var friend_list=[];
-  User.find({"_id":sess.userid}, function(err, users) {
-    if(err) return console.error(err);
-    async.eachSeries(users[0].friends, function(elem, callback) {
-      User.find({"_id":elem}, function(err, friendslist) {
-        friend_list.push(friendslist[0]);
-        callback(false);
-      });
-    },function(error) {
-      if (error) { console.error(error);}
-      res.json(friend_list);
-    }
-    )
-  })
-});
-
 //creation du processus d'ajout (upload) photo profil
 var idFileProPic;
 var storageProPic =   multer.diskStorage({
@@ -476,6 +494,5 @@ slack.webhook({
   text: message
 }, function(err, response) {
   if (err) { return console.error(err);}
-  console.dir(response);
 });
 };

@@ -19,7 +19,7 @@
   margin-left: -9px;
 }
 
-.material-icons {
+.backIcon {
   margin-top: 10px;
   color: white;
   font-size: 35px;
@@ -134,7 +134,7 @@
   border-radius: 3px;
   width: 100%;
   height: auto;
-  margin-top: 9px;
+  margin-top: 5px;
 }
 .anecdotePic {
   margin: 10px 9px;
@@ -146,6 +146,17 @@
   padding: 10px 9px;
   text-align: justify;
   text-justify: inter-word;
+}
+#anecdoteInput {
+  width: auto;
+  height: auto;
+}
+#submitAnecdoteBtn {
+  width: auto;
+  padding: 5px;
+  height: 100%;
+  font-size: 5px;
+  margin: auto;
 }
 
 #popupDivBckGround {

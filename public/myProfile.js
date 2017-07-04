@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $.post("/friends_recall",{send : "1"},function(myFriends_data){
+  $.post("/getAllMyFriends",{send : "1"},function(myFriends_data){
     if(myFriends_data) {
       console.log(myFriends_data);
       var i;

@@ -162,6 +162,9 @@ $("#input_photo").change(function() {
 function displayFocusedSvnr(focusId) {
   $('#svnr_recall_space').empty();
 
+  //Enlever le + button
+  $('#input_photo').transition({ y: '95px' });
+
   //Enlever le HEADER
   $('#myHeader').transition({ y: '-65px' });
 
@@ -172,7 +175,7 @@ function displayFocusedSvnr(focusId) {
   $("#svnr_recall_space").append(
      '<div id="myFHeader" class="FtransparentHeader">'
     +  '<button class="headerButton" onclick="closeFocus()">'
-    +     '<i class="material-icons">keyboard_arrow_left</i>'
+    +     '<i class="material-icons backIcon">keyboard_arrow_left</i>'
     +   '</button>'
     +'</div>'
   );
@@ -180,7 +183,6 @@ function displayFocusedSvnr(focusId) {
   //Récupère les infos du souvenir focused
   $.post("/focusedRecall", {focusId : focusId}, function (resultFocus) {
     if(resultFocus) {
-      console.log(resultFocus);
 
       //Affiche photo, description etc et le layout vide pour amis
       displayFocusedSvnrLayout (resultFocus[0]);
@@ -189,6 +191,9 @@ function displayFocusedSvnr(focusId) {
 
       //Affiche les amis avec lesquels le svnr est partagé
       getSharedFriends(resultFocus[0]._id);
+
+      //Affiche les comments du souvenir
+      getAnecdotes (resultFocus[0]._id);
   };
 });
 } //Fin displayFocusedSvnr
@@ -228,23 +233,41 @@ function displayFocusedSvnrLayout (f) {
     + '<p class="chapterP">Anecdotes</p>'
 
     + '<div id="anecdoteDiv">'
-    +    '<div class="anecdoteDivTxt">'
-    +      '<div class="anecdoteDivTxtLeft">'
-    +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
-    +      '</div>'
-    +      '<div class="anecdoteDivTxtRight">'
-    + 'Aximus est reptaque por ad moluptatum dolestiberum qui- busam et aut aped magnam aut omnimil laboreicabo. Disi- mi, quas eatus et et unt re non porior siti ut a sin et et aut l'
-    +   '</div>'
-    +   '</div>'
-    +    '<div class="anecdoteDivTxt">'
-    +      '<div class="anecdoteDivTxtLeft">'
-    +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
-    +      '</div>'
-    +      '<div class="anecdoteDivTxtRight">'
-    + 'i dolutes cullam, comnim aceaquias et molorem rehendae voluptate natum fugitae nonet fuga. Vitaers pidunt oditior emolu- picia aut in nullaboribus autatem int, sunt eate nonsequam, tet quia- ti beat eum qui doluptae. Nus, quam res il il ma int omnisquatur? Agnis aceprorionet earunto elictae peliatquam, ulparum laccum utenis excesto maximet uriscius dite late sus des et ducidis aliquiam fugit mo- lore evelibe rspedi od ma aspicipsus adias quibusam explatet erio beritat. Archill acculpa sum etur aut evel ipiet hiciaep '
-    +   '</div>'
-    +   ' </div>'
+
+    // +    '<div class="anecdoteDivTxt">'
+    // +      '<div class="anecdoteDivTxtLeft">'
+    // +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+    // +      '</div>'
+    // +      '<div class="anecdoteDivTxtRight">'
+    // + 'Aximus est reptaque por ad moluptatum dolestiberum qui- busam et aut aped magnam aut omnimil laboreicabo. Disi- mi, quas eatus et et unt re non porior siti ut a sin et et aut l'
+    // +   '</div>'
+    // +   '</div>'
+    //
+    // +    '<div class="anecdoteDivTxt">'
+    // +      '<div class="anecdoteDivTxtLeft">'
+    // +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+    // +      '</div>'
+    // +      '<div class="anecdoteDivTxtRight">'
+    // + 'i dolutes cullam, comnim aceaquias et molorem rehendae voluptate natum fugitae nonet fuga. Vitaers pidunt oditior emolu- picia aut in nullaboribus autatem int, sunt eate nonsequam, tet quia- ti beat eum qui doluptae. Nus, quam res il il ma int omnisquatur? Agnis aceprorionet earunto elictae peliatquam, ulparum laccum utenis excesto maximet uriscius dite late sus des et ducidis aliquiam fugit mo- lore evelibe rspedi od ma aspicipsus adias quibusam explatet erio beritat. Archill acculpa sum etur aut evel ipiet hiciaep '
+    // +   '</div>'
+    // +   '</div>'
+
     +  '</div>'
+
+    + '<div id="anecdoteInputDiv" class="anecdoteDivTxt">'
+    +   '<div class="anecdoteDivTxtLeft">'
+    // BUG: CHANGER LA PHOTO
+    +     '<img src="'+ $('#myProfilePic').attr('src') +'" class="creatorDivPicture anecdotePic">'
+    +   '</div>'
+    +   '<div class="anecdoteDivTxtRight" style="display:flex; flex-direction:row">'
+    +     '<textarea id="anecdoteInput" cols="50" rows="5" placeholder="Ajouter une anecdote...">'
+    +     '</textarea>'
+    +     '<button onclick="submitAnecdote('+ "'" + f._id + "'" +')" class="gradButton" id="submitAnecdoteBtn">'
+    +        '<i class="material-icons">send</i>'
+    +     '</button>'
+    +   '</div>'
+    + '</div>'
+
   );
 };
 
@@ -259,10 +282,9 @@ function getPresentFriends (p) {
 
 function getSharedFriends (sh) {
   $("#sharedDivDiv").empty();
-  
+
   $.post("/getSharedFriends", {idSvnr : sh}, function (result) {
     if(result) {
-      console.log(result);
       var n;
       for (n in result[0].sharedFriends) {
         $("#sharedDivDiv").append(
@@ -271,16 +293,35 @@ function getSharedFriends (sh) {
       };
       //Affiche le bouton pour ajouter un sharedFriends
       $("#sharedDivDiv").append(
-        '<button onclick="openAddFriendDiv('+ "'" + sh + "'" + ')" class="gradButton addFriendBtn">+</button>'
+        '<button onclick="displayAllMyFriends('+ "'" + sh + "'" + ')" class="gradButton addFriendBtn">+</button>'
       )
     };
   });
 };//fin getSharedFriends
 
-function openAddFriendDiv (idSouv) {
-  displayAllMyFriends (idSouv);
-};
+function getAnecdotes (an) {
+  $("#anecdoteDiv").empty();
 
+  $.post("/getComments", {idSvnr : an}, function (result) {
+    if (result) {
+      var n;
+      for (n in result) {
+        $("#anecdoteDiv").append(
+              '<div class="anecdoteDivTxt">'
+          +      '<div class="anecdoteDivTxtLeft">'
+          +        '<img src="/'+ result[n].createdBy.photo_address +'" class="creatorDivPicture anecdotePic">'
+          +      '</div>'
+          +      '<div class="anecdoteDivTxtRight">'
+          +         result[n].content
+          +     '</div>'
+          +   '</div>'
+        )
+      };
+    }
+  })
+}
+
+//Affiche le pop up quand le + est cliqué = affiche mes amis => peut ajouter en sharedFriends
 function displayAllMyFriends (idSouv) {
 
   //Affiche le popup
@@ -328,7 +369,11 @@ function closeAddFriendDiv () {
   $("#popupDivBckGround").remove();
 };
 
+//Revenir en arrière (au display global) quand le retour est cliqué
 function closeFocus() {
+  //Remettre le + button
+  $('#input_photo').transition({ y: '0px' });
+
   //Supprimer le focus svnr
   $('#svnr_recall_space').empty();
 
@@ -343,6 +388,24 @@ function closeFocus() {
   recallGlobal ();
 }
 
+//Envoie l'anecdote
+function submitAnecdote(idSouv) {
+  var content = $("#anecdoteInput").val();
+  var date = new Date();
+  console.log(content + " " + date);
+
+  $.post("/addComment", {idSouv : idSouv, content:content, date:date}, function (result) {
+    if(result) {
+      console.log(result);
+      if (result == 'done') {
+        //Refresh le module
+      } else {
+        console.log("erreur d'ajout d'anecdote");
+      }
+    };
+  });
+
+};
 
   //FUNCTIONS ------------------------------------------------------------------
   //Checker si la valeur est déjà dans l'array
