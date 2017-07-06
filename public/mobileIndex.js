@@ -82,6 +82,9 @@ function recallGlobal () {
   recall ++;
 };
 
+
+//======================= BARRE DE RECHERCHE ===================================
+
 //USER PRESS ENTRER APRES AVOIR SAISI LES MOTS DE RECHERCHE
 $("#searchInput").keypress(function(event) {
     if (event.which == 13) {
@@ -105,7 +108,7 @@ function searchSvnr (query_word) {
       console.log(resultSvnrs);
       $('#svnr_recall_space').empty();
       $("#svnr_recall_space").append(
-        '<p style="color:white">'+ resultSvnrs.length + ' Souvenirs trouvé(s) avec "'+ query_word + '" dans le titre<span id="searchCancel"><button onclick="cancelSearch()">Annuler</button></span></p>'
+        '<p style="color:white">'+ resultSvnrs.length + ' Souvenirs trouvé(s) contenant "'+ query_word + '<span style="float:right"><button class="classicBtn" onclick="cancelSearch()" style="color:white">Annuler</button></span></p>'
       );
       var n;
       for (n in resultSvnrs) {
@@ -204,7 +207,7 @@ function displayFocusedSvnrLayout (f) {
     +  '<img class="creatorDivPicture" src="/'+ f.createdBy[0].photo_address + '" alt="photo de profil">'
     +  '<div id="creatorDivInfo">'
     +    '<p id="svnrTitre">' + f.titre + '</p>'
-    +    '<p id="svnrDate">'+ f.creation_date +'</p>'
+    +    '<p id="svnrDate">'+ returnNiceDate(f.svnr_date) +'</p>'
     +  '</div>'
     + '</div>'
 
@@ -234,24 +237,6 @@ function displayFocusedSvnrLayout (f) {
 
     + '<div id="anecdoteDiv">'
 
-    // +    '<div class="anecdoteDivTxt">'
-    // +      '<div class="anecdoteDivTxtLeft">'
-    // +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
-    // +      '</div>'
-    // +      '<div class="anecdoteDivTxtRight">'
-    // + 'Aximus est reptaque por ad moluptatum dolestiberum qui- busam et aut aped magnam aut omnimil laboreicabo. Disi- mi, quas eatus et et unt re non porior siti ut a sin et et aut l'
-    // +   '</div>'
-    // +   '</div>'
-    //
-    // +    '<div class="anecdoteDivTxt">'
-    // +      '<div class="anecdoteDivTxtLeft">'
-    // +        '<img src="/'+ f.createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
-    // +      '</div>'
-    // +      '<div class="anecdoteDivTxtRight">'
-    // + 'i dolutes cullam, comnim aceaquias et molorem rehendae voluptate natum fugitae nonet fuga. Vitaers pidunt oditior emolu- picia aut in nullaboribus autatem int, sunt eate nonsequam, tet quia- ti beat eum qui doluptae. Nus, quam res il il ma int omnisquatur? Agnis aceprorionet earunto elictae peliatquam, ulparum laccum utenis excesto maximet uriscius dite late sus des et ducidis aliquiam fugit mo- lore evelibe rspedi od ma aspicipsus adias quibusam explatet erio beritat. Archill acculpa sum etur aut evel ipiet hiciaep '
-    // +   '</div>'
-    // +   '</div>'
-
     +  '</div>'
 
     + '<div id="anecdoteInputDiv" class="anecdoteDivTxt">'
@@ -260,10 +245,10 @@ function displayFocusedSvnrLayout (f) {
     +     '<img src="'+ $('#myProfilePic').attr('src') +'" class="creatorDivPicture anecdotePic">'
     +   '</div>'
     +   '<div class="anecdoteDivTxtRight" style="display:flex; flex-direction:row">'
-    +     '<textarea id="anecdoteInput" cols="50" rows="5" placeholder="Ajouter une anecdote...">'
+    +     '<textarea id="anecdoteInput" placeholder="Ajouter une anecdote...">'
     +     '</textarea>'
     +     '<button onclick="submitAnecdote('+ "'" + f._id + "'" +')" class="gradButton" id="submitAnecdoteBtn">'
-    +        '<i class="material-icons">send</i>'
+    +        '<i class="material-icons" id="sendIcon">send</i>'
     +     '</button>'
     +   '</div>'
     + '</div>'
@@ -449,6 +434,15 @@ function submitAnecdote(idSouv) {
     }
   };
 
+function returnNiceDate (date) {
+  date = new Date(date);
+  let dateY = 1900 + date.getYear();
+  let dateM = date.getMonth();
+  let month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
+  let dateD = date.getDate();
+  let time = date.getTime();
+  return "le " + dateD + " " + month[dateM] + " " + dateY + " à ";
+}
 
   //FONCTION POUR PARTAGE AVEC AMI
   // function sharedFriendsSupp(idFriend) {

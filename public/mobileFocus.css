@@ -146,17 +146,21 @@
   padding: 10px 9px;
   text-align: justify;
   text-justify: inter-word;
+  width: 100%;
 }
 #anecdoteInput {
-  width: auto;
+  width: 100%;
   height: auto;
+  margin-right: 5px;
 }
 #submitAnecdoteBtn {
   width: auto;
   padding: 5px;
   height: 100%;
-  font-size: 5px;
-  margin: auto;
+  right: 0;
+  padding: 0px 5px;
+} #sendIcon {
+  font-size: 13px;
 }
 
 #popupDivBckGround {

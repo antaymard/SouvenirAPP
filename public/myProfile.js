@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+//Affiche mes amis
   $.post("/getAllMyFriends",{send : "1"},function(myFriends_data){
     if(myFriends_data) {
       console.log(myFriends_data);
@@ -7,7 +8,7 @@ $(document).ready(function(){
       for (i in myFriends_data) {
         if (!myFriends_data[i].photo_address) {myFriends_data[i].photo_address = "http://placehold.it/350x150"}
         var user_age = calcAge(myFriends_data[i].birthday);
-        $('#myFriends_Space').append(
+        $('#content_Space').append(
           '<div class="friendCard">'
         +     '<div class="card-image">'
         +       '<img class="imgFriend" src="' + myFriends_data[i].photo_address +'">'

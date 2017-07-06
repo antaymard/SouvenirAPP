@@ -224,18 +224,19 @@ app.post('/searchSvnr', function(req,res) {
     var query_word = req.body.query_word;
     var query_type = "description";
     console.log(query_word);
-  Svnr.find()
-    .or([
-       {"createdBy": sess.userid},
-       {"sharedFriends":sess.userid}
-     ])
-    .where(query_type).regex(new RegExp(query_word, "i"))
+
+    Svnr.find()
+    .and([
+      { $or: [{"createdBy": sess.userid}, {"sharedFriends":sess.userid}] },
+      { $or: [{"description": new RegExp(query_word, "i")}, {"titre": new RegExp(query_word, "i")}] }
+    ])
     .populate("createdBy").sort("-creation_date")
     .exec(
-    function(err, resultSvnrs) {
-      if (err) return console.error(err);
-      res.json(resultSvnrs);
-  });
+      function(err, resultSvnrs) {
+        if (err) return console.error(err);
+        res.json(resultSvnrs);
+      });
+
 });
 
 //========  IMPORTANT  ========
@@ -489,11 +490,11 @@ function isInArray(value, array) {
 };
 
 function SendToSlack (message) {
-slack.webhook({
-  channel: "#server_feedback",
-  username: "webhookbot",
-  text: message
-}, function(err, response) {
-  if (err) { return console.error(err);}
-});
+// slack.webhook({
+//   channel: "#server_feedback",
+//   username: "webhookbot",
+//   text: message
+// }, function(err, response) {
+//   if (err) { return console.error(err);}
+// });
 };
