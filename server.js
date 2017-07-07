@@ -76,10 +76,11 @@ var Svnr = mongoose.model("Svnr", svnrSchema);
 // svnrSchema.index({titre: 'text'});
 
 var notifSchema = mongoose.Schema({
-  createdBy : String,
-  targetTo : String,
+  createdBy : [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
+  targetTo : [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
+  idSvnr : [{type : mongoose.Schema.Types.ObjectId, ref : "Svnr"}],
   creationDate : Date,
-  type : String,
+  type : Number,
   beenRead : Array
 });
 var Notif = mongoose.model('Notif', notifSchema);
@@ -162,6 +163,7 @@ app.post('/login', function(req, response) {
   })
 });
 
+//Récupérer les infos de l'utilisateur actif
 app.post('/MyInfo', function(req, res) {
   sess = req.session;
   User.find({"_id" : sess.userid}, function(err, infos) {
@@ -252,7 +254,7 @@ app.post('/svnr_recall', function(req,res) {
 
 
 
-
+//Supprimer un partage de souvenir
 app.post('/sharedFriends_Supp', function(req, res) {
   sess = req.session;
   var idFriend = req.body.idFriend;
@@ -297,6 +299,7 @@ app.post('/addSharedFriend', function(req, res) {
   sess = req.session;
   var idFriend = req.body.idFriend;
   var idSouv = req.body.idSouv;
+  var targetFriends = req.body.targetFriends;
   Svnr.find({"_id" : idSouv}, function(error, sv) {
     if (error) {return console.error(error);}
     if (String(isInArray(idFriend, sv[0].sharedFriends)) == 'false') {
@@ -304,6 +307,7 @@ app.post('/addSharedFriend', function(req, res) {
       Svnr.update({"_id": idSouv}, {"$push":{ sharedFriends : idFriend}}, function(error, ret){
         if (error) { return console.error(error);}
         // console.log("ADDED".green);
+        addANotif(1, idSouv, sess.userid, targetFriends, new Date());
         res.end('added');
       });
     } else {
@@ -325,10 +329,13 @@ app.post("/addComment", function (req, res) {
     });
   c.save(function(){
     console.log("nouveau comment ajouté");
+    //Ajoute une notification
+    addANotif(0, cont.idSouv, sess.userid, cont.targetFriends, cont.date);
     res.end('done');
   })
 });
 
+//Récupère les nouveaux commentaires
 app.post("/getComments", function (req, res) {
   Comments.find({"svnrId": req.body.idSvnr}, function (err, comments) {
     if (err) {return console.error(err);}
@@ -337,6 +344,31 @@ app.post("/getComments", function (req, res) {
   }).populate("createdBy");
 });
 
+//Fonction d'ajout de notification
+function addANotif (type, idSvnr, userId, targetTo, creationDate) {
+  suppFromArray(userId, targetTo);
+  var n = new Notif({
+    createdBy : userId,
+    targetTo : targetTo,
+    idSvnr : idSvnr,
+    type : type,
+    creationDate : creationDate,
+    beenRead : []
+  });
+  n.save(function(){
+    console.log('nouvelle notif ajoutée');
+  })
+};
+
+//Récupérer mes notifications
+app.post("/getNotifs", function (req, res) {
+  sess = req.session;
+  Notif.find({"targetTo": sess.userid}, function (err, notifs) {
+    if (err) {return console.error(err);}
+    console.log(notifs);
+    res.json(notifs);
+  }).populate("createdBy").sort("-creationDate");
+});
 
 // ==============ALL AJAX FOR EDIT SVNR ============================
 
@@ -488,6 +520,17 @@ app.post('/myProfile/updateImg', function(req, res){
 function isInArray(value, array) {
   return array.indexOf(value) > -1; //answer T or F
 };
+
+function suppFromArray(value, array) {
+		var index = array.indexOf(value);
+    if (array.indexOf(value) > -1) {
+      console.log("supprimé de l'array");
+      array.splice(index ,1);
+      return array;
+    } else {
+      console.log("pas de supp de l'array");
+    }
+  };
 
 function SendToSlack (message) {
 // slack.webhook({

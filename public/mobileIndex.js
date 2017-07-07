@@ -1,5 +1,7 @@
 var recall = 0, limit = 10, svnrs;
 var query_type;
+var targetFriends = []; //Initie dans le scope global pour pouvoir envoyer à notif.
+                    //Est modifié à chaque getSharedFriends et vidé à chaque back.
 
 //OBSCURCIR HEADER QUAND SCROLLED
 $(window).on("scroll touchmove", function () {
@@ -45,16 +47,11 @@ $('#searchInput').on({
 });
 
 $( document ).ready(function() {
+  //Afficher les notifications en haut du fil
+  getNotifs();
 
   //RECALL DES SOUVENRIS
   recallGlobal ();
-
-  //auto load more souvenris
-  $(window).scroll(function() {
-     if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        //  recallGlobal();
-     }
-  });
 
 // NOTE: WORK IN PROGRESS defocus la barre quand on scroll vers le bas
   if ($(document).scrollTop() > 50) {
@@ -63,6 +60,9 @@ $( document ).ready(function() {
 });
 
 function recallGlobal () {
+  //vide targetFriends
+  targetFriends = [];
+
   $("#loadMoreCard").remove();
   $.post("/svnr_recall", {limit:limit, recall:recall}, function (svnrs) {
     // console.log(svnrs);
@@ -137,7 +137,7 @@ function cancelSearch () {
         + '<img class="who_posted" src="/'+ cBphotoAdress + '">'
         + '<div class="svnrCard_topDiv_rightPart">'
           + '<div class="cBusername">' + cBusername
-            + '<span class="actionType">a ajouté une anécdote</span>'
+            + '<span class="actionType"> a ajouté un souvenir</span>'
           + '</div>'
           + '<div class="creationDate">'+ calcAgo(creation_date) +'</div>'
         + '</div>'
@@ -267,9 +267,21 @@ function getPresentFriends (p) {
 
 function getSharedFriends (sh) {
   $("#sharedDivDiv").empty();
+  //Vide targetFriends
+  targetFriends = [];
 
   $.post("/getSharedFriends", {idSvnr : sh}, function (result) {
     if(result) {
+      console.log(result);
+      //Mettre les amis partagés dans targetFriends
+      var s;
+      for (s in result[0].sharedFriends) {
+        targetFriends.push(result[0].sharedFriends[s]._id);
+      }
+      targetFriends.push(result[0].createdBy[0]);
+
+      console.log(targetFriends);
+
       var n;
       for (n in result[0].sharedFriends) {
         $("#sharedDivDiv").append(
@@ -284,6 +296,7 @@ function getSharedFriends (sh) {
   });
 };//fin getSharedFriends
 
+//Récupère les anecdotes
 function getAnecdotes (an) {
   $("#anecdoteDiv").empty();
 
@@ -304,7 +317,7 @@ function getAnecdotes (an) {
         )
       };
     }
-  })
+  });
 }
 
 //Affiche le pop up quand le + est cliqué = affiche mes amis => peut ajouter en sharedFriends
@@ -339,7 +352,8 @@ function displayAllMyFriends (idSouv) {
 //Ajouter l'ami cliqué comme partagé avec
 function addAsShared (idFriend, idSouv) {
   console.log(idFriend + " " + idSouv);
-  $.post("/addSharedFriend", {idFriend : idFriend, idSouv : idSouv}, function (state) {
+  targetFriends.push(idFriend);
+  $.post("/addSharedFriend", {idFriend : idFriend, idSouv : idSouv, targetFriends : targetFriends }, function (state) {
     if(state == 'added') {
       console.log("added");
       getSharedFriends(idSouv);
@@ -357,6 +371,9 @@ function closeAddFriendDiv () {
 
 //Revenir en arrière (au display global) quand le retour est cliqué
 function closeFocus() {
+  //Vider targetFriends
+  targetFriends = [];
+
   //Remettre le + button
   $('#input_photo').transition({ y: '0px' });
 
@@ -371,7 +388,9 @@ function closeFocus() {
 
   //RECALL DES SOUVENRIS
   recall --;
+  getNotifs();
   recallGlobal ();
+
 }
 
 //Envoie l'anecdote
@@ -381,7 +400,7 @@ function submitAnecdote(idSouv) {
   console.log(content + " " + date);
 
   if (content) {
-    $.post("/addComment", {idSouv : idSouv, content:content, date:date}, function (result) {
+    $.post("/addComment", {idSouv : idSouv, content:content, date:date, targetFriends : targetFriends}, function (result) {
       if(result) {
         console.log(result);
         if (result == 'done') {
@@ -399,6 +418,39 @@ function submitAnecdote(idSouv) {
     });
   }
 };
+
+//Récupère et affiche les notifications !!
+// NOTE: gérer la suppr des notifs !!
+function getNotifs() {
+  // $("").empty();
+  console.log("notifs incoming");
+
+  $.post("/getNotifs", {ping : "1"}, function (notifs) {
+    if (notifs) {
+      console.log(notifs);
+
+      //Registre de conversion type de notifs
+      var registre = ["ajouté une anecdote !", "partagé un souvenir avec vous !"];
+
+      var n;
+      for (n in notifs) {
+        console.log(notifs);
+
+        $("#svnr_recall_space").append(
+              '<div onclick="displayFocusedSvnr('+ "'" + notifs[n].idSvnr + "'" + ')" class="anecdoteDivTxt" style="margin:5px 0;background-color:#D1C4E9">'
+          +      '<div class="anecdoteDivTxtLeft">'
+          +        '<img src="/'+ notifs[n].createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+          +      '</div>'
+          +      '<div class="anecdoteDivTxtRight">'
+          +         notifs[n].createdBy[0].prenom + ' a ' + registre[notifs[n].type]
+          +     '</div>'
+          +   '</div>'
+        )
+      };
+    }
+  });
+};
+
 
   //FUNCTIONS ------------------------------------------------------------------
   //Checker si la valeur est déjà dans l'array
