@@ -62,3 +62,14 @@ a {
   color: white;
   margin-bottom: 60px;
 }
+
+#state {
+  position: relative;
+  bottom: 2vh;
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  border-radius: 3px;
+  color: red;
+  font-size: 15px;
+}

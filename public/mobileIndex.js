@@ -422,34 +422,89 @@ function submitAnecdote(idSouv) {
 //Récupère et affiche les notifications !!
 // NOTE: gérer la suppr des notifs !!
 function getNotifs() {
-  // $("").empty();
+  $("#notif_recall_space").empty();
   console.log("notifs incoming");
 
   $.post("/getNotifs", {ping : "1"}, function (notifs) {
-    if (notifs) {
-      console.log(notifs);
-
+    if (notifs.length > 0) {
       //Registre de conversion type de notifs
-      var registre = ["ajouté une anecdote !", "partagé un souvenir avec vous !"];
-
+      var registre = ["a ajouté une anecdote !", "partagé un souvenir avec vous !", ""];
+      $("#notif_recall_space").append(
+        "<div style='margin-bottom:5px; color: white'>" + notifs.length +" nouvelle(s) notification(s)</div>"
+      );
       var n;
       for (n in notifs) {
-        console.log(notifs);
+        if (notifs[n].type <2 ) { //Si pas un ajout d'ami
+          $("#notif_recall_space").append(
+              '<div class="notifDivTxt">'
+            +   '<div style="display:flex; flex-direction:row" onclick="displayFocusedSvnr('+ "'" + notifs[n].idSvnr + "'" + ')">'
 
-        $("#svnr_recall_space").append(
-              '<div onclick="displayFocusedSvnr('+ "'" + notifs[n].idSvnr + "'" + ')" class="anecdoteDivTxt" style="margin:5px 0;background-color:#D1C4E9">'
-          +      '<div class="anecdoteDivTxtLeft">'
-          +        '<img src="/'+ notifs[n].createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
-          +      '</div>'
-          +      '<div class="anecdoteDivTxtRight">'
-          +         notifs[n].createdBy[0].prenom + ' a ' + registre[notifs[n].type]
-          +     '</div>'
-          +   '</div>'
-        )
+            +      '<div class="notifDivTxtLeft">'
+            +        '<img src="/'+ notifs[n].createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+            +      '</div>'
+
+            +      '<div class="notifDivTxtRight" >'
+            +         notifs[n].createdBy[0].prenom + ' ' + registre[notifs[n].type]
+            +      '</div>'
+            +   '</div>'
+
+            +      '<button class="notifSupprBtn gradButton" onclick="supprNotif('+ "'" + notifs[n]._id + "'" + ')">'
+            +         '<i class="material-icons">delete_forever</i>'
+            +     '</button>'
+
+            +  '</div>'
+          );
+        } else {
+          $("#notif_recall_space").append(
+              '<div class="notifDivTxt">'
+            +   '<div style="display:flex; flex-direction:row" onclick="addFriendBack('+ "'" + notifs[n].createdBy[0]._id + "', '"+ notifs[n]._id + "'" + ')">'
+
+            +      '<div class="notifDivTxtLeft">'
+            +        '<img src="/'+ notifs[n].createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+            +      '</div>'
+
+            +      '<div class="notifDivTxtRight" >'
+            +         notifs[n].createdBy[0].prenom + ' vous a ajouté en ami. Cliquez pour accepter'
+            +      '</div>'
+            +   '</div>'
+
+            +      '<button class="notifSupprBtn gradButton" onclick="supprNotif('+ "'" + notifs[n]._id + "'" + ')">'
+            +         '<i class="material-icons">delete_forever</i>'
+            +     '</button>'
+
+            +  '</div>'
+          );
+        }
+
       };
+    } else {
+      $("#notif_recall_space").append(
+        "<div style='margin-bottom:5px; color: white'>Pas de nouvelles notifications</div>");
     }
   });
 };
+
+function supprNotif(idN) {
+  $.post("/supprNotif", {idN : idN}, function (result) {
+    if (result == "ok") {
+      console.log("ok");
+      getNotifs();
+    }
+  });
+};
+
+function addFriendBack(idF, idN) {
+  $.post("/add_as_friend", {friendid : idF}, function (result) {
+    if (result == "added") {
+      console.log("added back");
+      supprNotif(idN);
+    }
+    if (result == "déjà amis") {
+      console.log("added back");
+      supprNotif(idN);
+    }
+  });
+}
 
 
   //FUNCTIONS ------------------------------------------------------------------

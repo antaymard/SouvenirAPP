@@ -188,10 +188,11 @@ app.post("/get_all_users_names", function (req, res) {
 
 //Permet l'affichage de la carte de l'ami recherché dans le panel de recherche d'ami
 app.post('/get_user_card_addFr', function(req, res) {
-  User.find({"username" : req.body.username}, function(err, users) {
+  console.log(req.body.search);
+  User.find({"username" : new RegExp(req.body.search, "i")}, function(err, users) {
     if(err) return console.log(err + 'login err'.red);
     res.json(users);
-  })
+  }).select("nom prenom username photo_address birthday _id");
 });
 
 //Permet d'ajouter l'ami précédemment affiché par /get_user_card_addFr
@@ -208,6 +209,7 @@ app.post('/add_as_friend', function(req, res){
         {"_id" : sess.userid},
         {"$push":{ friends : friend_in_adding_id}}, function(error, user) {
           if (error) {return console.error(error);}
+          addANotif (2, [], sess.userid, friend_in_adding_id, new Date())
         res.end('added');
       });
     } if (sess.userid == friend_in_adding_id) {
@@ -320,7 +322,6 @@ app.post('/addSharedFriend', function(req, res) {
 app.post("/addComment", function (req, res) {
   sess = req.session;
   var cont = req.body;
-  console.log(cont.idSouv);
   var c = new Comments({
       svnrId : cont.idSouv,
       createdBy:sess.userid,
@@ -340,7 +341,6 @@ app.post("/getComments", function (req, res) {
   Comments.find({"svnrId": req.body.idSvnr}, function (err, comments) {
     if (err) {return console.error(err);}
     res.json(comments);
-    console.log(comments);
   }).populate("createdBy");
 });
 
@@ -355,7 +355,8 @@ function addANotif (type, idSvnr, userId, targetTo, creationDate) {
     creationDate : creationDate,
     beenRead : []
   });
-  n.save(function(){
+  n.save(function(err, u){
+    if (err) {return console.error(err);}
     console.log('nouvelle notif ajoutée');
   })
 };
@@ -365,9 +366,20 @@ app.post("/getNotifs", function (req, res) {
   sess = req.session;
   Notif.find({"targetTo": sess.userid}, function (err, notifs) {
     if (err) {return console.error(err);}
-    console.log(notifs);
     res.json(notifs);
   }).populate("createdBy").sort("-creationDate");
+});
+
+//Supprimer une notification (id du user dans la notif)
+app.post("/supprNotif", function(req, res) {
+  sess = req.session;
+  var idN = req.body.idN;
+  console.log("called");
+  Notif.update( {"_id": idN}, { $pullAll: {"targetTo": [sess.userid] } } )
+    .exec(function(err, r){
+      if (err) {return console.error(err);}
+      res.json("ok");
+    });
 });
 
 // ==============ALL AJAX FOR EDIT SVNR ============================
@@ -473,6 +485,14 @@ app.get('/myProfile', function(req, res){
   };
   // var u = new User({ username : "test1"});
   // u.save();
+});
+
+app.post('/getSvnrNumber', function(req,res) {
+  sess = req.session;
+  Svnr.count({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}, function(err, number) {
+    if (err) return console.error(err);
+    res.json(number);
+  });
 });
 
 //Fermeture de sessions

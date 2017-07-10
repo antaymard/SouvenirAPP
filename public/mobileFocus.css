@@ -130,7 +130,7 @@
 .anecdoteDivTxt {
   display: flex;
   flex-direction: row;
-  background: white;
+  background-color: white;
   border-radius: 3px;
   width: 100%;
   height: auto;
@@ -141,12 +141,13 @@
 }
 .anecdoteDivTxtLeft {
   border-right: 1px solid rgba(0,0,0,0.1);
+  width: auto;
 }
 .anecdoteDivTxtRight {
   padding: 10px 9px;
   text-align: justify;
   text-justify: inter-word;
-  width: 100%;
+  width: 80%;
 }
 #anecdoteInput {
   width: 100%;
@@ -162,6 +163,46 @@
 } #sendIcon {
   font-size: 13px;
 }
+
+/* NOTE: NOTIF CSS */
+.notifDivTxt {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 0px;
+  width: 100%;
+  height: auto;
+  margin-top: 0px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.notifDivTxtLeft {
+  border-right: 1px solid rgba(0,0,0,0.1);
+  width: auto;
+}
+.notifDivTxtRight {
+  padding: 10px 9px;
+  text-align: justify;
+  text-justify: inter-word;
+  width: 80%;
+}
+.notifSupprBtn {
+  background-color: blue;
+  position: relative;
+  right: 0px;
+  width: 15%;
+  border: 0px;
+  height: auto;
+  margin: auto;
+  margin-right: 5px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+}
+.notifDivTxt:first-child {
+  border-radius: 3px 3px 0 0;
+}
+.notifDivTxt:last-child {
+  border-radius: 0 03px 3px;
+}
+
 
 #popupDivBckGround {
   position: fixed;

@@ -16,11 +16,15 @@
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
 
   <div id="Header">
+    <a href="/mobileIndex">
+      <img id="whitelogo" src="whitelogo.png" alt="logo">
+    </a>
     <div id="profileCard" class="row">
 
       <div id="profilePicDiv" class="col-xs-5">
@@ -59,10 +63,19 @@
       </div>
 
       <p id='section_title'>Mes Amis</p>
-      <div id="content_Space" class="row"></div>
+      <div id="content_Space" class=""></div>
 </div>
 
-<button id="" class="gradButton addButton">+</button>
+<div id="popUp">
+  <div id="popUp_header">
+    <input type="text" id="addFriendInput" placeholder="Rechercher un ami">
+    <button type="button" class="classicBtn gradButton" id="addFriendInputBtn"><i class="material-icons">search</i></button>
+  </div>
+  <div id="popUp_body">
+  </div>
+</div>
+
+<button id="addFriendBtn" class="gradButton addButton" style="font-size:20px">+</button>
 
 
 
