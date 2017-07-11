@@ -164,6 +164,7 @@ $("#input_photo").change(function() {
 
 function displayFocusedSvnr(focusId) {
   $('#svnr_recall_space').empty();
+  $('#notif_recall_space').empty();
 
   //Enlever le + button
   $('#input_photo').transition({ y: '95px' });
