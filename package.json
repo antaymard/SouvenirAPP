@@ -17,6 +17,7 @@
     "ejs": "2.5.1",
     "express": "^4.12.4",
     "express-session": "^1.7.6",
+    "forever": "^0.15.3",
     "mongodb": "^2.2.22",
     "mongoose": "^4.11.0",
     "multer": "^1.2.0",

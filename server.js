@@ -163,6 +163,10 @@ app.post('/login', function(req, response) {
   })
 });
 
+app.post('/stop', function(req, response) {
+  process.exit(1);
+});
+
 //Récupérer les infos de l'utilisateur actif
 app.post('/MyInfo', function(req, res) {
   sess = req.session;

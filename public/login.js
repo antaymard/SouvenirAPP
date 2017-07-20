@@ -12,6 +12,13 @@ $(document).ready(function(){
 //   window.location = '/register';
 // });
 
+function restart() {
+  $.post("/post",{ping:1},function(data){})
+  setTimeout(function(){
+    location.reload();
+  }, 1000);
+}
+
 //Entrer pour valider form
 $("input").keypress(function(event) {
     if (event.which == 13) {
