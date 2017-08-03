@@ -2,9 +2,9 @@
   "//1": "describes your app and its dependencies",
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
-  "name": "my-hyperdev-app",
+  "name": "rememeberapp",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "The place to remember",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -30,11 +30,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://hyperdev.com/#!/project/welcome-project"
+    "url": ""
   },
   "keywords": [
     "node",
-    "hyperdev",
+    "",
     "express"
   ],
   "license": "MIT"

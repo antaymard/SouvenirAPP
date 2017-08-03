@@ -39,7 +39,7 @@
 .svnrCard {
   height: auto;
   background-color: white;
-  width: 87vw;
+  width: auto;
   border-radius: 3px;
   margin-top: 10px;
   display: flex;
@@ -52,8 +52,8 @@
   margin-bottom: 7px;
 }
 .who_posted {
-  height : 5vh;
-  width: 5vh;
+  height : 30px;
+  width: 30px;
   object-fit: cover;
   border: 1px solid white;
   border-radius: 50%;

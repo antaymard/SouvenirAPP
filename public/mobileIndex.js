@@ -70,7 +70,7 @@ function recallGlobal () {
       var n;
       for (n in svnrs) {
         var s = svnrs[n];
-        displaySvnr(s.titre, s.lieu, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date, s.sharedFriends.length, s.hastags);
+        displaySvnr(s.titre, s.svnr_date, s.lieu, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date, s.sharedFriends.length, s.hastags);
       }
       $("#svnr_recall_space").append(
           '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
@@ -130,7 +130,7 @@ function cancelSearch () {
 
 //------------------------------------------------------------------------------
   //Affichage des souvenirs
-  function displaySvnr(titre, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
+  function displaySvnr(titre, date, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
     $("#svnr_recall_space").append(
         '<div onclick="displayFocusedSvnr('+ "'" + idsvnr + "'" + ')" class="svnrCard">'
       + '<div class="svnrCard_topDiv">'
@@ -145,8 +145,8 @@ function cancelSearch () {
         + '<img class="svnrImg" src="/'+ img_address +'">'
         + '<div class="svnrCard_botDiv">'
           + '<div class="titreDiv">'+ titre +'</div>'
-          + '<div class="dateDiv">date</div>'
-          + '<div class="lieuDiv">'+ lieu +'</div>'
+          + '<div class="dateDiv"><i class="material-icons" style="font-size:14px;height:100%;">event_note</i> '+ returnNiceDate(date) +'</div>'
+          + '<div class="lieuDiv"><i class="material-icons" style="font-size:12px">location_on</i> '+ lieu +'</div>'
         + '</div>'
       + '</div>'
     );
@@ -420,17 +420,39 @@ function submitAnecdote(idSouv) {
   }
 };
 
+var no_ = false;
+function openNotifContainer () {
+  if (no_ == false) {
+    $('.notificationButton').append (
+      '<div class="notificationContainer">' +
+        '<div id="notifContTitre">' +
+          '<h1>Notifications</h1>' +
+          '<a href="/">Tout marquer comme lu</a>' +
+        '</div>' +
+        '<div id="notifContContent">' +
+        '</div>' +
+      '</div>'
+    );
+    getNotifs();
+    no_ = true;
+  }
+  else {
+    $('.notificationContainer').remove();
+    no_ = false;
+  }
+};
+
 //Récupère et affiche les notifications !!
 // NOTE: gérer la suppr des notifs !!
 function getNotifs() {
-  $("#notif_recall_space").empty();
+  $("#notifContContent").empty();
   console.log("notifs incoming");
 
   $.post("/getNotifs", {ping : "1"}, function (notifs) {
     if (notifs.length > 0) {
       //Registre de conversion type de notifs
       var registre = ["a ajouté une anecdote !", "partagé un souvenir avec vous !", ""];
-      $("#notif_recall_space").append(
+      $("#notifContContent").append(
         "<div style='margin-bottom:5px; color: white'>" + notifs.length +" nouvelle(s) notification(s)</div>"
       );
       var n;
@@ -456,7 +478,7 @@ function getNotifs() {
             +  '</div>'
           );
         } else {
-          $("#notif_recall_space").append(
+          $("#notifContContent").append(
               '<div class="notifDivTxt">'
             +   '<div style="display:flex; flex-direction:row" onclick="addFriendBack('+ "'" + notifs[n].createdBy[0]._id + "', '"+ notifs[n]._id + "'" + ')">'
 
@@ -479,8 +501,8 @@ function getNotifs() {
 
       };
     } else {
-      $("#notif_recall_space").append(
-        "<div style='margin-bottom:5px; color: white'>Pas de nouvelles notifications</div>");
+      $("#notifContContent").append(
+        "<div style='margin-bottom:5px;'>Pas de nouvelles notifications</div>");
     }
   });
 };
@@ -549,7 +571,7 @@ function returnNiceDate (date) {
   let month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
   let dateD = date.getDate();
   let time = date.getTime();
-  return "le " + dateD + " " + month[dateM] + " " + dateY + " à ";
+  return "le " + dateD + " " + month[dateM] + " " + dateY + "";
 }
 
   //FONCTION POUR PARTAGE AVEC AMI

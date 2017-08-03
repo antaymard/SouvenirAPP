@@ -7,7 +7,7 @@
   font-size: 11px;
 }
 
-body {
+/*body {
   background-image: url("background.png");
   background-repeat:no-repeat;
   background-position:30% 50%;
@@ -17,6 +17,9 @@ body {
   background-attachment: fixed;
   margin: 0;
   transition: 0.3s;
+}*/
+body {
+  background-color: #5499f8;
 }
 
 .darkGradient {
@@ -54,12 +57,17 @@ body {
 
 .transparentHeader {
   z-index: 25;
-  width: 100vw;
+  width: 100%;
   height: 65px;
   position: fixed;
   top: 0;
+  left: 0;
   display: inline;
   transition: 1s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 .noTransparentHeader {
   background-color: rgba(69, 90, 100, 0.69);
@@ -72,29 +80,66 @@ body {
   width: 35px;
   object-fit: cover;
   border: 1px solid white;
-  position: absolute;
+  /*position: absolute;
   right: 4vw;
-  top: 15px;
+  top: 15px;*/
   border-radius: 50%;
+  margin: 0 8px;
 }
 #whitelogo {
-  position: absolute;
+  /*position: absolute;
   top: 15px;
-  left: 4vw;
+  left: 4vw;*/
   height: 35px;
   width: 35px;
+  margin-left: 8px;
 }
 #rememberTitle {
   color: white;
-  position: absolute;
+  /*position: absolute;
   top: 25px;
-  left: 14vw;
+  left: 14vw;*/
+  margin-bottom: 10px;
   font-size: 15px;
   font-weight: 100;
 }
 
+.notificationButton {
+  position: relative;
+}
+.notificationContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 300px;
+  width: 70vw;
+  right: 0px;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+}
+#notifContTitre {
+  padding: 5px 0px;
+  width: 100%;
+  background-color: #5499f8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} #notifContTitre h1 {
+  margin: 0 5px;
+  color: white;
+} #notifContTitre a {
+  margin: 0 5px;
+  color: white;
+  font-weight: 200;
+}
+#notifContContent {
+  width: auto;
+  height: 100%;
+}
+
 .trueBody {
-  margin: 65px 4vw 20px 4vw;
+  margin: 65px 0vw 20px 0vw;
   height: auto;
 }
 
