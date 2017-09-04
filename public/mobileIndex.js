@@ -164,45 +164,45 @@ $("#input_photo").change(function() {
 
 function displayFocusedSvnr(focusId) {
 
-window.location.href = "/focus/" + focusId;
+// window.location.href = "/focus/" + focusId;
 
-//   $('#svnr_recall_space').empty();
-//   $('#notif_recall_space').empty();
-//
-//   //Enlever le + button
-//   $('#input_photo').transition({ y: '95px' });
-//
-//   //Enlever le HEADER
-//   $('#myHeader').transition({ y: '-65px' });
-//
-//   //Enlever la  barre de recherche
-//   $( "#searchInput" ).transition({y: '-150px'});
-//
-//   //Crée le nouveau header
-//   $("#svnr_recall_space").append(
-//      '<div id="myFHeader" class="FtransparentHeader">'
-//     +  '<button class="headerButton" onclick="closeFocus()">'
-//     +     '<i class="material-icons backIcon">keyboard_arrow_left</i>'
-//     +   '</button>'
-//     +'</div>'
-//   );
-//
-//   //Récupère les infos du souvenir focused
-//   $.post("/focusedRecall", {focusId : focusId}, function (resultFocus) {
-//     if(resultFocus) {
-//
-//       //Affiche photo, description etc et le layout vide pour amis
-//       displayFocusedSvnrLayout (resultFocus[0]);
-//
-//       // getPresentFriends(resultFocus[0]._id);
-//
-//       //Affiche les amis avec lesquels le svnr est partagé
-//       getSharedFriends(resultFocus[0]._id);
-//
-//       //Affiche les comments du souvenir
-//       getAnecdotes (resultFocus[0]._id);
-//   };
-// });
+  $('#svnr_recall_space').empty();
+  $('#notif_recall_space').empty();
+
+  //Enlever le + button
+  $('#input_photo').transition({ y: '95px' });
+
+  //Enlever le HEADER
+  $('#myHeader').transition({ y: '-65px' });
+
+  //Enlever la  barre de recherche
+  $( "#searchInput" ).transition({y: '-150px'});
+
+  //Crée le nouveau header
+  $("#svnr_recall_space").append(
+     '<div id="myFHeader" class="FtransparentHeader">'
+    +  '<button class="headerButton" onclick="closeFocus()">'
+    +     '<i class="material-icons backIcon">keyboard_arrow_left</i>'
+    +   '</button>'
+    +'</div>'
+  );
+
+  //Récupère les infos du souvenir focused
+  $.post("/focusedRecall", {focusId : focusId}, function (resultFocus) {
+    if(resultFocus) {
+
+      //Affiche photo, description etc et le layout vide pour amis
+      displayFocusedSvnrLayout (resultFocus[0]);
+
+      // getPresentFriends(resultFocus[0]._id);
+
+      //Affiche les amis avec lesquels le svnr est partagé
+      getSharedFriends(resultFocus[0]._id);
+
+      //Affiche les comments du souvenir
+      getAnecdotes (resultFocus[0]._id);
+  };
+});
 } //Fin displayFocusedSvnr
 
 function displayFocusedSvnrLayout (f) {
