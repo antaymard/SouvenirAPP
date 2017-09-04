@@ -273,6 +273,20 @@ app.post('/sharedFriends_Supp', function(req, res) {
   })
 });
 
+// ============== FOCUS =============================================
+
+app.get("/focus/:id", function(req, res) {
+  sess = req.session;
+  var focusedSvnr;
+  Svnr.find({"_id":req.params.id}, function(err, Fsvnr) {
+    if (err) return console.log(err);
+    focusedSvnr = Fsvnr;
+      res.render('ejs/mobileFocus', {
+        f : focusedSvnr[0],
+      });
+    }).populate("createdBy");
+});
+
 // ==============ALL AJAX FOR FOCUS SVNR ============================
 
 //Récupère les infos d'un focused Svnr

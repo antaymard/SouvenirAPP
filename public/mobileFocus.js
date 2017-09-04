@@ -1,4 +1,3 @@
-console.log(_date);
 
 $("#svnrDate").append(_date);
 console.log(niceDate(_date));
