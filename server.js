@@ -37,7 +37,6 @@ mongoose.connection.on("error", function() {
 });
 mongoose.connection.on('open', function() {
   console.log('Connexion réussie svnrapp DB'.green);
-  SendToSlack("*Connexion réussie* à la database Svnr");
 });
 
 
@@ -64,7 +63,19 @@ var svnrSchema = mongoose.Schema({
   titre : String,
   lieu : String,
   file_address : String,
+  svnr_date_in : {
+    day: Number,
+    month: Number,
+    year: Number},
+  svnr_date_out : {
+    day: Number,
+    month: Number,
+    year: Number},
   creation_date : Date,
+  created_date : {
+    day: Number,
+    month: Number,
+    year: Number},
   svnr_date : Date,
   sharedFriends: [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
   type : String,
@@ -117,6 +128,11 @@ app.get("/", function (req, res) {
   };
   // var u = new User({ username : "test1"});
   // u.save();
+});
+
+app.get("/reactTest/:test", function(req, res){
+  console.log(req.params.test);
+  res.json(req.params.test);
 });
 
 app.get("/mobileIndex", function (req, res) {
@@ -178,6 +194,136 @@ app.post('/MyInfo', function(req, res) {
     }
   })
 });
+
+// ================= FUNCTIONS DATA CLEANING
+
+// app.get('/script/removekey', function(req,res){
+//   Svnr.findOne({ "toBeDeletedSV": { $exists: true}}, function(err, result) {
+//     if (err) {
+//       return console.error("REMOVE KEY PB".red + err);
+//     }
+//     console.log("processing on ".green + result.titre);
+//     Svnr.update({"_id": result._id},
+//       {$unset : {"toBeDeletedSV": 1}},
+//       function(error, done) {
+//         if (error) {
+//           return console.error(error);
+//         }
+//         Svnr.count({ "toBeDeletedSV": { $exists: true}}, function(er, doe) {
+//           console.log(doe);
+//         })
+//       })
+//       res.redirect('/script/removekey');
+//   })
+// });
+
+// app.get("/script/changeDateFormat", function(req, res) {
+//   console.log("working...".green);
+//
+//   // Svnr.update({"_id":"5955a189e9f8041d10a9a4ba"}, {"toBeDeletedSV" : []},
+//   // function(er, num){
+//   //   if (er) console.log(er);
+//   //   console.log("SUCCESS - nombre modifiés : ".green + num.nModified);
+//   // })
+//
+//   var old_date = [];
+//
+//
+//   Svnr.findOne({ "created_date": { $exists: false}},function(err, done) {
+//     if (err) {
+//       return console.error("script ERROR : ".red + err);
+//     }
+//     if (!done.creation_date) {
+//       return console.log("DONNEES MANQUANTES ".red + done.titre );
+//     } else {
+//     old_date.brut = done.creation_date.toString();
+//     // console.log("BRUT old date was : ".blue + old_date.brut);
+//     old_date.month = old_date.brut.slice(4,7);
+//     // console.log("MONTH date is -".green + old_date.month + "-");
+//     old_date.day = Number(old_date.brut.slice(8,10));
+//     // console.log("DAY date is -".green + old_date.day + "-");
+//     old_date.year = Number(old_date.brut.slice(11,15));
+//     // console.log("YEAR date is -".green + old_date.year + "-");
+//
+//     // console.log("now replacing...".green);
+//
+//     // console.log("output is " + done);
+//
+//     Svnr.update(
+//      {"_id": done.id},
+//      {
+//        $set:
+//        {
+//          created_date :
+//           {
+//             day : old_date.day,
+//             month : returnMonth(old_date.month),
+//             year : old_date.year
+//           }
+//        }
+//      },
+//      {multi:true},
+//        function(error, donee){
+//          if (error) {
+//            return console.error(error);
+//          }
+//         //  res.json({
+//         //   //  "done" : donee,
+//         //    "Entry Affected" : done._id,
+//         //    "Titre" : done.titre,
+//         //    "Number Affected" : donee.n,
+//         //    "OLD" : old_date.brut,
+//         //    "NEW" : old_date.day + " " + returnMonth(old_date.month) + " " + old_date.year
+//         //  });
+//
+//         // res.redirect("/script/changeDateFormat");
+//       }); }
+//  })
+//
+//  Svnr.count({ "created_date": { $exists: false}},function(err, count) {
+//    console.log(count);
+//  })
+// });
+// function returnMonth (month_numb) {
+//   switch (month_numb) {
+//     case "Jan":
+//     return 1;
+//     break;
+//     case "Feb":
+//     return 2;
+//     break;
+//     case "Mar" :
+//     return 3;
+//     break;
+//     case "Apr":
+//     return 4;
+//     break;
+//     case "May":
+//     return 5;
+//     break;
+//     case "Jun":
+//     return 6;
+//     break;
+//     case "Jul":
+//     return 7;
+//     break;
+//     case "Aug":
+//     return 8;
+//     break;
+//     case "Sep":
+//     return 9;
+//     break;
+//     case "Oct":
+//     return 10;
+//     break;
+//     case "Nov":
+//     return 11;
+//     break;
+//     case "Dec":
+//     return 12;
+//     break;
+//   }
+// }
 
 
 //INDEX PAGE FUNCTIONS ---------------------------------------------------------
@@ -273,18 +419,32 @@ app.post('/sharedFriends_Supp', function(req, res) {
   })
 });
 
+app.get('/getRandomSvnr', function(req,res) {
+  sess = req.session;
+  Svnr.count().exec(function (err, count) {
+    //Get a random Entry
+    var random = Math.floor(Math.random() * count);
+    Svnr.findOne({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}).skip(random).exec(
+      function(err, result) {
+        if (err) {return console.error(err)};
+          console.log("clicked");
+          res.json(result);
+      }
+    )
+  })
+})
+
 // ============== FOCUS =============================================
 
 app.get("/focus/:id", function(req, res) {
   sess = req.session;
-  var focusedSvnr;
-  Svnr.find({"_id":req.params.id}, function(err, Fsvnr) {
-    if (err) return console.log(err);
-    focusedSvnr = Fsvnr;
+  Svnr.findOne({"_id" : req.params.id}).populate("createdBy").populate("sharedFriends")
+  .exec(function(err1, result1){
       res.render('ejs/mobileFocus', {
-        f : focusedSvnr[0],
-      });
-    }).populate("createdBy");
+             f : result1
+            });
+            console.log(result1.sharedFriends.length);
+    })
 });
 
 // ==============ALL AJAX FOR FOCUS SVNR ============================
@@ -579,3 +739,9 @@ function SendToSlack (message) {
 //   if (err) { return console.error(err);}
 // });
 };
+
+function returnMonthName (numb) {
+  var num = numb -1
+  var listt = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+  return listt[num];
+}

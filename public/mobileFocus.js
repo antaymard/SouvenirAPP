@@ -1,53 +1,77 @@
+//Affiche le pop up quand le + est cliqué = affiche mes amis => peut ajouter en sharedFriends
+function displayAllMyFriends () {
 
-$("#svnrDate").append(_date);
-console.log(niceDate(_date));
+  //Affiche le popup
+  $("#svnr_recall_space").append(
+    '<div onclick="closeAddFriendDiv()" id="popupDivBckGround">'
+    + '<p>Partager avec un ami</p>'
+    +   '<div id="popupDiv">'
+    +   '</div>'
+    +'</div>'
+  );
 
-
-function niceDate(input) {
-  var date_jour = input.substring(8, 10);
-  var date_mois = returnMonth(Number(input.substring(5, 7)));
-  var date_an = input.substring(0, 4);
-
-  function returnMonth (month_numb) {
-    var ans;
-    switch (month_numb) {
-      case 1:
-      return "JAN";
-      break;
-      case 2:
-      return "FEV";
-      break;
-      case 3:
-      return "MAR";
-      break;
-      case 4:
-      return "AVR";
-      break;
-      case 5:
-      return "MAI";
-      break;
-      case 6:
-      return "JUIN";
-      break;
-      case 7:
-      return "JUIL";
-      break;
-      case 8:
-      return "AOUT";
-      break;
-      case 9:
-      return "SEPT";
-      break;
-      case 10:
-      return "OCT";
-      break;
-      case 11:
-      return "NOV";
-      break;
-      case 12:
-      return "DEC";
-      break;
+  //Insère les cartes d'amis dans le popup
+  $.post("/getAllMyFriends", {lol : 1}, function (response) {
+    if(response) {
+      console.log(response);
+      var n;
+      for (n in response) {
+        $("#popupDiv").append(
+            '<div onclick="addAsShared('+ "'" + response[n]._id + "', '" + idSouv + "'" + ')" class="friendCard">'
+          +    '<img class="creatorDivPicture" src="/'+ response[n].photo_address +'">'
+          +   '<p>'+ response[n].username + '</p'
+          + '</div>'
+        )
+      }
     }
+  });
+};
+
+// function niceDate(input) {
+//   var date_jour = input.substring(8, 10);
+//   var date_mois = returnMonth(Number(input.substring(5, 7)));
+//   var date_an = input.substring(0, 4);
+//
+//   function returnMonth (month_numb) {
+//     var ans;
+//     switch (month_numb) {
+//       case 1:
+//       return "JAN";
+//       break;
+//       case 2:
+//       return "FEV";
+//       break;
+//       case 3:
+//       return "MAR";
+//       break;
+//       case 4:
+//       return "AVR";
+//       break;
+//       case 5:
+//       return "MAI";
+//       break;
+//       case 6:
+//       return "JUIN";
+//       break;
+//       case 7:
+//       return "JUIL";
+//       break;
+//       case 8:
+//       return "AOUT";
+//       break;
+//       case 9:
+//       return "SEPT";
+//       break;
+//       case 10:
+//       return "OCT";
+//       break;
+//       case 11:
+//       return "NOV";
+//       break;
+//       case 12:
+//       return "DEC";
+//       break;
+//     }
 
     return date_jour + " " + date_mois + " " + date_an;
   };

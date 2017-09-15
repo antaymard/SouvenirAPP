@@ -14,28 +14,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kemO00="
+  integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
   crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
   <script src="https://use.fontawesome.com/d5a570f79a.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-  <link href="https://fonts.googleapis.com/icon?family=MaterialIcons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
 <body>
 
+  <section class="FtransparentHeader">
+    <a href="/">
+      <i class="material-icons">keyboard_backspace</i>
+    </a>
+    <i class="material-icons">mode_edit</i>
+  </section>
+
   <section class="trueBody">
 
     <div id="creatorDiv">
-     <img class="creatorDivPicture" src="/' <%= f.createdBy[0].photo_address %>  '" alt="photo de profil">
+     <img class="creatorDivPicture" src="/<%= f.createdBy[0].photo_address %>" alt="photo de profil">
    <div id="creatorDivInfo">
    <p id="svnrTitre"> <%= f.titre %> </p>
-   <p id="svnrDate"> <%= f.svnr_date %> </p>
+   <p id="svnrDate">le <%= f.svnr_date_in.day %> <%= f.svnr_date_in.month %> <%= f.svnr_date_in.year %></p>
    </div>
    </div>
 
-   <img class="svnrImg" src="/'  <%= f.file_address %>  '">
+   <img class="svnrImg" src="/<%= f.file_address %>">
 
    <p class="chapterP">Avec</p>
 
@@ -47,11 +54,15 @@
    <div id="descriptionDiv">
    <div id="descDivTxt">
    <p style="font-size: 13px; font-weight:800">Description</p>
-   <p> <%= f.description %></p>
+     <p><%= f.description %></p>
       </div>
       <div id="sharedDiv">
         <p class="chapterP" style="color:black; margin:0 2px 0 2px">Partagé avec</p>
          <div id="sharedDivDiv">
+           <% for (var i=0; i<f.sharedFriends.length; i++) { %>
+               <img src="/<%= f.sharedFriends[i].photo_address %>" class="creatorDivPicture">
+          <% }; %>
+          <button onclick="displayAllMyFriends()" class="gradButton addFriendBtn">+</button>
           </div>
        </div>
      </div>
@@ -59,13 +70,12 @@
     <p class="chapterP">Anecdotes</p>
 
     <div id="anecdoteDiv">
-
      </div>
 
     <div id="anecdoteInputDiv" class="anecdoteDivTxt">
       <div class="anecdoteDivTxtLeft">
    // BUG: CHANGER LA PHOTO
-        <img src="' $('#myProfilePic').attr('src') '" class="creatorDivPicture anecdotePic">
+        <img src="" class="creatorDivPicture anecdotePic">
       </div>
       <div class="anecdoteDivTxtRight" style="display:flex; flex-direction:row">
         <textarea id="anecdoteInput" placeholder="Ajouter une anecdote...">
@@ -133,7 +143,6 @@
 <script type="text/javascript" src="/mobileFocus.js"></script>
 
 <link rel="stylesheet" href="/styleGeneral.css">
-<link rel="stylesheet" href="/mobileIndex.css">
 <link rel="stylesheet" href="/mobileFocus.css">
 
 

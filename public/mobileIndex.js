@@ -96,6 +96,15 @@ $("#searchInput").keypress(function(event) {
     }
 });
 
+//GET random
+$("#getRandomSvnr").click(function(){
+  $.get('/getRandomSvnr', function(randomSvnr) {
+    if (randomSvnr) {
+      displayFocusedSvnr(randomSvnr._id);
+    }
+  })
+});
+
 //EMPECHER LA TOUCHE ESPACE DANS LE INPUT RECHERCHE
 $(document).on('keydown', '#searchInput', function(e) {
     if (e.keyCode == 32) return false;
@@ -177,6 +186,7 @@ function displayFocusedSvnr(focusId) {
 
   //Enlever la  barre de recherche
   $( "#searchInput" ).transition({y: '-150px'});
+  $( "#getRandomSvnr" ).transition({y: '-20px'});
 
   //Crée le nouveau header
   $("#svnr_recall_space").append(
@@ -386,6 +396,7 @@ function closeFocus() {
 
   //Remettre le HEADER
   $('#myHeader').transition({ y: '0px' });
+  $( "#getRandomSvnr" ).transition({y: '0px'});
 
   //Remettre la  barre de recherche
   $( "#searchInput" ).transition({y: '0px'});
