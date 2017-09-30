@@ -147,7 +147,11 @@ $('.submitBtn').click(function() {
   souvenirObject.titre = $('#titre').val();
   souvenirObject.lieu = $('#autocomplete').val();
 
-  console.log(souvenirObject);
+  c//Loading spinner initiated in submitbtn
+  $('#submitBtnIcon').text('loop');
+  $('#submitBtnIcon').addClass('spinning');
+  $('.submitBtn').css('background-color', 'rgba(0,0,0,0)');
+  $('.submitBtn').prop("disabled", true);
 
   $.post("/create_svnr", {svnr : souvenirObject}, function(data){
     if (data==='done') {
