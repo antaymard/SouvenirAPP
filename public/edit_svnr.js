@@ -147,7 +147,7 @@ $('.submitBtn').click(function() {
   souvenirObject.titre = $('#titre').val();
   souvenirObject.lieu = $('#autocomplete').val();
 
-  c//Loading spinner initiated in submitbtn
+  //Loading spinner initiated in submitbtn
   $('#submitBtnIcon').text('loop');
   $('#submitBtnIcon').addClass('spinning');
   $('.submitBtn').css('background-color', 'rgba(0,0,0,0)');
