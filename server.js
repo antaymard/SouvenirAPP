@@ -62,7 +62,9 @@ var svnrSchema = mongoose.Schema({
   createdBy : [{type : mongoose.Schema.Types.ObjectId, ref : "User"}],
   titre : String,
   lieu : String,
-  file_address : String,
+  file_address : String, //deprecated
+  file_name : Array,
+  file_addresses : Array,
   svnr_date_in : {
     day: Number,
     month: Number,
@@ -110,7 +112,6 @@ var sess;
 
 app.get("/", function (req, res) {
   sess = req.session;
-  SendToSlack("Site appelé");
   if(sess.userid){
     User.find({"_id" : sess.userid}, function(err, users) {
       if(err) {
@@ -130,9 +131,8 @@ app.get("/", function (req, res) {
   // u.save();
 });
 
-app.get("/reactTest/:test", function(req, res){
-  console.log(req.params.test);
-  res.json(req.params.test);
+app.get("/test", function(req, res){
+
 });
 
 app.get("/mobileIndex", function (req, res) {
@@ -217,73 +217,57 @@ app.post('/MyInfo', function(req, res) {
 //   })
 // });
 
-// app.get("/script/changeDateFormat", function(req, res) {
-//   console.log("working...".green);
-//
-//   // Svnr.update({"_id":"5955a189e9f8041d10a9a4ba"}, {"toBeDeletedSV" : []},
-//   // function(er, num){
-//   //   if (er) console.log(er);
-//   //   console.log("SUCCESS - nombre modifiés : ".green + num.nModified);
-//   // })
-//
-//   var old_date = [];
-//
-//
-//   Svnr.findOne({ "created_date": { $exists: false}},function(err, done) {
-//     if (err) {
-//       return console.error("script ERROR : ".red + err);
-//     }
-//     if (!done.creation_date) {
-//       return console.log("DONNEES MANQUANTES ".red + done.titre );
-//     } else {
-//     old_date.brut = done.creation_date.toString();
-//     // console.log("BRUT old date was : ".blue + old_date.brut);
-//     old_date.month = old_date.brut.slice(4,7);
-//     // console.log("MONTH date is -".green + old_date.month + "-");
-//     old_date.day = Number(old_date.brut.slice(8,10));
-//     // console.log("DAY date is -".green + old_date.day + "-");
-//     old_date.year = Number(old_date.brut.slice(11,15));
-//     // console.log("YEAR date is -".green + old_date.year + "-");
-//
-//     // console.log("now replacing...".green);
-//
-//     // console.log("output is " + done);
-//
-//     Svnr.update(
-//      {"_id": done.id},
-//      {
-//        $set:
-//        {
-//          created_date :
-//           {
-//             day : old_date.day,
-//             month : returnMonth(old_date.month),
-//             year : old_date.year
-//           }
-//        }
-//      },
-//      {multi:true},
-//        function(error, donee){
-//          if (error) {
-//            return console.error(error);
-//          }
-//         //  res.json({
-//         //   //  "done" : donee,
-//         //    "Entry Affected" : done._id,
-//         //    "Titre" : done.titre,
-//         //    "Number Affected" : donee.n,
-//         //    "OLD" : old_date.brut,
-//         //    "NEW" : old_date.day + " " + returnMonth(old_date.month) + " " + old_date.year
-//         //  });
-//
-//         // res.redirect("/script/changeDateFormat");
-//       }); }
-//  })
-//
-//  Svnr.count({ "created_date": { $exists: false}},function(err, count) {
-//    console.log(count);
-//  })
-// });
+app.get("/script/changeFileAdress", function(req, res) {
+  console.log("working...".green);
+
+  // Svnr.update({"_id":"5955a189e9f8041d10a9a4ba"}, {"toBeDeletedSV" : []},
+  // function(er, num){
+  //   if (er) console.log(er);
+  //   console.log("SUCCESS - nombre modifiés : ".green + num.nModified);
+  // })
+
+  var old_data;
+
+
+  Svnr.findOne({ "file_adresses": { $exists: true}},function(err, done) {
+    if (err) {
+      return console.error("script ERROR : ".red + err);
+    }
+    if (!done.file_adresses) {
+      return console.log("DONNEES MANQUANTES ".red + done );
+    } else {
+
+      old_data = done.file_address;
+
+    Svnr.update(
+     {"_id": done.id},
+     {
+       $unset:
+       {
+         "file_adresses" : ""
+       }
+     },
+    //  {multi:true},
+       function(error, donee){
+         if (error) {
+           return console.error(error);
+         }
+        //  res.json({
+        //    "done" : donee,
+        //    "Entry Affected" : done._id,
+        //    "Titre" : done.titre,
+        //    "Number Affected" : donee.n,
+        //    "OLD" : old_data
+        //  });
+
+        res.redirect("/script/changeFileAdress");
+      });
+    }
+ });
+ Svnr.count({ "file_adresses": { $exists: true}},function(err, count) {
+   console.log(count);
+ })
+});
 // function returnMonth (month_numb) {
 //   switch (month_numb) {
 //     case "Jan":
@@ -421,7 +405,7 @@ app.post('/sharedFriends_Supp', function(req, res) {
 
 app.get('/getRandomSvnr', function(req,res) {
   sess = req.session;
-  Svnr.count().exec(function (err, count) {
+  Svnr.count({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}).exec(function (err, count) {
     //Get a random Entry
     var random = Math.floor(Math.random() * count);
     Svnr.findOne({$or : [{"createdBy":sess.userid}, {"sharedFriends":sess.userid}]}).skip(random).exec(
@@ -602,26 +586,36 @@ var storageSvnr =   multer.diskStorage({
 var uploadSvnr = multer({ storage : storageSvnr}).single('userPhoto');
 
 
-app.post('/new/uploadFile',function(req,res){
-    uploadSvnr(req,res,function(err) {
-        if(err) {return res.end("Error uploading file.".red);}
-        // var CidFileSvnr = idFileSvnr.slice(0, -4) + "_compd.jpg"
-        // console.log("CidFileSvnr = ".blue + CidFileSvnr);
-        tinify.fromFile("ImgSouvenir/" + idFileSvnr).toFile("ImgSouvenir/" + idFileSvnr);
-        console.log("fichier uploadé - ".green + idFileSvnr);
-        res.render('ejs/edit_svnr', {
-          userphotoid : idFileSvnr
-        });
+// app.post('/new/uploadFile',function(req,res){
+//     uploadSvnr(req,res,function(err) {
+//         if(err) {return res.end("Error uploading file.".red);}
+//         // var CidFileSvnr = idFileSvnr.slice(0, -4) + "_compd.jpg"
+//         // console.log("CidFileSvnr = ".blue + CidFileSvnr);
+//         tinify.fromFile("ImgSouvenir/" + idFileSvnr).toFile("ImgSouvenir/" + idFileSvnr);
+//         console.log("fichier uploadé - ".green + idFileSvnr);
+//         res.render('ejs/edit_svnr', {
+//           userphotoid : idFileSvnr
+//         });
+//     });
+// });
+
+app.get('/newSvnr', function(req, res) {
+  sess = req.session;
+  if (sess.userid) {
+    res.render('ejs/edit_svnr', {
     });
+  } else {
+    res.sendFile(__dirname + '/views/login.html');
+  }
 });
 
 app.post('/create_svnr', function(req,res) {
   sess = req.session;
-  var re = req.body;
-  var s = new Svnr({createdBy:sess.userid, titre:re.titre, lieu:re.lieu, type:re.type, svnr_date:re.svnr_date, creation_date:re.creation_date, description:re.description, file_address:re.file_address});
-  s.save(function(){
+  var svnr = req.body.svnr;
+  var s = new Svnr({createdBy:sess.userid, titre:svnr.titre, lieu:svnr.lieu, svnr_date:svnr.date, creation_date: new Date(), description: svnr.description, file_addresses: svnr.file_addresses});
+  s.save(function(err, dat){
     console.log("souvenir enregistré".green);
-    SendToSlack("Nouveau souvenir créé");
+    console.log(dat);
     res.end('done');
   })
 });

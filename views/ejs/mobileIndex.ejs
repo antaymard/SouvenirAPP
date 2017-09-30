@@ -37,9 +37,9 @@
       </a>
       <div style="display: flex; align-items: center;">
         <div class="notificationButton">
-          <a onclick="openNotifContainer()">
+          <!-- <a onclick="openNotifContainer()">
             <i class="material-icons" style="font-size:30px; color:white">notifications</i>
-          </a>
+          </a> -->
         </div>
         <a href='/myProfile'>
           <img id="myProfilePic" class="" src= "/<%= userphotoid %>">
@@ -77,12 +77,8 @@
     </section>
 
     <!-- <button id="" class="gradButton">+</button> -->
-    <div id='inputNewPhoto'>
-      <form id="fileUp" enctype = "multipart/form-data" action="/new/uploadFile" method="post">
-        <label id="addButton_label" for="userPhoto"></label>
-        <input type="file" name="userPhoto" id="input_photo" class='gradButton addButton'/>
-      </form>
-    </div>
+        <a href="/newSvnr" id="input_photo" class='gradButton addButton'>+</a>
+
 
     <script type="text/javascript" src="/mobileIndex.js"></script>
     <script type="text/javascript" src='/jquery.transit.min.js'></script>

@@ -9,70 +9,90 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="https://use.fontawesome.com/d5a570f79a.js"></script>
   <script src="https://code.jquery.com/jquery-2.2.1.min.js"
   integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
   crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
-  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css"> -->
-  <script src="http://malsup.github.com/jquery.form.js"></script>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIZJxUd_-Nr_QzFw3AEuc2OOuYECk0Nnk&libraries=places&callback=initMap"
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIZJxUd_-Nr_QzFw3AEuc2OOuYECk0Nnk&libraries=places&callback=initAutocomplete"
           async defer></script>
 
+  <!-- NOTE: AMAZON SDK -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.122.0.min.js"></script>
 
 </head>
-<body class="blue-grey lighten-5">
+<body>
 
-  <div class="row">
-
-    <div id="edit_panel" class="col m5 z-depth-1">
-
-      <div class="row">
-        <h5>Création d'un nouveau souvenir</h5>
-        <div class="input-field col s12">
-          <input id="titre" type="text" class="validate">
-          <label for="titre">Titre du souvenir</label>
-        </div>
-
-        <div class="col s12">
-          <!-- <input id="lieu" type="text" class="validate"> -->
-          <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
-          <div id="map"></div>
-        </div>
-
-        <div class="input-field col s12">
-          <label for="svnr_date">Date du souvenir (vide = aujourd'hui)</label>
-          <input id="svnr_date" type="date" class="datepicker">
-        </div>
-        <div class="input-field col s12">
-          <textarea id="description" class="materialize-textarea" data-length="120"></textarea>
-          <label for="description">Description du souvenir</label>
-        </div>
-        <!-- <div class="col s12">
-        <div id="enter_tagfriends" class="chips chips-placeholder"></div>
-      </div> -->
-        <!-- <div class="col s12">
-        <div id="enter_hashtags" class="chips chips-placeholder"></div>
-      </div> -->
-      <div class="card-action">
-        <button id="valider_btn" class='right waves-effect waves-light btn green' onclick="getIdFile('<%= userphotoid %>')">Valider</button>
-        <button id='cancel_btn' onclick="getIdFile('<%= userphotoid %>')"style="margin-right:10px" class='right waves-effect waves-red btn-flat red-text'>Annuler</button>
-      </div>
-
-      </div>
-
+  <div class="myHeader">
+    <div style="display: flex; flex-direction:'row'; align-items: center; justify-content:flex-start">
+      <a href="/"><i class="material-icons">keyboard_arrow_left</i></a>
+      <p>Creation d'un souvenir</p>
     </div>
-
-    <div id="photo_panel" class="col m7">
-      <img class="responsive-img" src= "/<%= userphotoid %>"></a>
+    <div>
+      <button class="submitBtn" name="button"><i id="submitBtnIcon" class="material-icons">done</i></button>
     </div>
   </div>
+
+  <div class="myBody">
+
+    <div class="myCard">
+      <div class="myCardHeader">
+        <p>AJOUTER DES PHOTOS</p><button class="gradButton sideBtn" onclick="addPhoto('ImgSvnr')">Transférer</button>
+      </div>
+      <div class="myCardContent">
+        <div class="uploadLabelDiv">
+          <span id="uploadLabel" for="photoupload">Choisir 3 photos max</span>
+        </div>
+        <input type="file" id="photoupload" class='gradButton' multiple="multiple"/>
+        <div class="addPictureDiv">
+          <div id="myProgress">
+            <div id="myBar"></div>
+          </div>
+          <div id="progressIndicator">
+            En attente de transfert
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="myCard">
+      <div class="myCardHeader">
+        <p>DATE ET LIEU</p>
+        <button class="sideBtn" id="hereNowBtn" style="border: 0px; color: rgba(0,0,0,0.55); font-size: 12px;">here and now</button>
+      </div>
+      <div class="myCardContent">
+        <p class="inputLabel" id='svnr_date'>Date</p>
+        <input type="date" id="dateInput">
+        <p class="inputLabel">Lieu</p>
+        <input id="autocomplete" class="controls" type="text" placeholder="Enter a location">
+      </div>
+    </div>
+
+    <div class="myCard">
+      <div class="myCardHeader">
+        <p>TITRE ET DESCRIPTION</p>
+      </div>
+      <div class="myCardContent">
+        <p class="inputLabel">Titre</p>
+        <input type="text" id="titre" placeholder="Titre du souvenir">
+        <p class="inputLabel">Racontez ce qu'il s'est passé</p>
+        <textarea id="description" placeholder="Description du souvenir" style="height:120px"></textarea>
+      </div>
+    </div>
+
+
+    <div class="myCard">
+      <div class="myCardHeader">
+        <p>PERSONNES PRESENTES</p>
+      </div>
+      <div class="myCardContent" id="friendsDisplay" style="overflow: scroll;">
+        <div id="friendsDisplayScrollable">
+
+        </div>
+
+      </div>
+    </div>
 
 
 

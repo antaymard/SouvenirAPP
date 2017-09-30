@@ -1,48 +1,184 @@
-#edit_panel {
-  margin: 15px -5px 2px 5px;
-  background-color: white;
-  /*height: 650px;*/
-  max-height: 700px;
-  overflow: auto;
-}
-
-#photo_panel {
-  margin-top: 5px;
-  max-height: 90%;
-}
-
 body {
+  background-color: #eef0f6;
+  margin: 0;
+  padding: 5px;
 }
 
-#map {
-  height: 250px;
+.myHeader {
+  z-index: 25;
+  width: 100%;
+  height: 55px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #6c90c7;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-.controls {
-  margin-top: 10px;
-  border: 1px solid transparent;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  height: 32px;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+.myHeader .submitBtn {
+  background-color: #3fa435;
+  opacity: 0.8;
+  color: white;
+  height: 55px;
+  width: 70px;
+  margin-right: -10px;
+  border-radius: 0;
+  border: 0px;
+}
+/*Spinning animation*/
+.spinning {
+  -webkit-animation: spin 1s infinite linear;
+}
+@-webkit-keyframes spin {
+    0%  {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
 }
 
-#pac-input {
-  background-color: #fff;
-  font-family: Roboto;
+.myHeader p {
+  font-size: 16px;
+  font-weight: lighter;
+  margin-left: 10px;
+}
+.myHeader a {
+  color: white;
+  text-decoration: none;
+}
+
+.myBody {
+  margin-top: 63px;
+}
+
+.myCard {
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-bottom: 25px;
+}
+.myCardHeader {
+  padding: 1px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+.myCardHeader p {
   font-size: 15px;
+  font-weight: 600;
+  color: #6c90c7;
+}
+.myCardContent {
+  padding: 2px 10px 15px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sideBtn {
+  font-size: 13px;
+  margin: -1px -10px;
+  height: 40px;
+  border-radius: 0 2px 0 0;
+  padding: 0 7px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  background-color: inherit;
+  border: inherit;
+}
+
+.inputLabel {
+  color: rgba(0,0,0,0.75);
+  font-size: 14px;
+  margin: 25px 0 8px 0;
+}
+input, textarea {
+  background-color: rgba(0,0,0,0.06);
+  border: 0;
+  border-radius: 2px;
+  padding: 11px 10px;
+  color: rgba(0,0,0,0.8);
   font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
+  font-size: 15px;
+  border-bottom: 2px solid #6c90c7;
+}
+
+#autocomplete{
+  background-color: rgba(0,0,0,0.06);
+  font-weight: 300;
+  padding: 11px 13px;
   text-overflow: ellipsis;
-  width: 300px;
+  width: 100%;
+  box-shadow: 0 0 0;
+  font-size: 15px;
+  border-bottom: 2px solid #6c90c7;
+  margin-top: 0px;
 }
 
-#pac-input:focus {
-  border-color: #4d90fe;
+.friendDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+}
+#friendsDisplayScrollable{
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0 0px 0;
+}
+.friendPic {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid white;
+}
+.selected {
+  border: 3px solid #6c90c7;
 }
 
-.pac-container {
-  font-family: Roboto;
+.addPictureDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
+
+#photoupload {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.uploadLabelDiv {
+  margin: 25px 0 15px 0;
+  background-color: rgba(0,0,0,0.06);
+  border: 0;
+  border-radius: 2px;
+  padding: 11px 10px;
+  color: rgba(0,0,0,0.8);
+  font-weight: 300;
+  font-size: 15px;
+  border-bottom: 2px solid #6c90c7;
+}
+#myProgress {
+  margin-top: 5px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.06);
+}
+#myBar {
+  width: 1%;
+  height: 3px;
+  background-color: #6c90c7;
+  transition: 1s;
+}
+#progressIndicator {
+  color: rgba(0,0,0,0.2);
+  margin-top: 5px;
+}
+
+/*Loading spinner magic*/

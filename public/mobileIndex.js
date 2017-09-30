@@ -5,7 +5,7 @@ var targetFriends = []; //Initie dans le scope global pour pouvoir envoyer à no
 
 //OBSCURCIR HEADER QUAND SCROLLED
 $(window).on("scroll touchmove", function () {
-    $('#myHeader').toggleClass('noTransparentHeader', $(document).scrollTop() > 50);
+    $('#myHeader').toggleClass('noTransparentHeader', $(document).scrollTop() > 40);
 });
 
 // NOTE: ANIMATION DU PANNEAU SOUS RECHERCHE. LA BARRE EST ANIMéE EN CSS
@@ -70,7 +70,7 @@ function recallGlobal () {
       var n;
       for (n in svnrs) {
         var s = svnrs[n];
-        displaySvnr(s.titre, s.svnr_date, s.lieu, s.file_address, s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.creation_date, s.sharedFriends.length, s.hastags);
+        displaySvnr(s.titre, s.svnr_date, s.lieu, s.file_addresses[0], s.description, s._id, s.createdBy[0].username, s.createdBy[0].photo_address, s.createdBy[0].fileNames, s.creation_date, s.sharedFriends.length, s.hastags);
       }
       $("#svnr_recall_space").append(
           '<div id="loadMoreCard" onclick="recallGlobal()" class="">'
@@ -139,11 +139,11 @@ function cancelSearch () {
 
 //------------------------------------------------------------------------------
   //Affichage des souvenirs
-  function displaySvnr(titre, date, lieu, img_address, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
+  function displaySvnr(titre, date, lieu, file_addresses, description, idsvnr, cBusername, cBphotoAdress, creation_date, nbShared, hashtags) {
     $("#svnr_recall_space").append(
         '<div onclick="displayFocusedSvnr('+ "'" + idsvnr + "'" + ')" class="svnrCard">'
       + '<div class="svnrCard_topDiv">'
-        + '<img class="who_posted" src="/'+ cBphotoAdress + '">'
+        + '<img class="who_posted" src="'+ adaptAddress(cBphotoAdress) + '">'
         + '<div class="svnrCard_topDiv_rightPart">'
           + '<div class="cBusername">' + cBusername
             + '<span class="actionType"> a ajouté un souvenir</span>'
@@ -151,7 +151,7 @@ function cancelSearch () {
           + '<div class="creationDate">'+ calcAgo(creation_date) +'</div>'
         + '</div>'
       + '</div>'
-        + '<img class="svnrImg" src="/'+ img_address +'">'
+        + '<img class="svnrImg" src="'+ adaptAddress(file_addresses) +'">'
         + '<div class="svnrCard_botDiv">'
           + '<div class="titreDiv">'+ titre +'</div>'
           + '<div class="dateDiv"><i class="material-icons" style="font-size:14px;height:100%;">event_note</i> '+ returnNiceDate(date) +'</div>'
@@ -215,17 +215,46 @@ function displayFocusedSvnr(focusId) {
 });
 } //Fin displayFocusedSvnr
 
+//Script d'adatpation des datas file_addresses
+function adaptAddress (address) {
+  if (address.charAt(0) !== "h") {
+    return address = "https://s3-eu-west-1.amazonaws.com/rememberbucket/ImgSvnr/" + address;
+  } else {
+    return address;
+  }
+}
+
+var arrayNb = 0;
+var imgArray;
+function displayNextImg () {
+  console.log("click");
+  console.log(imgArray);
+  if (imgArray.length > 1) {
+    arrayNb ++
+    if (arrayNb >= imgArray.length) {
+      arrayNb = 0;
+    }
+    $(".svnrImg").attr("src", adaptAddress(imgArray[arrayNb]));
+  }
+}
+
 function displayFocusedSvnrLayout (f) {
+  imgArray = f.file_addresses;
+
   $("#svnr_recall_space").append(
      '<div id="creatorDiv">'
-    +  '<img class="creatorDivPicture" src="/'+ f.createdBy[0].photo_address + '" alt="photo de profil">'
+    +  '<img class="creatorDivPicture" src="'+ adaptAddress(f.createdBy[0].photo_address) + '" alt="photo de profil">'
     +  '<div id="creatorDivInfo">'
     +    '<p id="svnrTitre">' + f.titre + '</p>'
     +    '<p id="svnrDate">'+ returnNiceDate(f.svnr_date) +'</p>'
     +  '</div>'
     + '</div>'
 
-    + '<img class="svnrImg" src="/' + f.file_address + '">'
+    + '<div class="imgContainer">'
+    +   '<img onclick="displayNextImg()" class="svnrImg" src="' + adaptAddress(f.file_addresses[0]) + '">'
+    +   '<span class="nbImgSpan">' + f.file_addresses.length +' images enregistrées</span>'
+    + '</div>'
+    + '<img class="mapImg" src="https://maps.googleapis.com/maps/api/staticmap?zoom=5&markers=color:blue%7C'+ f.lieu +'&size=450x100&key=AIzaSyCIZJxUd_-Nr_QzFw3AEuc2OOuYECk0Nnk">'
 
     +'<p class="chapterP">Avec</p>'
 

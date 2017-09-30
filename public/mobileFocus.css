@@ -86,12 +86,32 @@
   font-size: 16px;
 }
 
+.imgContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nbImgSpan {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  margin: -25px 0 10px 0;
+  padding: 2px 20px;
+  border-radius: 3px;
+}
+
 .svnrImg {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12), 0 6px 6px rgba(0,0,0,0.10);
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   border-radius: 3px;
   height: auto;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 7px;
+}
+.mapImg {
+  width: 100%;
+  height: 70px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .chapterP {
@@ -119,6 +139,7 @@
   width: 100%;
   height: auto;
   margin-bottom: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 #descDivTxt {
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -146,10 +167,17 @@
   display: flex;
   flex-direction: row;
   background-color: white;
-  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   width: 100%;
   height: auto;
+}
+.anecdoteDivTxt:first-child {
   margin-top: 5px;
+  border-radius: 3px 3px 0 0;
+}
+.anecdoteDivTxt:last-child {
+  margin-bottom: 5px;
+  border-radius: 0 0 3px 3px;
 }
 .anecdotePic {
   margin: 10px 9px;
@@ -164,10 +192,14 @@
   text-justify: inter-word;
   width: 80%;
 }
+#anecdoteInputDiv {
+  border-radius: 3px;
+}
 #anecdoteInput {
   width: 100%;
   height: auto;
   margin-right: 5px;
+  border-radius: 3px;
 }
 #submitAnecdoteBtn {
   width: auto;
