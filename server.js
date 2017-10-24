@@ -27,7 +27,7 @@ app
   .use(bodyParser.urlencoded({extended:true}))
   .set('view engine', 'ejs')
   .use(session({secret: 'ssshhhhh'}))
-  .listen(8000);
+  .listen(process.env.PORT || 8000);
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://antaymard:splinTer00@ds135039.mlab.com:35039/svnrapp');

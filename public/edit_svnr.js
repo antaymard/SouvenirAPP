@@ -82,7 +82,7 @@ function addPhoto(albumName) {
       })
       .send(function(err, data) {
         if (err) {
-          return alert('There was an error uploading your photo: ', err.message);
+          return alert('There was an error uploading your photo: ', err);
         }
         console.log(data);
         souvenirObject.file_addresses.push(data.Location);
