@@ -96,7 +96,10 @@ function addPhoto(albumName) {
 $("#photoupload").change(function() {
   files = document.getElementById('photoupload').files;
   $( "#uploadLabel" ).text(files.length + ' images selectionnée(s). Cliquer sur transférer.');
+  // Télécharge les photos une fois sélectionnées
+  addPhoto('ImgSvnr');
 });
+// Actionne la selection de photos quand le div gris est cliqué
 $('.uploadLabelDiv').click(function(){
   $( "#photoupload" ).click();
 });
@@ -182,7 +185,7 @@ $.post('/getAllMyFriends', function(friends) {
 function displayFriendsPic(friend) {
   $('#friendsDisplayScrollable').append(
     '<div class="friendDiv">' +
-      '<img id="'+ friend._id + '" onclick="friendsIsClicked(\''+ friend._id +'\')" src="'+ friend.photo_address +'" class="friendPic">' +
+      '<img id="'+ friend._id + '" onclick="friendsIsClicked(\''+ friend._id +'\')" src="'+ adaptAddress(friend.photo_address) +'" class="friendPic">' +
       '<p>'+ friend.username +'</p>' +
     '</div>'
   );
@@ -230,7 +233,18 @@ function fillInAddress() {
 
 // =============================================================================
 
-
+//Script d'adatpation des datas file_addresses
+function adaptAddress (address) {
+  if (address) {
+    if (address.charAt(0) !== "h") {
+      return address = "https://s3-eu-west-1.amazonaws.com/rememberbucket/ImgSvnr/" + address;
+    } else {
+      return address;
+    }
+  } else {
+    return address = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+  }
+}
 
 
 // $(document).ready(function() {

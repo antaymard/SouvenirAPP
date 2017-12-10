@@ -217,10 +217,14 @@ function displayFocusedSvnr(focusId) {
 
 //Script d'adatpation des datas file_addresses
 function adaptAddress (address) {
-  if (address.charAt(0) !== "h") {
-    return address = "https://s3-eu-west-1.amazonaws.com/rememberbucket/ImgSvnr/" + address;
+  if (address) {
+    if (address.charAt(0) !== "h") {
+      return address = "https://s3-eu-west-1.amazonaws.com/rememberbucket/ImgSvnr/" + address;
+    } else {
+      return address;
+    }
   } else {
-    return address;
+    return address = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
   }
 }
 
@@ -506,7 +510,7 @@ function getNotifs() {
             +   '<div style="display:flex; flex-direction:row" onclick="displayFocusedSvnr('+ "'" + notifs[n].idSvnr + "'" + ')">'
 
             +      '<div class="notifDivTxtLeft">'
-            +        '<img src="/'+ notifs[n].createdBy[0].photo_address +'" class="creatorDivPicture anecdotePic">'
+            +        '<img src="'+ adaptAddress(notifs[n].createdBy[0].photo_address) +'" class="creatorDivPicture anecdotePic">'
             +      '</div>'
 
             +      '<div class="notifDivTxtRight" >'
